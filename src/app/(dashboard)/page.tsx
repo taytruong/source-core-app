@@ -8,7 +8,7 @@ const page = async () => {
   const user = await createUser({
     clerkId: "123456",
     username: "john_doe",
-    email_address: "johndoe@gmail.com",
+    email: "johndoe@gmail.com",
   });
   console.log("🚀 ~ page ~ user:", user);
   return (
