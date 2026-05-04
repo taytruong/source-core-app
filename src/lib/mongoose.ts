@@ -1,5 +1,3 @@
-"use server";
-
 import mongoose from "mongoose";
 
 // singelton connection :  check đã connect chưa ? nếu có MONGODB_URL is already connected
