@@ -1,0 +1,59 @@
+import { Document, model, models, Schema } from "mongoose";
+import { EUserRole, EUserStatus } from "../types/enum";
+
+export interface IUser extends Document {
+  clerkId: string;
+  name: string;
+  username: string;
+  email_address: string;
+  avatar: string;
+  courses: Schema.Types.ObjectId[];
+  status: EUserStatus;
+  role: EUserRole;
+  createAt: Date;
+}
+
+const useSchema = new Schema<IUser>({
+  clerkId: {
+    type: String,
+  },
+  name: {
+    type: String,
+  },
+  username: {
+    type: String,
+    unique: true, // unique là ko dc trùng
+    required: true,
+  },
+  email_address: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  avatar: {
+    type: String,
+  },
+  courses: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Course", // reference to file has name is course (course.md.ts)
+    },
+  ],
+  createAt: {
+    type: Date,
+    default: Date.now,
+  },
+  role: {
+    type: String,
+    enum: Object.values(EUserRole), // lấy 1 trong các values của EUserRole
+    default: EUserRole.USER,
+  },
+  status: {
+    type: String,
+    enum: Object.values(EUserStatus), // lấy 1 trong các values của EUserStatus
+    default: EUserStatus.ACTIVE,
+  },
+});
+
+const User = models.User || model("User", useSchema);
+export default User;
