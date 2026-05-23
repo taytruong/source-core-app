@@ -18,7 +18,7 @@ const Sidebar = () => {
       >
         <span className="mb-2">
           <Image
-            src="/Logo.svg"
+            src="/logo.svg"
             alt="logo"
             width={40}
             height={40}
