@@ -1,23 +1,20 @@
 import { CourseGrid } from "@/src/components/common";
 import CourseItem from "@/src/components/course/CourseItem";
 import Heading from "@/src/components/text/Heading";
-import createUser from "@/src/lib/actions/user.actions";
+import { getAllCourse } from "@/src/lib/actions/course.action";
 import React from "react";
 
 const page = async () => {
-  const user = await createUser({
-    clerkId: "123456",
-    username: "john_doe",
-    email: "johndoe@gmail.com",
-  });
-  console.log("🚀 ~ page ~ user:", user);
+  const courses = (await getAllCourse()) || [];
+  console.log("🚀 ~ page ~ courses:", courses);
   return (
     <div>
       <Heading>Khám phá</Heading>
       <CourseGrid>
-        <CourseItem></CourseItem>
-        <CourseItem></CourseItem>
-        <CourseItem></CourseItem>
+        {courses?.length > 0 &&
+          courses?.map((item, index) => (
+            <CourseItem key={item.slug} data={item}></CourseItem>
+          ))}
       </CourseGrid>
     </div>
   );

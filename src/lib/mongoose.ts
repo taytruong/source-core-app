@@ -13,7 +13,7 @@ export const connectToDatabase = async () => {
     return;
   }
 
-  // nếu chưa connect thì chạy try/catch
+  // nếu chưa connect thì chạy try/catch để connect đến DB
   try {
     await mongoose.connect(process.env.MONGODB_URL, {
       dbName: "course_apps",

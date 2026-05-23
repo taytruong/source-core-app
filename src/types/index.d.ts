@@ -1,15 +1,17 @@
-type LinkActiveProps = {
+import { ICourse } from "../database/course.md";
+
+export type LinkActiveProps = {
   url: string;
   children?: React.ReactNode;
 };
 
-type MenuItemProps = {
+export type MenuItemProps = {
   url: string;
   title: string;
   icon?: React.ReactNode;
 };
 
-type TCreateUserParams = {
+export type TCreateUserParams = {
   clerkId: string;
   username: string;
   email: string;
@@ -17,4 +19,14 @@ type TCreateUserParams = {
   avatar?: string;
 };
 
-export { LinkActiveProps, MenuItemProps, TCreateUserParams };
+export type TCreateCourseParams = {
+  title: string;
+  slug: string;
+  author: Types.ObjectId;
+};
+
+export type TUpdateCourseParams = {
+  slug: string;
+  updateData: Partial<ICourse>; // Partial : from must to option
+  path?: string;
+};

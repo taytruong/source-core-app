@@ -1,8 +1,12 @@
 // tailwind.config.ts
 import type { Config } from "tailwindcss";
+import { withUt } from "uploadthing/tw";
 
-export default {
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+export default withUt({
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@uploadthing/react/dist/**/*.js",
+  ],
   theme: {
     extend: {
       colors: {
@@ -10,4 +14,4 @@ export default {
       },
     },
   },
-} satisfies Config;
+} satisfies Config);

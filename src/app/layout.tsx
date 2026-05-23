@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { work__sans } from "../utils";
-import Sidebar from "../components/layout/Sidebar";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Course-app",
@@ -17,7 +17,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${work__sans.className}`}>{children}</body>
+        <body className={`${work__sans.className}`}>
+          {children}
+          <Toaster richColors position="top-right" />
+        </body>
       </html>
     </ClerkProvider>
   );
