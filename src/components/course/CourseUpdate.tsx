@@ -8,7 +8,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { createCourse, updateCourse } from "@/src/lib/actions/course.action";
+import { updateCourse } from "@/src/lib/actions/course.action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,7 +23,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import { courseLevel, courseStatus } from "@/src/constanst";
 import { UploadButton } from "@/src/utils/uploadthing";
 import Image from "next/image";
@@ -126,7 +126,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
     }
   }
 
-  const imageWatch = form.watch("image")
+  const imageWatch = form.watch("image");
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <div className="grid grid-cols-2 gap-8 mt-10 mb-6">
@@ -225,8 +225,6 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
               <>
                 <div className="h-50 bg-white rounded border border-gray-200 flex items-center justify-center relative">
                   {!imageWatch ? (
-
-
                     <UploadButton
                       endpoint="imageUploader"
                       className="
@@ -249,16 +247,22 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                             "
                       onClientUploadComplete={(res) => {
                         // Do something with the response
-                        form.setValue("image", res[0].ufsUrl)
+                        form.setValue("image", res[0].ufsUrl);
                       }}
                       onUploadError={(error: Error) => {
                         // Do something with the error.
                         console.error(`ERROR! ${error.message}`);
                       }}
                     />
-                  ) : <Image alt="" src={imageWatch} fill className="w-full h-full object-cover" />}
+                  ) : (
+                    <Image
+                      alt=""
+                      src={imageWatch}
+                      fill
+                      className="w-full h-full object-cover"
+                    />
+                  )}
                 </div>
-
               </>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -311,7 +315,13 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                 <SelectContent>
                   <SelectGroup>
                     {courseStatus.map((status) => (
-                      <SelectItem value={status.value} key={status.value} className={status.className}>{status.title}</SelectItem>
+                      <SelectItem
+                        value={status.value}
+                        key={status.value}
+                        className={status.className}
+                      >
+                        {status.title}
+                      </SelectItem>
                     ))}
                   </SelectGroup>
                 </SelectContent>
@@ -334,7 +344,9 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                 <SelectContent>
                   <SelectGroup>
                     {courseLevel.map((level) => (
-                      <SelectItem value={level.value} key={level.value}>{level.title}</SelectItem>
+                      <SelectItem value={level.value} key={level.value}>
+                        {level.title}
+                      </SelectItem>
                     ))}
                   </SelectGroup>
                 </SelectContent>
@@ -418,7 +430,10 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
           name="info.qa"
           control={form.control}
           render={({ field, fieldState }) => (
-            <Field data-invalid={fieldState.invalid} className="col-start-1 col-end-3">
+            <Field
+              data-invalid={fieldState.invalid}
+              className="col-start-1 col-end-3"
+            >
               <FieldLabel className="flex items-center justify-between gap-5">
                 <span>Hỏi đáp</span>
                 <button
@@ -474,7 +489,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
       >
         Cập nhật khóa học
       </Button>
-    </form >
+    </form>
   );
 };
 

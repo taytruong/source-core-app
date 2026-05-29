@@ -3,6 +3,7 @@ import "./globals.css";
 import { work__sans } from "../utils";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
   title: "Course-app",
@@ -18,7 +19,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`${work__sans.className}`}>
-          {children}
+          <TooltipProvider>{children}</TooltipProvider>
           <Toaster richColors position="top-right" />
         </body>
       </html>

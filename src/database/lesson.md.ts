@@ -26,7 +26,6 @@ const lessonSchema = new Schema<ILesson>({
   },
   content: {
     type: String,
-    required: true,
   },
   video_url: {
     type: String,

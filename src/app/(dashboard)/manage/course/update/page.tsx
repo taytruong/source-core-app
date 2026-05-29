@@ -1,4 +1,4 @@
-import Heading from "@/src/components/common/Heading";
+import { Heading } from "@/src/components/common";
 import CourseUpdate from "@/src/components/course/CourseUpdate";
 import { getCourseBySlug } from "@/src/lib/actions/course.action";
 import React from "react";

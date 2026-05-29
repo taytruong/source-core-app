@@ -1,4 +1,4 @@
-import Heading from "@/src/components/common/Heading";
+import { Heading } from "@/src/components/common";
 import CourseNewAdd from "@/src/components/course/CourseNewAdd";
 import { getUserInfo } from "@/src/lib/actions/user.actions";
 import { auth } from "@clerk/nextjs/server";

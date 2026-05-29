@@ -1,8 +1,14 @@
 "use server";
-import { TCreateCourseParams, TUpdateCourseParams } from "@/src/types";
+import {
+  TCourseUpdateParams,
+  TCreateCourseParams,
+  TUpdateCourseParams,
+} from "@/src/types";
 import { connectToDatabase } from "../mongoose";
 import Course, { ICourse } from "@/src/database/course.md";
 import { revalidatePath } from "next/cache";
+import Lecture from "@/src/database/lecture.md";
+import Lesson from "@/src/database/lesson.md";
 
 export async function getAllCourse(): Promise<ICourse[] | undefined> {
   try {
@@ -18,10 +24,28 @@ export async function getCourseBySlug({
   slug,
 }: {
   slug: string;
-}): Promise<ICourse | undefined> {
+}): Promise<TCourseUpdateParams | undefined> {
   try {
     connectToDatabase();
-    const findCourse = await Course.findOne({ slug });
+
+    //populate("lectures") when using ref: "Lecture" in course.md.ts
+    const findCourse = await Course.findOne({ slug }).populate({
+      path: "lectures",
+      model: Lecture,
+      select: "_id title", // select để lấy ra trong lectures
+      match: {
+        _destroy: false,
+      },
+
+      // select để lấy ra trong Lesson của lectures
+      populate: {
+        path: "lessons",
+        model: Lesson,
+        match: {
+          _destroy: false,
+        },
+      },
+    });
     return findCourse;
   } catch (error) {
     console.log("🚀 ~ getCourseBySlug ~ error:", error);

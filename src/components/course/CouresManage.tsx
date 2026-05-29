@@ -3,14 +3,12 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import React from "react";
-import Heading from "../common/Heading";
 import Image from "next/image";
 import { commonClassNames, courseStatus } from "@/src/constanst";
 import { cn } from "@/lib/utils";
@@ -19,6 +17,7 @@ import {
   IconDelete,
   IconEdit,
   IconEye,
+  IconPlus,
   IconStudy,
 } from "../icons";
 import Link from "next/link";
@@ -29,6 +28,7 @@ import { ECourseStatus } from "@/src/types/enum";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import IconArrowRight from "../icons/IconArrowRight";
+import { Heading } from "../common";
 
 const CouresManage = ({ courses }: { courses: ICourse[] }) => {
   const handleDeleteCourseItem = (slug: string) => {
@@ -86,14 +86,17 @@ const CouresManage = ({ courses }: { courses: ICourse[] }) => {
   };
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-10">
+    <>
+      <Link href="/manage/course/new">
+        <IconPlus className="size-10 rounded-full bg-primary flexCenter text-white fixed right-5 bottom-5 p-2 hover:animate-[spin_0.8s_linear_0.5]" />
+      </Link>
+      <div className="flex flex-col lg:flex-row lg:items-center gap-5 justify-between mb-10">
         <Heading>Quản lý khóa học</Heading>
-        <div className="w-75">
+        <div className="w-full lg:w-75">
           <Input placeholder="Tìm kiếm khóa học ..." />
         </div>
       </div>
-      <Table>
+      <Table className="table-responsive">
         <TableHeader>
           <TableRow>
             <TableHead>STT</TableHead>
@@ -122,10 +125,10 @@ const CouresManage = ({ courses }: { courses: ICourse[] }) => {
                         className="shrink-0 size-16 rounded-lg object-cover"
                       />
                       <div className="flex flex-col gap-1">
-                        <h3 className="font-semibold text-base">
+                        <h3 className="font-semibold text-sm lg:text-base whitespace-nowrap">
                           {courses.title}
                         </h3>
-                        <h4 className="text-sm text-slate-500">
+                        <h4 className="text-xs lg:text-sm text-slate-500">
                           {new Date(courses.create_at).toLocaleDateString(
                             "vi-VI",
                           )}
@@ -134,7 +137,7 @@ const CouresManage = ({ courses }: { courses: ICourse[] }) => {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <span className="font-semibold text-base">
+                    <span className="font-semibold text-sm lg:text-base">
                       {courses.price.toLocaleString()}đ
                     </span>
                   </TableCell>
@@ -194,7 +197,7 @@ const CouresManage = ({ courses }: { courses: ICourse[] }) => {
           <IconArrowRight />
         </button>
       </div>
-    </div>
+    </>
   );
 };
 

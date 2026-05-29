@@ -9,6 +9,9 @@ export default withUt({
   ],
   theme: {
     extend: {
+      screens: {
+        "3xl": "1600px",
+      },
       colors: {
         primary: "#E87F24",
       },

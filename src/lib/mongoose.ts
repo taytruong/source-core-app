@@ -9,7 +9,7 @@ export const connectToDatabase = async () => {
     throw new Error("MONGODB_URL is not set");
   }
   if (isConnected) {
-    console.log("MONGODB_URL is already connected");
+    // console.log("MONGODB_URL is already connected");
     return;
   }
 

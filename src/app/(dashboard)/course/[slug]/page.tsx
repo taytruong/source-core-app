@@ -10,6 +10,14 @@ import { courseLevelTitle } from "@/src/constanst";
 import { getCourseBySlug } from "@/src/lib/actions/course.action";
 import { ECourseStatus } from "@/src/types/enum";
 import Image from "next/image";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { ILecture } from "@/src/database/lecture.md";
+import { TUpdateCourseLecture } from "@/src/types";
 
 const page = async ({
   params,
@@ -22,8 +30,9 @@ const page = async ({
     slug: params.slug,
   });
   if (!data) return null;
-  if (data.status !== ECourseStatus.APPROVED) return <PageNotFound />
+  if (data.status !== ECourseStatus.APPROVED) return <PageNotFound />;
   const videoId = data.intro_url?.split("v=")[1];
+  const lectures = data.lectures || [];
   return (
     <div className="grid lg:grid-cols-[2fr_1fr] gap-10 min-h-screen">
       <div>
@@ -55,9 +64,40 @@ const page = async ({
         <BoxSection title="Thông tin">
           <div className="grid grid-cols-4 gap-5 mb-10">
             <BoxInfo title="Bài học">100</BoxInfo>
-            <BoxInfo title="Lượt xem">{data.views}</BoxInfo>
+            <BoxInfo title="Lượt xem">{data.views.toLocaleString()}</BoxInfo>
             <BoxInfo title="Trình độ">{courseLevelTitle[data.level]}</BoxInfo>
             <BoxInfo title="Thời lượng">100</BoxInfo>
+          </div>
+        </BoxSection>
+        <BoxSection title="Nội dung khóa học">
+          <div className="flex flex-col gap-5">
+            {lectures.map((item: TUpdateCourseLecture) => (
+              <Accordion type="single" collapsible key={item._id.toString()}>
+                <AccordionItem value={item._id.toString()}>
+                  <AccordionTrigger>
+                    <div className="flex items-center gap-3 justify-between w-full pr-5">
+                      <div>{item.title}</div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="bg-transparent! border-none">
+                    <div className="flex flex-col gap-3">
+                      {item.lessons.map((lesson) => (
+                        <div
+                          key={lesson._id.toString()}
+                          className="flex items-center gap-3 bg-white border border-slate-300 rounded-lg p-3 text-sm font-medium"
+                        >
+                          <IconPlay className="size-4" />
+                          <h4>{lesson.title}</h4>
+                          <span className="ml-auto text-xs font-medium">
+                            {lesson.duration} phút
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            ))}
           </div>
         </BoxSection>
         <BoxSection title="Yêu cầu">
@@ -80,12 +120,14 @@ const page = async ({
             </div>
           ))}
         </BoxSection>
-        <BoxSection title="Q.A">
+        <BoxSection title="Hỏi đáp ?">
           {data.info.qa.map((qa, index) => (
-            <div key={index}>
-              <div>{qa.question}</div>
-              <div>{qa.answer}</div>
-            </div>
+            <Accordion type="single" collapsible key={index}>
+              <AccordionItem value={qa.question}>
+                <AccordionTrigger>{qa.question}</AccordionTrigger>
+                <AccordionContent>{qa.answer}</AccordionContent>
+              </AccordionItem>
+            </Accordion>
           ))}
         </BoxSection>
       </div>

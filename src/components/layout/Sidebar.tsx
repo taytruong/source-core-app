@@ -14,14 +14,14 @@ const Sidebar = () => {
     <div className="hidden p-5 border-r border-r-gray-200 bg-white lg:flex flex-col fixed top-0 left-0 bottom-0 w-75">
       <a
         href="/"
-        className="font-semibold text-3xl mb-6 flex items-end text-primary"
+        className="font-semibold text-3xl mb-8 flex items-end text-primary"
       >
         <span className="mb-2">
           <Image
-            src="/logo.svg"
+            src="/logo.png"
             alt="logo"
-            width={40}
-            height={40}
+            width={25}
+            height={25}
             className="object-cover"
           />
         </span>
@@ -53,14 +53,19 @@ const Sidebar = () => {
   );
 };
 
-function MenuItem({ url = "/", title = "", icon }: MenuItemProps) {
+export function MenuItem({
+  url = "/",
+  title = "",
+  icon,
+  onlyIcon,
+}: MenuItemProps) {
   return (
-    <li>
+    <ul>
       <LinkActive url={url}>
         {icon}
-        {title}
+        {onlyIcon ? null : title}
       </LinkActive>
-    </li>
+    </ul>
   );
 }
 
