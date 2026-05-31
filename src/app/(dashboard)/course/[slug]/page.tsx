@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/accordion";
 import { ILecture } from "@/src/database/lecture.md";
 import { TUpdateCourseLecture } from "@/src/types";
+import LessonItem from "@/src/components/lesson/LessonItem";
+import LessonContent from "@/src/components/lesson/LessonContent";
 
 const page = async ({
   params,
@@ -70,35 +72,7 @@ const page = async ({
           </div>
         </BoxSection>
         <BoxSection title="Nội dung khóa học">
-          <div className="flex flex-col gap-5">
-            {lectures.map((item: TUpdateCourseLecture) => (
-              <Accordion type="single" collapsible key={item._id.toString()}>
-                <AccordionItem value={item._id.toString()}>
-                  <AccordionTrigger>
-                    <div className="flex items-center gap-3 justify-between w-full pr-5">
-                      <div>{item.title}</div>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="bg-transparent! border-none">
-                    <div className="flex flex-col gap-3">
-                      {item.lessons.map((lesson) => (
-                        <div
-                          key={lesson._id.toString()}
-                          className="flex items-center gap-3 bg-white border border-slate-300 rounded-lg p-3 text-sm font-medium"
-                        >
-                          <IconPlay className="size-4" />
-                          <h4>{lesson.title}</h4>
-                          <span className="ml-auto text-xs font-medium">
-                            {lesson.duration} phút
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            ))}
-          </div>
+          <LessonContent lectures={lectures} course="" slug="" />
         </BoxSection>
         <BoxSection title="Yêu cầu">
           {data.info.requirements.map((r, index) => (

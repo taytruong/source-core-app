@@ -2,8 +2,8 @@
 import { TCreateLessonParams, TUpdateLessonParams } from "@/src/types";
 import { connectToDatabase } from "../mongoose";
 import Course from "@/src/database/course.md";
-import Lecture from "@/src/database/lecture.md";
-import Lesson from "@/src/database/lesson.md";
+import Lecture, { ILecture } from "@/src/database/lecture.md";
+import Lesson, { ILesson } from "@/src/database/lesson.md";
 import { revalidatePath } from "next/cache";
 
 export async function createLesson(params: TCreateLessonParams) {
@@ -42,6 +42,41 @@ export async function updateLesson(params: TUpdateLessonParams) {
     return {
       success: true,
     };
+  } catch (error) {
+    console.log("🚀 ~ createLesson ~ error:", error);
+  }
+}
+
+export async function getLessonBySlug({
+  slug,
+  course,
+}: {
+  slug: string;
+  course: string;
+}): Promise<ILesson | undefined> {
+  try {
+    connectToDatabase();
+    const findLesson = await Lesson.findOne({
+      slug,
+      course,
+    });
+    return findLesson;
+  } catch (error) {
+    console.log("🚀 ~ createLesson ~ error:", error);
+  }
+}
+
+export async function findAllLessons({
+  course,
+}: {
+  course: string;
+}): Promise<ILesson[] | undefined> {
+  try {
+    connectToDatabase();
+    const lessons = await Lesson.find({
+      course,
+    });
+    return lessons;
   } catch (error) {
     console.log("🚀 ~ createLesson ~ error:", error);
   }

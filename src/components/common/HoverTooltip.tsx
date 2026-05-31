@@ -7,16 +7,30 @@ import {
 const HoverTooltip = ({
   children,
   label,
+  className,
+  labelClassName,
+  IsColorArrow,
 }: {
   children?: React.ReactNode;
+  className?: string;
+  labelClassName?: string;
   label?: string;
+  IsColorArrow?: boolean;
 }) => {
   return (
     <>
       <Tooltip>
-        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipTrigger asChild className={className}>
+          {children}
+        </TooltipTrigger>
 
-        <TooltipContent side="top">{label}</TooltipContent>
+        <TooltipContent
+          side="top"
+          className={labelClassName}
+          IsColorArrow={IsColorArrow}
+        >
+          {label}
+        </TooltipContent>
       </Tooltip>
     </>
   );

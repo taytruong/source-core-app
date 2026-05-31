@@ -28,7 +28,7 @@ import { ECourseStatus } from "@/src/types/enum";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import IconArrowRight from "../icons/IconArrowRight";
-import { Heading } from "../common";
+import { Heading, HoverTooltip } from "../common";
 
 const CouresManage = ({ courses }: { courses: ICourse[] }) => {
   const handleDeleteCourseItem = (slug: string) => {
@@ -87,9 +87,17 @@ const CouresManage = ({ courses }: { courses: ICourse[] }) => {
 
   return (
     <>
-      <Link href="/manage/course/new">
-        <IconPlus className="size-10 rounded-full bg-primary flexCenter text-white fixed right-5 bottom-5 p-2 hover:animate-[spin_0.8s_linear_0.5]" />
-      </Link>
+      <HoverTooltip
+        label="Tạo khóa học mới"
+        className="fixed right-5 bottom-5"
+        labelClassName="bg-primary"
+        IsColorArrow
+      >
+        <Link href="/manage/course/new">
+          <IconPlus className="size-10 rounded-full bg-primary flexCenter text-white p-2 hover:animate-[spin_0.8s_linear_0.5]" />
+        </Link>
+      </HoverTooltip>
+
       <div className="flex flex-col lg:flex-row lg:items-center gap-5 justify-between mb-10">
         <Heading>Quản lý khóa học</Heading>
         <div className="w-full lg:w-75">
@@ -157,31 +165,39 @@ const CouresManage = ({ courses }: { courses: ICourse[] }) => {
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-3">
-                      <Link
-                        href={`/manage/course/update-content?slug=${courses.slug}`}
-                        className={commonClassNames.iconSetting}
-                      >
-                        <IconStudy />
-                      </Link>
-                      <Link
-                        href={`/course/${courses.slug}`}
-                        target="_blank"
-                        className={commonClassNames.iconSetting}
-                      >
-                        <IconEye />
-                      </Link>
-                      <Link
-                        href={`/manage/course/update?slug=${courses.slug}`}
-                        className={commonClassNames.iconSetting}
-                      >
-                        <IconEdit />
-                      </Link>
-                      <button
-                        onClick={() => handleDeleteCourseItem(courses.slug)}
-                        className={commonClassNames.iconSetting}
-                      >
-                        <IconDelete />
-                      </button>
+                      <HoverTooltip label="Cập nhật nội dụng cho người xem">
+                        <Link
+                          href={`/manage/course/update-content?slug=${courses.slug}`}
+                          className={commonClassNames.iconSetting}
+                        >
+                          <IconStudy />
+                        </Link>
+                      </HoverTooltip>
+                      <HoverTooltip label="Xem khóa học">
+                        <Link
+                          href={`/course/${courses.slug}`}
+                          target="_blank"
+                          className={commonClassNames.iconSetting}
+                        >
+                          <IconEye />
+                        </Link>
+                      </HoverTooltip>
+                      <HoverTooltip label="Cập nhật thông tin khóa học">
+                        <Link
+                          href={`/manage/course/update?slug=${courses.slug}`}
+                          className={commonClassNames.iconSetting}
+                        >
+                          <IconEdit />
+                        </Link>
+                      </HoverTooltip>
+                      <HoverTooltip label="Xóa khóa học">
+                        <button
+                          onClick={() => handleDeleteCourseItem(courses.slug)}
+                          className={commonClassNames.iconSetting}
+                        >
+                          <IconDelete />
+                        </button>
+                      </HoverTooltip>
                     </div>
                   </TableCell>
                 </TableRow>
