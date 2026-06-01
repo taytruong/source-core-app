@@ -110,7 +110,6 @@ const LessonItemUpdate = ({ lesson }: { lesson: ILesson }) => {
             name="content"
             control={form.control}
             render={({ field, fieldState }) => {
-              console.log("🚀 ~ LessonItemUpdate ~ field:", field);
               return (
                 <Field
                   data-invalid={fieldState.invalid}

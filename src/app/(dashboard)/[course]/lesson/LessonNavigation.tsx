@@ -1,9 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { IconArrowLeft } from "@/src/components/icons";
-import IconArrowRight from "@/src/components/icons/IconArrowRight";
-import { ILesson } from "@/src/database/lesson.md";
+import { IconNext, IconPrevious } from "@/src/components/icons";
+
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -23,14 +22,14 @@ const LessonNavigation = ({
         onClick={() => (!prevLesson ? null : router.push(prevLesson))}
         disabled={!prevLesson}
       >
-        <IconArrowLeft />
+        <IconPrevious />
       </Button>
       <Button
         className="size-8 rounded-md border border-slate-200 flex items-center justify-center p-1.5 transition-all"
         onClick={() => (!nextLesson ? null : router.push(nextLesson))}
         disabled={!nextLesson}
       >
-        <IconArrowRight />
+        <IconNext />
       </Button>
     </div>
   );

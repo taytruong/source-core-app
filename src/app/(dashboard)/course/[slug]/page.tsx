@@ -77,7 +77,7 @@ const page = async ({
         <BoxSection title="Yêu cầu">
           {data.info.requirements.map((r, index) => (
             <div key={index} className="mb-3 flex items-center gap-2">
-              <span className="shrink-0 size-5 bg-primary text-white p-1 rounded flex items-center justify-center">
+              <span className="shrink-0 size-7 rounded flex items-center justify-center text-green-500">
                 <IconChecked />
               </span>
               <span>{r}</span>
@@ -87,7 +87,7 @@ const page = async ({
         <BoxSection title="Lợi ích">
           {data.info.benefits.map((r, index) => (
             <div key={index} className="mb-3 flex items-center gap-2">
-              <span className="shrink-0 size-5 bg-primary text-white p-1 rounded flex items-center justify-center">
+              <span className="shrink-0 size-7 rounded flex items-center justify-center text-green-500">
                 <IconChecked />
               </span>
               <span>{r}</span>
@@ -99,7 +99,9 @@ const page = async ({
             <Accordion type="single" collapsible key={index}>
               <AccordionItem value={qa.question}>
                 <AccordionTrigger>{qa.question}</AccordionTrigger>
-                <AccordionContent>{qa.answer}</AccordionContent>
+                <AccordionContent className="mt-2.5">
+                  {qa.answer}
+                </AccordionContent>
               </AccordionItem>
             </Accordion>
           ))}

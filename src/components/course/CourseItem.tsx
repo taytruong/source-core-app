@@ -4,7 +4,7 @@ import React from "react";
 import { IconClock, IconEye, IconStar } from "../icons";
 import { ICourse } from "@/src/database/course.md";
 
-const CourseItem = ({ data }: { data: ICourse }) => {
+const CourseItem = ({ data, cta }: { data: ICourse; cta?: string }) => {
   const courseInfo = [
     {
       title: data?.views,
@@ -31,9 +31,9 @@ const CourseItem = ({ data }: { data: ICourse }) => {
           sizes="@media (min-width:640px) 300px, 100vw"
           priority
         />
-        <span className="inline-block px-3 py-1 rounded-full absolute top-3 right-3 z-10 text-white font-medium text-xs bg-green-500">
-          New
-        </span>
+        {/* <span className="inline-block px-3 py-1 rounded-full absolute top-3 right-3 z-10 text-white font-medium text-xs bg-green-500">
+          {data?.create_at.toLocaleDateString("vi-VI")}
+        </span> */}
       </Link>
       <div className="pt-4">
         <h3 className="font-bold text-lg mb-3">{data?.title}</h3>
@@ -52,7 +52,7 @@ const CourseItem = ({ data }: { data: ICourse }) => {
           href={`course/${data?.slug}`}
           className="flex items-center justify-center w-full mt-10 rounded-lg text-white bg-primary h-12"
         >
-          Xem chi tiết
+          {cta || "Xem chi tiết"}
         </Link>
       </div>
     </div>

@@ -15,10 +15,10 @@ import { cn } from "@/lib/utils";
 import {
   IconArrowLeft,
   IconDelete,
+  IconDocument,
   IconEdit,
   IconEye,
   IconPlus,
-  IconStudy,
 } from "../icons";
 import Link from "next/link";
 import { ICourse } from "@/src/database/course.md";
@@ -170,7 +170,7 @@ const CouresManage = ({ courses }: { courses: ICourse[] }) => {
                           href={`/manage/course/update-content?slug=${courses.slug}`}
                           className={commonClassNames.iconSetting}
                         >
-                          <IconStudy />
+                          <IconDocument />
                         </Link>
                       </HoverTooltip>
                       <HoverTooltip label="Xem khóa học">

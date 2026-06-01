@@ -13,7 +13,7 @@ export const menuItems: MenuItemProps[] = [
   {
     url: "/",
     title: "Khám phá",
-    icon: <IconPlay className="size-5" />,
+    icon: <IconExplore className="size-5" />,
   },
   {
     url: "/study",
@@ -23,7 +23,7 @@ export const menuItems: MenuItemProps[] = [
   {
     url: "/manage/course",
     title: "Quản lý khóa học",
-    icon: <IconExplore className="size-5" />,
+    icon: <IconPlay className="size-5" />,
   },
   {
     url: "/manage/member",

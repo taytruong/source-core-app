@@ -204,6 +204,7 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setLectureIdEdit(item._id.toString());
+                                setLectureEdit(item.title);
                               }}
                             >
                               <IconEdit />
@@ -295,6 +296,7 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
                                           setLessonIdEdit(
                                             lesson._id.toString(),
                                           );
+                                          setLessonEdit(lesson.title);
                                         }}
                                       >
                                         <IconEdit />

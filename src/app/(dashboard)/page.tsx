@@ -5,7 +5,6 @@ import React from "react";
 
 const page = async () => {
   const courses = (await getAllCourse()) || [];
-  console.log("🚀 ~ page ~ courses:", courses);
   return (
     <div>
       <Heading>Khám phá</Heading>
