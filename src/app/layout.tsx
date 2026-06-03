@@ -4,6 +4,7 @@ import { work__sans } from "../utils";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Course-app",
@@ -21,6 +22,7 @@ export default function RootLayout({
         <body className={`${work__sans.className}`}>
           <TooltipProvider>{children}</TooltipProvider>
           <Toaster richColors position="top-right" />
+          <SpeedInsights />
         </body>
       </html>
     </ClerkProvider>
