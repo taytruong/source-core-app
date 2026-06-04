@@ -40,6 +40,13 @@ export type TUpdateCourseLecture = {
   lessons: ILesson[];
 };
 
+export type TGetAllCourseParams = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  status?: string;
+};
+
 export interface TCourseUpdateParams extends Omit<ICourse, "lectures"> {
   lectures: TUpdateCourseLecture[];
 }
@@ -79,6 +86,7 @@ export type TUpdateLessonParams = {
     duration?: number;
     video_url?: string;
     content?: string;
+    _destroy?: boolean;
   };
 };
 

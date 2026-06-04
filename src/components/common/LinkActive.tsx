@@ -12,7 +12,7 @@ const LinkActive = ({ url, children }: LinkActiveProps) => {
       href={url}
       className={`p-3 rounded-md flex items-center gap-3 text-base transition-all ${
         isActive
-          ? "text-white bg-primary svg-animate font-medium"
+          ? "text-primary bg-primary/25 svg-animate font-medium"
           : "hover:text-primary hover:bg-primary/10"
       }`}
     >

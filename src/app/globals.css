@@ -20,6 +20,7 @@
     stroke-dasharray: 100;
     animation: dash 2s linear forwards;
   }
+
   @keyframes dash {
     to {
       stroke-dashoffset: 0;
@@ -30,6 +31,12 @@
 @layer utilities {
   .flexCenter {
     @apply flex items-center justify-center;
+  }
+  .focus-primary:focus {
+    @apply focus:ring-4 focus:ring-primary/10;
+  }
+  .skeleton {
+    @apply bg-gray-200 animate-pulse;
   }
 }
 
@@ -101,5 +108,49 @@
   h5,
   h6 {
     font-weight: 600;
+  }
+}
+
+.button-primary {
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.button-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: auto;
+  right: 0;
+  height: 100%;
+  width: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.25s linear;
+  z-index: -1;
+}
+.button-primary:hover::before {
+  left: 0;
+  width: 100%;
+}
+
+html body .swal2-container {
+  .swal2-popup {
+    @apply w-full;
+    max-width: 450px;
+  }
+  .swal2-title {
+    @apply font-medium text-xl;
+  }
+  .swal2-actions {
+    .swal2-confirm {
+      @apply bg-primary;
+    }
+    .swal2-cancel {
+      @apply bg-transparent text-slate-600 border border-slate-400;
+    }
+    .swal2-confirm {
+      @apply w-37.5;
+    }
   }
 }

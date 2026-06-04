@@ -38,8 +38,10 @@ const LessonItem = ({
   return (
     <div
       className={cn(
-        "flex items-center gap-2 bg-white border border-slate-300 rounded-lg p-4 text-base font-medium ",
-        isActive ? "text-primary underline underline-offset-4" : "",
+        "flex items-center gap-2 bg-white border border-slate-300 rounded-lg p-4 text-base font-medium",
+        isActive
+          ? "underline underline-offset-4 decoration-primary decoration-2"
+          : "",
       )}
     >
       {url && (

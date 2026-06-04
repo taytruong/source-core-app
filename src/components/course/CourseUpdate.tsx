@@ -209,7 +209,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                 aria-invalid={fieldState.invalid}
                 placeholder="Nhập mô tả ..."
                 autoComplete="off"
-                className="h-50"
+                className="h-63"
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -223,7 +223,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Ảnh bìa</FieldLabel>
               <>
-                <div className="h-50 bg-white rounded border border-gray-200 flex items-center justify-center relative">
+                <div className="h-63 bg-white rounded border border-gray-200 flex items-center justify-center relative">
                   {!imageWatch ? (
                     <UploadButton
                       endpoint="imageUploader"
@@ -259,7 +259,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                       alt=""
                       src={imageWatch}
                       fill
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover rounded-md"
                     />
                   )}
                 </div>

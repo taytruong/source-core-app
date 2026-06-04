@@ -3,8 +3,17 @@ import Link from "next/link";
 import React from "react";
 import { IconClock, IconEye, IconStar } from "../icons";
 import { ICourse } from "@/src/database/course.md";
+import { commonClassNames } from "@/src/constanst";
 
-const CourseItem = ({ data, cta }: { data: ICourse; cta?: string }) => {
+const CourseItem = ({
+  data,
+  cta,
+  url,
+}: {
+  data: ICourse;
+  cta?: string;
+  url: string;
+}) => {
   const courseInfo = [
     {
       title: data?.views,
@@ -20,8 +29,8 @@ const CourseItem = ({ data, cta }: { data: ICourse; cta?: string }) => {
     },
   ];
   return (
-    <div className="bg-white border border-gray-200 p-4 rounded-2xl">
-      <Link href={`course/${data?.slug}`} className="block h-48 relative">
+    <div className="bg-white border border-gray-200 p-3 rounded-2xl flex flex-col">
+      <Link href={url} className="block h-48 relative">
         <Image
           src={data.image}
           alt=""
@@ -35,25 +44,24 @@ const CourseItem = ({ data, cta }: { data: ICourse; cta?: string }) => {
           {data?.create_at.toLocaleDateString("vi-VI")}
         </span> */}
       </Link>
-      <div className="pt-4">
-        <h3 className="font-bold text-lg mb-3">{data?.title}</h3>
-        <div className="flex items-center gap-3 mb-5 text-xs text-gray-500">
-          {courseInfo.map((item, index) => (
-            <div className="flex items-center gap-2" key={index}>
-              {item.icon("size-5")}
-              <span>{item.title}</span>
-            </div>
-          ))}
-          <span className="font-bold text-primary ml-auto text-base">
-            {data?.price.toLocaleString()}đ
-          </span>
+      <div className="pt-4 flex flex-col flex-1">
+        <h3 className="font-medium text-lg mb-3">{data?.title}</h3>
+        <div className="mt-auto">
+          <div className="flex items-center gap-3 mb-5 text-xs text-gray-500">
+            {courseInfo.map((item, index) => (
+              <div className="flex items-center gap-2" key={index}>
+                {item.icon("size-5")}
+                <span>{item.title}</span>
+              </div>
+            ))}
+            <span className="font-bold text-primary ml-auto text-base">
+              {data?.price?.toLocaleString()}đ
+            </span>
+          </div>
+          <Link href={url} className={commonClassNames.primaryButton}>
+            {cta || "Xem chi tiết"}
+          </Link>
         </div>
-        <Link
-          href={`course/${data?.slug}`}
-          className="flex items-center justify-center w-full mt-10 rounded-lg text-white bg-primary h-12"
-        >
-          {cta || "Xem chi tiết"}
-        </Link>
       </div>
     </div>
   );

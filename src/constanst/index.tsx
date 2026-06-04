@@ -95,7 +95,10 @@ export const commonClassNames = {
     "size-9 p-2 rounded-md border border-slate-200 flex items-center justify-center hover:bg-slate-100 shrink-0",
   iconPagination:
     "size-8 rounded-md border border-slate-200 hover:border-primary hover:text-primary flex items-center justify-center bg-white p-1.5 transition-all",
+  primaryButton:
+    "flex items-center justify-center w-full mt-10 rounded-lg text-white bg-primary h-12 button-primary",
 };
+
 export const editorOptions = (field: any, theme: any) => ({
   initialValue: "",
   onBlur: field.onBlur,
@@ -133,3 +136,5 @@ export const editorOptions = (field: any, theme: any) => ({
     content_style: `@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');body { font-family: Manrope,Helvetica,Arial,sans-serif; font-size:14px; line-height: 2; padding-bottom: 32px; } img { max-width: 100%; height: auto; display: block; margin: 0 auto; };`,
   },
 });
+
+export const lastLessonKey = "lastLesson"; //(localStorage)

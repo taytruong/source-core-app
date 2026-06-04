@@ -59,7 +59,7 @@ export async function getLessonBySlug({
     const findLesson = await Lesson.findOne({
       slug,
       course,
-    });
+    }).select("title video_url content"); //select là lấy riêng dc các field cần thiết
     return findLesson;
   } catch (error) {
     console.log("🚀 ~ createLesson ~ error:", error);
@@ -75,8 +75,22 @@ export async function findAllLessons({
     connectToDatabase();
     const lessons = await Lesson.find({
       course,
-    });
+    }).select("title video_url content slug");
     return lessons;
+  } catch (error) {
+    console.log("🚀 ~ createLesson ~ error:", error);
+  }
+}
+
+export async function countLessonByCourseId({
+  course: courseId,
+}: {
+  course: string;
+}): Promise<number | undefined> {
+  try {
+    connectToDatabase();
+    const count = await Lesson.countDocuments({ course: courseId });
+    return count || 0;
   } catch (error) {
     console.log("🚀 ~ createLesson ~ error:", error);
   }
