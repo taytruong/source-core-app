@@ -14,6 +14,7 @@ enum ECourseStatus {
   APPROVED = "APPROVED",
   PENDING = "PENDING",
   REJECTED = "REJECTED",
+  DEFAULT = "DEFAULT",
 }
 
 enum ECourseLevel {

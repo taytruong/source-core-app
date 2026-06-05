@@ -13,7 +13,6 @@ const StudyCourse = ({
   if (!courses || courses.length <= 0) return null;
   const lastLesson =
     JSON.parse(localStorage?.getItem(lastLessonKey) || "[]") || [];
-  //
   return (
     <CourseGrid>
       {courses &&

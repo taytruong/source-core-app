@@ -42,6 +42,7 @@ const formSchema = z.object({
       ECourseStatus.APPROVED,
       ECourseStatus.PENDING,
       ECourseStatus.REJECTED,
+      ECourseStatus.DEFAULT,
     ])
     .optional(),
   level: z
@@ -309,7 +310,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Trạng thái</FieldLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger>
+                <SelectTrigger size="lg">
                   <SelectValue placeholder="Trạng thái" />
                 </SelectTrigger>
                 <SelectContent>
@@ -338,7 +339,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Trình độ</FieldLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <SelectTrigger>
+                <SelectTrigger size="lg">
                   <SelectValue placeholder="Trình độ" />
                 </SelectTrigger>
                 <SelectContent>

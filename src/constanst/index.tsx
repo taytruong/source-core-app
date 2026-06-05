@@ -48,6 +48,11 @@ export const courseStatus: {
   className?: string;
 }[] = [
   {
+    title: "Mặc định",
+    value: ECourseStatus.DEFAULT,
+    className: "",
+  },
+  {
     title: "Đã duyệt",
     value: ECourseStatus.APPROVED,
     className: "text-green-500",

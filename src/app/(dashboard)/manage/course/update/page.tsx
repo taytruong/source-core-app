@@ -14,7 +14,6 @@ const page = async ({
     slug: searchParams.slug,
   });
   if (!findCourse) return null;
-  console.log("🚀 ~ page ~ findCourse:", findCourse);
   return (
     <>
       <Heading className="mb-8">

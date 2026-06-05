@@ -34,6 +34,7 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -59,13 +60,11 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
 
   const handleDeleteCourseItem = (slug: string) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
+      title: "Bạn có chắc chắn xóa không?",
+      icon: "error",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Xóa khóa học",
+      cancelButtonText: "Hủy",
     }).then(async (result) => {
       if (result.isConfirmed) {
         await updateCourse({
@@ -85,7 +84,6 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
     try {
       Swal.fire({
         title: "Bạn có muốn đổi trạng thái không?",
-        // text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Cập nhật",
@@ -164,13 +162,17 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
               handleSelectStatus(value as ECourseStatus)
             }
           >
-            <SelectTrigger className="w-full max-w-48">
+            <SelectTrigger className="w-full max-w-48" size="lg">
               <SelectValue placeholder="Chọn trạng thái" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 {courseStatus.map((status) => (
-                  <SelectItem value={status.value} key={status.value}>
+                  <SelectItem
+                    value={status.value}
+                    key={status.value}
+                    className={status.className}
+                  >
                     {status.title}
                   </SelectItem>
                 ))}
@@ -225,18 +227,20 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
                     </span>
                   </TableCell>
                   <TableCell>
-                    <button
-                      type="button"
-                      className={cn(
-                        commonClassNames.status,
-                        courseStatusTitleItem?.className,
-                      )}
-                      onClick={() =>
-                        handleChangeStatus(courses.slug, courses.status)
-                      }
-                    >
-                      {courseStatusTitleItem?.title}
-                    </button>
+                    <HoverTooltip label="Có thể chuyển sang 'Đã duyệt' / 'Chờ duyệt'">
+                      <button
+                        type="button"
+                        className={cn(
+                          commonClassNames.status,
+                          courseStatusTitleItem?.className,
+                        )}
+                        onClick={() =>
+                          handleChangeStatus(courses.slug, courses.status)
+                        }
+                      >
+                        {courseStatusTitleItem?.title}
+                      </button>
+                    </HoverTooltip>
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-3">

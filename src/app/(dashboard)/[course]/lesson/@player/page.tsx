@@ -33,7 +33,7 @@ const page = async ({
   const prevLesson = lessonList?.[currentLessonIndex - 1];
   const nextLesson = lessonList?.[currentLessonIndex + 1];
 
-  const videoId = lessonDetails.video_url?.split("v=").at(-1);
+  const videoId = lessonDetails.video_url;
 
   return (
     <div className="mb-5">

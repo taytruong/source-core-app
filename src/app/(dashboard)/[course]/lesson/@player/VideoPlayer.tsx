@@ -4,6 +4,22 @@ import LessonNavigation from "../LessonNavigation";
 import useGlobalStore from "@/src/store";
 import { Button } from "@/components/ui/button";
 
+// process host url for YT
+export const getYoutubeVideoId = (url: string | undefined) => {
+  if (!url) return undefined;
+  try {
+    const parsedUrl = new URL(url);
+
+    if (parsedUrl.hostname === "youtu.be") {
+      return parsedUrl.pathname.slice(1);
+    }
+
+    return parsedUrl.searchParams.get("v");
+  } catch {
+    return undefined;
+  }
+};
+
 const VideoPlayer = ({
   videoId,
   nextLesson,
@@ -13,13 +29,17 @@ const VideoPlayer = ({
   nextLesson: string;
   prevLesson: string;
 }) => {
+  const urlVideoId = getYoutubeVideoId(videoId);
   const { expandedPlayer, setExpandedPlayer } = useGlobalStore();
   return (
     <>
       <div className="relative mb-5 aspect-video">
         <iframe
           className="w-full h-full object-fill rounded-xl"
-          src={`https://www.youtube.com/embed/${videoId}`}
+          src={`https://www.youtube.com/embed/${urlVideoId}?rel=0`}
+          allow="autoplay; encrypted-media; picture-in-picture"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
         ></iframe>
       </div>
       <div className="flex items-center justify-between mb-5">
