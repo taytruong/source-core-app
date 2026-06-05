@@ -20,6 +20,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@clerk/localizations": "^4.7.1",
     "@clerk/nextjs": "^6.0.0",
     "@hookform/resolvers": "^5.2.2",
     "@tinymce/tinymce-react": "^6.3.0",

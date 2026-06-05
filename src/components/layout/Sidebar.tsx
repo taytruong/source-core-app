@@ -11,10 +11,10 @@ import Image from "next/image";
 const Sidebar = () => {
   const { userId } = useAuth();
   return (
-    <div className="hidden p-5 border-r border-r-gray-200 bg-white lg:flex flex-col fixed top-0 left-0 bottom-0 w-75">
+    <div className="hidden p-5 border-r border-r-gray-200 bg-linear-to-r from-orange-100 to-white lg:flex flex-col fixed top-0 left-0 bottom-0 w-75">
       <a
         href="/"
-        className="font-semibold text-3xl mb-8 flex items-end text-primary"
+        className="font-semibold text-3xl mb-8 flex items-end text-primary justify-center"
       >
         <span className="mb-2">
           <Image

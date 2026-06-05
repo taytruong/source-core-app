@@ -8,12 +8,13 @@ import { commonClassNames } from "@/src/constanst";
 const CourseItem = ({
   data,
   cta,
-  url,
+  url = "",
 }: {
   data: ICourse;
   cta?: string;
-  url: string;
+  url?: string;
 }) => {
+  const courseUrl = url || `/course/${data.slug}`;
   const courseInfo = [
     {
       title: data?.views,
@@ -30,7 +31,7 @@ const CourseItem = ({
   ];
   return (
     <div className="bg-white border border-gray-200 p-3 rounded-2xl flex flex-col">
-      <Link href={url} className="block h-48 relative">
+      <Link href={courseUrl} className="block h-48 relative">
         <Image
           src={data.image}
           alt=""
@@ -58,7 +59,7 @@ const CourseItem = ({
               {data?.price?.toLocaleString()}đ
             </span>
           </div>
-          <Link href={url} className={commonClassNames.primaryButton}>
+          <Link href={courseUrl} className={commonClassNames.primaryButton}>
             {cta || "Xem chi tiết"}
           </Link>
         </div>

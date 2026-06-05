@@ -11,7 +11,7 @@ const page = async () => {
       <CourseGrid>
         {courses?.length > 0 &&
           courses?.map((item, index) => (
-            <CourseItem key={item.slug} data={item} url=""></CourseItem>
+            <CourseItem key={item.slug} data={item}></CourseItem>
           ))}
       </CourseGrid>
     </div>

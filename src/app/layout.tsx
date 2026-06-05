@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
+import { viVN } from "@clerk/localizations";
 
 export const metadata: Metadata = {
   title: "Course-app",
@@ -18,7 +19,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      localization={viVN}
+      appearance={{
+        variables: {
+          fontFamily: work__sans.style.fontFamily,
+          fontSize: "15px",
+        },
+      }}
+    >
       <html lang="en">
         <body className={`${work__sans.className}`}>
           <TooltipProvider>

@@ -134,6 +134,7 @@
   width: 100%;
 }
 
+/** popup alert */
 html body .swal2-container {
   .swal2-popup {
     @apply w-full;
@@ -153,4 +154,15 @@ html body .swal2-container {
       @apply w-37.5;
     }
   }
+}
+
+/** login / logout for clerk */
+.cl-internal-1ljmodc {
+  .cl-internal-l2l775 {
+    display: none;
+  }
+}
+
+.cl-internal-1dauvpw {
+  display: none;
 }

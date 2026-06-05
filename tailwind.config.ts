@@ -13,7 +13,7 @@ export default withUt({
         "3xl": "1600px",
       },
       colors: {
-        primary: "#E87F24",
+        primary: "#DD9E59",
       },
     },
   },
