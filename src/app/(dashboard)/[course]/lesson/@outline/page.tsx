@@ -23,7 +23,9 @@ const page = async ({
   const lectures = findCourse.lectures || [];
   const histories = await getHistory({ course: courseId });
   const lessonCount = await countLessonByCourseId({ course: courseId });
-  const completePercent = ((histories?.length || 0) / (lessonCount || 1)) * 100;
+  const completePercent = Math.floor(
+    ((histories?.length || 0) / (lessonCount || 1)) * 100,
+  );
   return (
     <div className="sticky top-5 right-0 max-h-[calc(100svh-100px)] overflow-y-auto">
       <div className="relative overflow-hidde h-3 w-full rounded-full border border-slate-200 bg-white mb-2">

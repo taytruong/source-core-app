@@ -5,4 +5,7 @@ const work__sans = Work_Sans({
   weight: ["400", "500", "700"],
 });
 
+export const createOrderCode = () =>
+  `DH-${new Date().getTime().toString().slice(-6)}`;
+
 export { work__sans };

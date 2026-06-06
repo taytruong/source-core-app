@@ -28,4 +28,17 @@ enum ELessonType {
   TEXT = "TEXT",
 }
 
-export { EUserStatus, EUserRole, ECourseStatus, ECourseLevel, ELessonType };
+enum EOrderStatus {
+  PENDING = "PENDING",
+  COMPLETE = "COMPLETE",
+  CANCEL = "CANCEL",
+}
+
+export {
+  EUserStatus,
+  EUserRole,
+  ECourseStatus,
+  ECourseLevel,
+  ELessonType,
+  EOrderStatus,
+};

@@ -34,7 +34,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -223,7 +222,7 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
                   </TableCell>
                   <TableCell>
                     <span className="font-medium text-sm lg:text-base">
-                      {courses?.price?.toLocaleString()}đ
+                      {courses?.price?.toLocaleString("en-EN")}
                     </span>
                   </TableCell>
                   <TableCell>
@@ -284,7 +283,8 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
             })}
         </TableBody>
       </Table>
-      <div className="flex justify-end gap-3 mt-5">
+      <div className="flex items-center justify-end gap-3 mt-5">
+        <span className="font-medium">Trang {page} </span>
         <button
           type="button"
           className={commonClassNames.iconPagination}

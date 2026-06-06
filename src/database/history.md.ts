@@ -1,5 +1,4 @@
 import { Document, model, models, Schema, Types } from "mongoose";
-import { ECourseLevel, ECourseStatus } from "../types/enum";
 
 export interface IHistory extends Document {
   _id: Types.ObjectId;
