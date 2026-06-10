@@ -28,7 +28,7 @@ import { ECourseStatus } from "@/src/types/enum";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import IconArrowRight from "../icons/IconArrowRight";
-import { Heading, HoverTooltip } from "../common";
+import { Heading, HoverTooltip, StatusBadge } from "../common";
 import {
   Select,
   SelectContent,
@@ -227,18 +227,12 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
                   </TableCell>
                   <TableCell>
                     <HoverTooltip label="Có thể chuyển sang 'Đã duyệt' / 'Chờ duyệt'">
-                      <button
-                        type="button"
-                        className={cn(
-                          commonClassNames.status,
-                          courseStatusTitleItem?.className,
-                        )}
+                      <StatusBadge
+                        item={courseStatusTitleItem}
                         onClick={() =>
                           handleChangeStatus(courses.slug, courses.status)
                         }
-                      >
-                        {courseStatusTitleItem?.title}
-                      </button>
+                      ></StatusBadge>
                     </HoverTooltip>
                   </TableCell>
                   <TableCell>

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import { commonClassNames, courseStatus } from "@/src/constanst";
+import { commonClassNames, courseStatus, orderStatus } from "@/src/constanst";
 import { cn } from "@/lib/utils";
 
 import Link from "next/link";
@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { debounce } from "lodash";
-import { Heading, HoverTooltip } from "@/src/components/common";
+import { Heading, HoverTooltip, StatusBadge } from "@/src/components/common";
 import {
   IconArrowLeft,
   IconDelete,
@@ -44,10 +44,17 @@ import IconArrowRight from "@/src/components/icons/IconArrowRight";
 import { IOrder } from "@/src/database/order.md";
 
 interface IOrderManageProps {
-    code: string;
-    course: {
-      title: string;
-    };
+  code: string;
+  total: number;
+  amount: number;
+  discount: number;
+  status: EOrderStatus;
+  course: {
+    title: string;
+  };
+  user: {
+    name: string;
+  };
 }
 
 const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
@@ -108,14 +115,25 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
         </TableHeader>
         <TableBody>
           {orders.length > 0 &&
-            orders.map((order) => (
-              <TableRow key={order.code}>
-                <TableCell>
-                  <strong>{order.code}</strong>
-                </TableCell>
-                <TableCell>{order.course.title}</TableCell>
-              </TableRow>
-            ))}
+            orders.map((order) => {
+              const orderStatusItem = orderStatus.find(
+                (item) => item.value === order.status,
+              );
+              return (
+                <TableRow key={order.code}>
+                  <TableCell>
+                    <strong>{order.code}</strong>
+                  </TableCell>
+                  <TableCell>{order.course.title}</TableCell>
+                  <TableCell>{order.user.name}</TableCell>
+                  <TableCell>{order.total}</TableCell>
+                  <TableCell></TableCell>
+                  <TableCell>
+                    <StatusBadge item={orderStatusItem}></StatusBadge>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
         </TableBody>
       </Table>
       <div className="flex items-center justify-end gap-3 mt-5">

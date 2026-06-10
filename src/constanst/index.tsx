@@ -7,7 +7,7 @@ import {
   IconUsers,
 } from "../components/icons";
 import { MenuItemProps } from "../types";
-import { ECourseLevel, ECourseStatus } from "../types/enum";
+import { ECourseLevel, ECourseStatus, EOrderStatus } from "../types/enum";
 
 export const menuItems: MenuItemProps[] = [
   {
@@ -143,3 +143,25 @@ export const editorOptions = (field: any, theme: any) => ({
 });
 
 export const lastLessonKey = "lastLesson"; //(localStorage)
+
+export const orderStatus: {
+  title: string;
+  value: EOrderStatus;
+  className?: string;
+}[] = [
+  {
+    title: "Đã duyệt",
+    value: EOrderStatus.COMPLETE,
+    className: "text-green-500 bg-green-500",
+  },
+  {
+    title: "Chờ duyệt",
+    value: EOrderStatus.PENDING,
+    className: "text-orange-500 bg-orange-500",
+  },
+  {
+    title: "Từ chối",
+    value: EOrderStatus.CANCEL,
+    className: "text-red-500 bg-red-500",
+  },
+];
