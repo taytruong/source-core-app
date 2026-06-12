@@ -18,3 +18,4 @@ export { default as IconCheck } from "./IconCheck";
 export { default as IconCancel } from "./IconCancel";
 export { default as IconNext } from "./IconNext";
 export { default as IconPrevious } from "./IconPrevious";
+export { default as IconTicket } from "./IconTicket";

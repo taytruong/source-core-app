@@ -4,10 +4,16 @@ import {
   IconOrder,
   IconPlay,
   IconStudy,
+  IconTicket,
   IconUsers,
 } from "../components/icons";
 import { MenuItemProps } from "../types";
-import { ECourseLevel, ECourseStatus, EOrderStatus } from "../types/enum";
+import {
+  ECouponType,
+  ECourseLevel,
+  ECourseStatus,
+  EOrderStatus,
+} from "../types/enum";
 
 export const menuItems: MenuItemProps[] = [
   {
@@ -34,6 +40,11 @@ export const menuItems: MenuItemProps[] = [
     url: "/manage/order",
     title: "Quản lý đơn hàng",
     icon: <IconOrder className="size-5" />,
+  },
+  {
+    url: "/manage/coupon",
+    title: "Quản lý mã giảm giá",
+    icon: <IconTicket className="size-5" />,
   },
   {
     url: "/manage/comment",
@@ -152,16 +163,30 @@ export const orderStatus: {
   {
     title: "Đã duyệt",
     value: EOrderStatus.COMPLETE,
-    className: "text-green-500 bg-green-500",
+    className: "text-green-500",
   },
   {
     title: "Chờ duyệt",
     value: EOrderStatus.PENDING,
-    className: "text-orange-500 bg-orange-500",
+    className: "text-orange-500",
   },
   {
-    title: "Từ chối",
+    title: "Đã hủy",
     value: EOrderStatus.CANCEL,
-    className: "text-red-500 bg-red-500",
+    className: "text-red-500",
+  },
+];
+
+export const couponTypes: {
+  title: string;
+  value: ECouponType;
+}[] = [
+  {
+    title: "Phần trăm",
+    value: ECouponType.PERCENT,
+  },
+  {
+    title: "Giá trị",
+    value: ECouponType.AMOUNT,
   },
 ];

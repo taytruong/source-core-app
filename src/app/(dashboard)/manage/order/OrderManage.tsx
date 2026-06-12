@@ -8,19 +8,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React, { useCallback, useEffect, useState } from "react";
-import Image from "next/image";
+import React from "react";
 import { commonClassNames, courseStatus, orderStatus } from "@/src/constanst";
-import { cn } from "@/lib/utils";
-
 import Link from "next/link";
-import { ICourse } from "@/src/database/course.md";
 import Swal from "sweetalert2";
-import { updateCourse } from "@/src/lib/actions/course.action";
-import { ECourseStatus, EOrderStatus } from "@/src/types/enum";
-import { toast } from "sonner";
+import { EOrderStatus } from "@/src/types/enum";
 import { Input } from "@/components/ui/input";
-
 import {
   Select,
   SelectContent,
@@ -29,21 +22,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { debounce } from "lodash";
 import { Heading, HoverTooltip, StatusBadge } from "@/src/components/common";
 import {
   IconArrowLeft,
-  IconDelete,
-  IconDocument,
-  IconEdit,
-  IconEye,
+  IconCancel,
+  IconCheck,
   IconPlus,
 } from "@/src/components/icons";
 import IconArrowRight from "@/src/components/icons/IconArrowRight";
-import { IOrder } from "@/src/database/order.md";
+import useQueryString from "@/src/hooks/useQueryString";
+import { updateOrder } from "@/src/lib/actions/order.action";
+import { toast } from "sonner";
 
 interface IOrderManageProps {
+  _id: string;
   code: string;
   total: number;
   amount: number;
@@ -58,8 +51,46 @@ interface IOrderManageProps {
 }
 
 const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
-  const handleSelectStatus = (status: EOrderStatus) => {};
+  const { createQueryString, pathname, router } = useQueryString();
 
+  const handleUpdateOrder = async ({
+    orderId,
+    status,
+  }: {
+    orderId: string;
+    status: EOrderStatus;
+  }) => {
+    if (status === EOrderStatus.CANCEL) {
+      Swal.fire({
+        title: "Bạn có muốn hủy đơn hàng không?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Thoát",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await updateOrder({ orderId, status });
+        }
+      });
+    }
+    if (status === EOrderStatus.COMPLETE) {
+      const res = await updateOrder({ orderId, status });
+      if (res?.success) {
+        toast.success("Cập nhật đơn hàng thành công");
+      }
+    }
+  };
+
+  const handleSelectStatus = (status: EOrderStatus) => {
+    router.push(`${pathname}?${createQueryString("status", status)}`);
+  };
+
+  const handleSearchOrder = debounce(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      router.push(`${pathname}?${createQueryString("search", e.target.value)}`);
+    },
+    500,
+  );
   return (
     <>
       <HoverTooltip
@@ -77,7 +108,10 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
         <Heading>Quản lý đơn hàng</Heading>
         <div className="flex gap-3">
           <div className="w-full lg:w-75">
-            <Input placeholder="Tìm kiếm đơn hàng ..." />
+            <Input
+              placeholder="Tìm kiếm đơn hàng ..."
+              onChange={(e) => handleSearchOrder(e)}
+            />
           </div>
           <Select
             onValueChange={(value) => handleSelectStatus(value as EOrderStatus)}
@@ -104,6 +138,7 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
       <Table className="table-responsive">
         <TableHeader>
           <TableRow>
+            <TableHead>STT</TableHead>
             <TableHead>Mã đơn hàng</TableHead>
             <TableHead>Khoá học</TableHead>
             <TableHead>Thành viên</TableHead>
@@ -115,21 +150,69 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
         </TableHeader>
         <TableBody>
           {orders.length > 0 &&
-            orders.map((order) => {
+            orders.map((order, index) => {
               const orderStatusItem = orderStatus.find(
                 (item) => item.value === order.status,
               );
               return (
                 <TableRow key={order.code}>
+                  <TableCell className="w-10 p-7">{index + 1}</TableCell>
                   <TableCell>
                     <strong>{order.code}</strong>
                   </TableCell>
                   <TableCell>{order.course.title}</TableCell>
                   <TableCell>{order.user.name}</TableCell>
-                  <TableCell>{order.total}</TableCell>
+                  <TableCell>
+                    <div className="flex flex-col gap-2">
+                      <span>{order.amount.toLocaleString("us-US")}</span>
+                      {order.discount > 0 && (
+                        <span>{order.discount.toLocaleString("us-US")}</span>
+                      )}
+                      <strong className={orderStatusItem?.className}>
+                        {order.total.toLocaleString("us-US")}
+                      </strong>
+                    </div>
+                  </TableCell>
                   <TableCell></TableCell>
                   <TableCell>
                     <StatusBadge item={orderStatusItem}></StatusBadge>
+                  </TableCell>
+                  <TableCell>
+                    {order.status !== EOrderStatus.CANCEL && (
+                      <div className="flex gap-3">
+                        {order.status === EOrderStatus.PENDING && (
+                          <HoverTooltip label="Duyệt đơn hàng">
+                            <button
+                              type="button"
+                              className={commonClassNames.iconSetting}
+                              onClick={() =>
+                                handleUpdateOrder({
+                                  orderId: order._id,
+                                  status: EOrderStatus.COMPLETE,
+                                })
+                              }
+                            >
+                              <IconCheck />
+                            </button>
+                          </HoverTooltip>
+                        )}
+
+                        <HoverTooltip label="Hủy đơn hàng">
+                          <button
+                            type="button"
+                            className={commonClassNames.iconSetting}
+                            onClick={() =>
+                              handleUpdateOrder({
+                                orderId: order._id,
+                                status: EOrderStatus.CANCEL,
+                              })
+                            }
+                          >
+                            <IconCancel />
+                          </button>
+                        </HoverTooltip>
+                      </div>
+                    )}
                   </TableCell>
                 </TableRow>
               );

@@ -48,7 +48,7 @@ const CourseItem = ({
       <div className="pt-4 flex flex-col flex-1">
         <h3 className="font-medium text-lg mb-3">{data?.title}</h3>
         <div className="mt-auto">
-          <div className="flex items-center gap-3 mb-5 text-xs text-gray-500 2xl:grid 2xl:grid-cols-2 2xl:mb-0">
+          <div className="xl:flex xl:items-center xl:gap-3 xl:mb-5 text-xs text-gray-500 grid grid-cols-2 mb-0">
             {courseInfo.map((item, index) => (
               <div className="flex items-center gap-2" key={index}>
                 {item.icon("size-5")}

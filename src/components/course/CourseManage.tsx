@@ -8,10 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { commonClassNames, courseStatus } from "@/src/constanst";
-import { cn } from "@/lib/utils";
 import {
   IconArrowLeft,
   IconDelete,
@@ -37,26 +36,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { debounce } from "lodash";
+import useQueryString from "@/src/hooks/useQueryString";
 
 const CourseManage = ({ courses }: { courses: ICourse[] }) => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  // Get a new searchParams string by merging the current
-  // searchParams with a provided key/value pair
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
-
-      return params.toString();
-    },
-    [searchParams],
-  );
-
+  const { createQueryString, pathname, router } = useQueryString();
   const handleDeleteCourseItem = (slug: string) => {
     Swal.fire({
       title: "Bạn có chắc chắn xóa không?",
@@ -198,7 +182,7 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
               );
               return (
                 <TableRow key={courses.slug}>
-                  <TableCell className="w-10 p-4">{index + 1}</TableCell>
+                  <TableCell className="w-10 p-7">{index + 1}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-3">
                       <Image
@@ -227,12 +211,14 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
                   </TableCell>
                   <TableCell>
                     <HoverTooltip label="Có thể chuyển sang 'Đã duyệt' / 'Chờ duyệt'">
-                      <StatusBadge
-                        item={courseStatusTitleItem}
-                        onClick={() =>
-                          handleChangeStatus(courses.slug, courses.status)
-                        }
-                      ></StatusBadge>
+                      <button>
+                        <StatusBadge
+                          item={courseStatusTitleItem}
+                          onClick={() =>
+                            handleChangeStatus(courses.slug, courses.status)
+                          }
+                        ></StatusBadge>
+                      </button>
                     </HoverTooltip>
                   </TableCell>
                   <TableCell>
