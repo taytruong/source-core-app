@@ -39,7 +39,7 @@ const formSchema = z.object({
   courses: z.array(z.string()).optional(),
   limit: z.number().optional(),
 });
-const NewCouponForm = () => {
+const UpdateCouponForm = () => {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -239,10 +239,10 @@ const NewCouponForm = () => {
         />
       </div>
       <Button variant="primary" className="w-37.5 ml-auto flex">
-        Tạo mã
+        Cập nhật
       </Button>
     </form>
   );
 };
 
-export default NewCouponForm;
+export default UpdateCouponForm;

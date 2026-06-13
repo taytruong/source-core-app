@@ -27,7 +27,7 @@ import { ECourseStatus } from "@/src/types/enum";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import IconArrowRight from "../icons/IconArrowRight";
-import { Heading, HoverTooltip, StatusBadge } from "../common";
+import { Heading, HoverTooltip, StatusBadge, TableAction } from "../common";
 import {
   Select,
   SelectContent,
@@ -38,6 +38,8 @@ import {
 } from "@/components/ui/select";
 import { debounce } from "lodash";
 import useQueryString from "@/src/hooks/useQueryString";
+import TableActionItem from "../common/TableActionItem";
+import PanigationBtn from "../common/PanigationBtn";
 
 const CourseManage = ({ courses }: { courses: ICourse[] }) => {
   const { createQueryString, pathname, router } = useQueryString();
@@ -222,64 +224,40 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
                     </HoverTooltip>
                   </TableCell>
                   <TableCell>
-                    <div className="flex gap-3">
-                      <HoverTooltip label="Cập nhật nội dụng cho người xem">
-                        <Link
-                          href={`/manage/course/update-content?slug=${courses.slug}`}
-                          className={commonClassNames.iconSetting}
-                        >
-                          <IconDocument />
-                        </Link>
-                      </HoverTooltip>
-                      <HoverTooltip label="Xem khóa học">
-                        <Link
-                          href={`/course/${courses.slug}`}
-                          target="_blank"
-                          className={commonClassNames.iconSetting}
-                        >
-                          <IconEye />
-                        </Link>
-                      </HoverTooltip>
-                      <HoverTooltip label="Cập nhật thông tin khóa học">
-                        <Link
-                          href={`/manage/course/update?slug=${courses.slug}`}
-                          className={commonClassNames.iconSetting}
-                        >
-                          <IconEdit />
-                        </Link>
-                      </HoverTooltip>
-                      <HoverTooltip label="Xóa khóa học">
-                        <button
-                          onClick={() => handleDeleteCourseItem(courses.slug)}
-                          className={commonClassNames.iconSetting}
-                        >
-                          <IconDelete />
-                        </button>
-                      </HoverTooltip>
-                    </div>
+                    <TableAction>
+                      <TableActionItem
+                        type="doc"
+                        label="Cập nhật nội dụng cho người xem"
+                        url={`/manage/course/update-content?slug=${courses.slug}`}
+                      />
+                      <TableActionItem
+                        type="view"
+                        label="Xem khóa học"
+                        url={`/course/${courses.slug}`}
+                        newTab
+                      />
+                      <TableActionItem
+                        type="edit"
+                        label="Cập nhật thông tin khóa học"
+                        url={`/manage/course/update?slug=${courses.slug}`}
+                      />
+                      <TableActionItem
+                        type="delete"
+                        label="Xóa khóa học"
+                        onClick={() => handleDeleteCourseItem(courses.slug)}
+                      />
+                    </TableAction>
                   </TableCell>
                 </TableRow>
               );
             })}
         </TableBody>
       </Table>
-      <div className="flex items-center justify-end gap-3 mt-5">
-        <span className="font-medium">Trang {page} </span>
-        <button
-          type="button"
-          className={commonClassNames.iconPagination}
-          onClick={() => handleChagePage("prev")}
-        >
-          <IconArrowLeft />
-        </button>
-        <button
-          type="button"
-          className={commonClassNames.iconPagination}
-          onClick={() => handleChagePage("next")}
-        >
-          <IconArrowRight />
-        </button>
-      </div>
+      <PanigationBtn
+        page={page}
+        onClickNext={() => handleChagePage("next")}
+        onClickPrev={() => handleChagePage("prev")}
+      ></PanigationBtn>
     </>
   );
 };

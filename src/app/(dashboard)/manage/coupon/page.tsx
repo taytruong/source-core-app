@@ -8,14 +8,26 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { fetchOrder } from "@/src/lib/actions/order.action";
-import { EOrderStatus } from "@/src/types/enum";
-import { Heading, HoverTooltip } from "@/src/components/common";
+import { ECouponType, EOrderStatus } from "@/src/types/enum";
+import {
+  Heading,
+  HoverTooltip,
+  StatusBadge,
+  TableAction,
+} from "@/src/components/common";
 import Link from "next/link";
-import { IconArrowLeft, IconPlus } from "@/src/components/icons";
+import {
+  IconArrowLeft,
+  IconDelete,
+  IconEdit,
+  IconPlus,
+} from "@/src/components/icons";
 import { Input } from "@/components/ui/input";
 
 import { commonClassNames } from "@/src/constanst";
 import IconArrowRight from "@/src/components/icons/IconArrowRight";
+import { getCoupons } from "@/src/lib/actions/coupon.action";
+import TableActionItem from "@/src/components/common/TableActionItem";
 
 const page = async ({
   searchParams,
@@ -32,6 +44,7 @@ const page = async ({
     search: searchParams.search || "",
     status: searchParams.status,
   });
+  const coupons = await getCoupons({});
   return (
     <>
       <HoverTooltip
@@ -65,7 +78,61 @@ const page = async ({
             <TableHead>Hành động</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody></TableBody>
+        <TableBody>
+          {coupons &&
+            coupons.length > 0 &&
+            coupons.map((item, index) => (
+              <TableRow key={item.code}>
+                <TableCell className="w-10 p-7">{index + 1}</TableCell>
+                <TableCell>
+                  <strong>{item.code}</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>{item.title}</strong>
+                </TableCell>
+                <TableCell>
+                  {item.type === ECouponType.AMOUNT ? (
+                    <>{item.value.toLocaleString("us-US")}</>
+                  ) : (
+                    <>{item.value}%</>
+                  )}
+                </TableCell>
+                <TableCell>
+                  {item.used} / {item.limit}
+                </TableCell>
+                <TableCell>
+                  {item.active ? (
+                    <StatusBadge
+                      item={{
+                        title: "Đang hoạt động",
+                        className: "text-green-500",
+                      }}
+                    ></StatusBadge>
+                  ) : (
+                    <StatusBadge
+                      item={{
+                        title: "Chưa kích hoạt",
+                        className: "text-orange-500",
+                      }}
+                    ></StatusBadge>
+                  )}
+                </TableCell>
+                <TableCell>
+                  <TableAction>
+                    <TableActionItem
+                      type="edit"
+                      label="Cập nhật thông tin khóa học"
+                      url={`/manage/coupon/update?code=${item.code}`}
+                    ></TableActionItem>
+                    <TableActionItem
+                      type="delete"
+                      label="Xóa khóa học"
+                    ></TableActionItem>
+                  </TableAction>
+                </TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
       </Table>
       <div className="flex items-center justify-end gap-3 mt-5">
         <button type="button" className={commonClassNames.iconPagination}>
