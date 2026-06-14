@@ -32,7 +32,7 @@ export async function getAllCourse(
       .skip(skip)
       .limit(limit)
       .sort({ create_at: -1 });
-    return courses;
+    return JSON.parse(JSON.stringify(courses));
   } catch (error) {
     console.log("🚀 ~ getAllCourse ~ error:", error);
   }

@@ -15,13 +15,16 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { useState } from "react";
+import React, { useState } from "react";
 import { ECouponType } from "@/src/types/enum";
 import { couponTypes } from "@/src/constanst";
 import { format } from "date-fns";
 import { createCoupon } from "@/src/lib/actions/coupon.action";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
+import { debounce } from "lodash";
+import { getAllCourse } from "@/src/lib/actions/course.action";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
   title: z
@@ -42,6 +45,7 @@ const formSchema = z.object({
 const NewCouponForm = () => {
   const [startDate, setStartDate] = useState<Date>();
   const [endDate, setEndDate] = useState<Date>();
+  const [findCourse, setFindCourse] = useState<any[] | undefined>([]);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -61,6 +65,15 @@ const NewCouponForm = () => {
     }
   }
   const couponTypeWatch = form.watch("type");
+
+  const handleSearchCourse = debounce(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      const courseList = await getAllCourse({ search: value });
+      setFindCourse(courseList);
+    },
+    500,
+  );
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
@@ -232,7 +245,18 @@ const NewCouponForm = () => {
           render={({ field, fieldState }) => (
             <Field>
               <FieldLabel>Khóa học</FieldLabel>
-              <Input placeholder="Tìm kiếm khóa học ..." />
+              <Input
+                placeholder="Tìm kiếm khóa học ..."
+                onChange={handleSearchCourse}
+              />
+              <div className="flex flex-col gap-2 mt-5">
+                {findCourse?.map((course) => (
+                  <div key={course.title} className="flex items-center gap-2">
+                    <Checkbox />
+                    <div>{course.title}</div>
+                  </div>
+                ))}
+              </div>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}

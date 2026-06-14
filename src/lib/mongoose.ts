@@ -1,25 +1,28 @@
-"use server";
-
 import mongoose from "mongoose";
+import dns from "dns";
 
-// singelton connection :  check đã connect chưa ? nếu có MONGODB_URL is already connected
-let isConnected: boolean = false;
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
+
 export const connectToDatabase = async () => {
   if (!process.env.MONGODB_URL) {
     throw new Error("MONGODB_URL is not set");
   }
-  if (isConnected) {
-    // console.log("MONGODB_URL is already connected");
+
+  // 👇 cách chuẩn của mongoose
+  if (mongoose.connection.readyState >= 1) {
     return;
   }
 
-  // nếu chưa connect thì chạy try/catch để connect đến DB
   try {
+    console.log("Connecting...");
+
     await mongoose.connect(process.env.MONGODB_URL, {
       dbName: "course_apps",
     });
-    isConnected = true;
+
+    console.log("✅ Connected");
   } catch (error) {
-    console.log("Error while connecting to database");
+    console.error("❌ Error while connecting to database", error);
+    throw error; // 👈 rất quan trọng
   }
 };
