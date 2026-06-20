@@ -1,7 +1,11 @@
 import PageNotFound from "@/src/app/not-found";
 import { IconChecked } from "@/src/components/icons";
 import { courseLevelTitle } from "@/src/constanst";
-import { getCourseBySlug } from "@/src/lib/actions/course.action";
+import {
+  getCourseBySlug,
+  getCourseLessonsInfo,
+  updateCourseView,
+} from "@/src/lib/actions/course.action";
 import { ECourseStatus } from "@/src/types/enum";
 import Image from "next/image";
 import {
@@ -15,6 +19,7 @@ import { auth } from "@clerk/nextjs/server";
 import { getUserInfo } from "@/src/lib/actions/user.actions";
 import CourseWidget from "./CourseWidget";
 import AlreadyEnroll from "./AlreadyEnroll";
+import { formatMinutesToHour } from "@/src/utils";
 
 const page = async ({
   params,
@@ -23,6 +28,7 @@ const page = async ({
     slug: string;
   };
 }) => {
+  await updateCourseView({ slug: params.slug });
   const data = await getCourseBySlug({
     slug: params.slug,
   });
@@ -36,7 +42,9 @@ const page = async ({
   const videoId = data.intro_url?.split("v=")[1];
   const lectures = data.lectures || [];
 
-  const handleBuyCourse = () => {};
+  const { duration, lessons }: any = await getCourseLessonsInfo({
+    slug: data.slug,
+  });
 
   return (
     <div className="grid lg:grid-cols-[2fr_1fr] gap-10 min-h-screen">
@@ -68,10 +76,12 @@ const page = async ({
         </BoxSection>
         <BoxSection title="Thông tin">
           <div className="grid grid-cols-4 gap-5 mb-10">
-            <BoxInfo title="Bài học">100</BoxInfo>
+            <BoxInfo title="Bài học">{lessons}</BoxInfo>
             <BoxInfo title="Lượt xem">{data.views.toLocaleString()}</BoxInfo>
             <BoxInfo title="Trình độ">{courseLevelTitle[data.level]}</BoxInfo>
-            <BoxInfo title="Thời lượng">100</BoxInfo>
+            <BoxInfo title="Thời lượng">
+              {formatMinutesToHour(duration)}
+            </BoxInfo>
           </div>
         </BoxSection>
         <BoxSection title="Nội dung khóa học">
@@ -117,6 +127,7 @@ const page = async ({
           <CourseWidget
             findUser={findUser ? JSON.parse(JSON.stringify(findUser)) : null}
             data={data ? JSON.parse(JSON.stringify(data)) : null}
+            duration={formatMinutesToHour(duration)}
           ></CourseWidget>
         )}
       </div>

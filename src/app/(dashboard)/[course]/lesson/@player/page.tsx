@@ -4,6 +4,8 @@ import { getCourseBySlug } from "@/src/lib/actions/course.action";
 import { findAllLessons } from "@/src/lib/actions/lesson.action";
 import { Heading } from "@/src/components/common";
 import VideoPlayer from "./VideoPlayer";
+import { auth } from "@clerk/nextjs/server";
+import { getUserInfo } from "@/src/lib/actions/user.actions";
 
 const page = async ({
   params,
@@ -16,6 +18,8 @@ const page = async ({
     slug: string;
   };
 }) => {
+  const { userId } = await auth();
+  const findUser = await getUserInfo({ userId: userId! });
   const course = params.course;
   const slug = searchParams.slug;
   const findCourse = await getCourseBySlug({ slug: course });
@@ -49,6 +53,10 @@ const page = async ({
         prevLesson={
           !prevLesson ? "" : `/${course}/lesson?slug=${prevLesson?.slug}`
         }
+        data={{
+          userId: findUser?._id.toString() || "",
+          courseId,
+        }}
       />
 
       <Heading className="mb-5 font-semibold">{lessonDetails.title}</Heading>

@@ -18,11 +18,7 @@ const page = async ({
     search: searchParams.search || "",
     status: searchParams.status,
   });
-  return (
-    <OrderManage
-      orders={orders ? JSON.parse(JSON.stringify(orders)) : []}
-    ></OrderManage>
-  );
+  return <OrderManage orders={orders}></OrderManage>;
 };
 
 export default page;

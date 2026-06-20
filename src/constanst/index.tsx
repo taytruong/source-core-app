@@ -1,3 +1,4 @@
+import z from "zod";
 import {
   IconComment,
   IconExplore,
@@ -7,7 +8,7 @@ import {
   IconTicket,
   IconUsers,
 } from "../components/icons";
-import { MenuItemProps } from "../types";
+import { MenuItemProps, TRatingIcon } from "../types";
 import {
   ECouponType,
   ECourseLevel,
@@ -188,5 +189,48 @@ export const couponTypes: {
   {
     title: "Giá trị",
     value: ECouponType.AMOUNT,
+  },
+];
+
+export const couponFormSchema = z.object({
+  title: z
+    .string({ message: "Tiêu đề không được để trống" })
+    .min(3, "Tiêu đề phải có ít nhất 3 ký tự"),
+  code: z
+    .string({ message: "Mã giảm giá không được để trống" })
+    .min(3, "Mã giảm giá phải có ít nhất 3 ký tự")
+    .max(10, "Mã giảm giá không được quá 10 ký tự"),
+  start_date: z.string().optional(),
+  end_date: z.string().optional(),
+  active: z.boolean().optional(),
+  value: z.string().optional(),
+  type: z.enum([ECouponType.PERCENT, ECouponType.AMOUNT]),
+  courses: z.array(z.string()).optional(),
+  limit: z.number().optional(),
+});
+
+export const ratingList: {
+  title: TRatingIcon;
+  value: number;
+}[] = [
+  {
+    title: "awesome",
+    value: 5,
+  },
+  {
+    title: "good",
+    value: 4,
+  },
+  {
+    title: "meh",
+    value: 3,
+  },
+  {
+    title: "bad",
+    value: 2,
+  },
+  {
+    title: "terrible",
+    value: 1,
   },
 ];

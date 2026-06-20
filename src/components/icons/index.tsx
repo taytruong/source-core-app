@@ -19,3 +19,4 @@ export { default as IconCancel } from "./IconCancel";
 export { default as IconNext } from "./IconNext";
 export { default as IconPrevious } from "./IconPrevious";
 export { default as IconTicket } from "./IconTicket";
+export { default as IconClose } from "./IconClose";

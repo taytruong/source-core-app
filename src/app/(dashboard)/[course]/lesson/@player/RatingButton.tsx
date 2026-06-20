@@ -1,0 +1,118 @@
+"use client";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { IconStar } from "@/src/components/icons";
+import { ratingList } from "@/src/constanst";
+import Image from "next/image";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import {
+  createRating,
+  getRatingByUserId,
+} from "@/src/lib/actions/rating.action";
+import { toast } from "sonner";
+
+const RatingButton = ({
+  courseId,
+  userId,
+}: {
+  courseId: string;
+  userId: string;
+}) => {
+  const [ratingValute, setRatingValute] = useState(-1);
+  const [ratingContent, setRatingContent] = useState("");
+  const [isAlreadyRating, setIsAlreadyRating] = useState(false);
+
+  useLayoutEffect(() => {
+    async function checkRating() {
+      const res = await getRatingByUserId(userId);
+      setIsAlreadyRating(res || false);
+    }
+    checkRating();
+  }, []);
+
+  const handleRatingCoursee = async () => {
+    try {
+      const res = await createRating({
+        rate: ratingValute,
+        content: ratingContent,
+        user: userId,
+        course: courseId,
+      });
+      if (res) {
+        toast.success("Đánh giá thành công");
+      }
+    } catch (error) {}
+  };
+
+  if (isAlreadyRating) return null;
+
+  return (
+    <Dialog>
+      <DialogTrigger
+        className="flex items-center gap-3 rounded-lg bg-primary text-sm font-medium px-5 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={isAlreadyRating}
+      >
+        <IconStar />
+        <span>Đánh giá khóa học</span>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="mb-5 text-xl tracking-tight font font-medium">
+            Đánh giá
+          </DialogTitle>
+          <DialogDescription>
+            <div className="flex justify-between gap-5 mb-5">
+              {ratingList.map((rating) => (
+                <button
+                  key={rating.title}
+                  className="flex flex-col gap-3 text-center text-xs items-center"
+                  type="button"
+                  onClick={() => setRatingValute(rating.value)}
+                >
+                  <span
+                    className={cn(
+                      "flexCenter size-10 rounded-full bg-gray-200",
+                      ratingValute === rating.value && "bg-primary",
+                    )}
+                  >
+                    <Image
+                      width={20}
+                      height={20}
+                      alt={rating.title}
+                      src={`/rating/${rating.title}.png`}
+                      className="transition-transform duration-300 hover:scale-[2.1]"
+                    />
+                  </span>
+                  <span className="capitalize">{rating.title}</span>
+                </button>
+              ))}
+            </div>
+            <Textarea
+              placeholder="Đánh giá của bạn"
+              className="h-50 resize-none"
+              onChange={(e) => setRatingContent(e.target.value)}
+            />
+            <Button
+              variant="primary"
+              className="w-full mt-5"
+              onClick={handleRatingCoursee}
+            >
+              Gửi đánh giá
+            </Button>
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default RatingButton;

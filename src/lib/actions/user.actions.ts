@@ -6,6 +6,8 @@ import { TCreateUserParams } from "@/src/types";
 import { auth } from "@clerk/nextjs/server";
 import Course, { ICourse } from "@/src/database/course.md";
 import { ECourseStatus } from "@/src/types/enum";
+import Lecture from "@/src/database/lecture.md";
+import Lesson from "@/src/database/lesson.md";
 
 export async function createUser(
   params: TCreateUserParams,
@@ -43,6 +45,16 @@ export async function getUserCourses(): Promise<ICourse[] | undefined | null> {
       model: Course,
       match: {
         status: ECourseStatus.APPROVED,
+      },
+      populate: {
+        path: "lectures",
+        model: Lecture,
+        select: "lessons",
+        populate: {
+          path: "lessons",
+          model: Lesson,
+          select: "slug",
+        },
       },
     });
     if (!findUser) return null;

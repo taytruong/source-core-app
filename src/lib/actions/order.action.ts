@@ -7,6 +7,7 @@ import User from "@/src/database/user.modal";
 import { QueryFilter } from "mongoose";
 import { EOrderStatus } from "@/src/types/enum";
 import { revalidatePath } from "next/cache";
+import Coupon from "@/src/database/coupon.md";
 
 export async function fetchOrder(params: any) {
   try {
@@ -31,9 +32,14 @@ export async function fetchOrder(params: any) {
         model: User,
         select: "name",
       })
+      .populate({
+        path: "coupon",
+        select: "code",
+      })
+      .sort({ create_at: -1 })
       .skip(skip)
       .limit(limit);
-    return orders;
+    return JSON.parse(JSON.stringify(orders));
   } catch (error) {
     console.log("🚀 ~ fetchOrder ~ error:", error);
   }
@@ -43,6 +49,12 @@ export async function createOrder(params: TCreateOrderParams) {
   try {
     connectToDatabase();
     const newOrder = await Order.create(params);
+    // used apply coupon
+    if (params.coupon) {
+      await Coupon.findByIdAndUpdate(params.coupon, {
+        $inc: { used: 1 },
+      });
+    }
     return JSON.parse(JSON.stringify(newOrder));
   } catch (error) {
     console.log("🚀 ~ createOrder ~ error:", error);

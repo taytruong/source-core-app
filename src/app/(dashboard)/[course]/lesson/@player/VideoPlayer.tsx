@@ -3,6 +3,7 @@ import React from "react";
 import LessonNavigation from "../LessonNavigation";
 import useGlobalStore from "@/src/store";
 import { Button } from "@/components/ui/button";
+import RatingButton from "./RatingButton";
 
 // process host url for YT
 export const getYoutubeVideoId = (url: string | undefined) => {
@@ -24,10 +25,15 @@ const VideoPlayer = ({
   videoId,
   nextLesson,
   prevLesson,
+  data,
 }: {
   videoId: string | undefined;
   nextLesson: string;
   prevLesson: string;
+  data: {
+    courseId: string;
+    userId: string;
+  };
 }) => {
   const urlVideoId = getYoutubeVideoId(videoId);
   const { expandedPlayer, setExpandedPlayer } = useGlobalStore();
@@ -44,9 +50,15 @@ const VideoPlayer = ({
       </div>
       <div className="flex items-center justify-between mb-5">
         <LessonNavigation nextLesson={nextLesson} prevLesson={prevLesson} />
-        <Button onClick={() => setExpandedPlayer(!expandedPlayer)}>
-          {expandedPlayer ? "Mặc định" : "Chế độ rạp chiếu"}
-        </Button>
+        <div className="flex gap-5">
+          <RatingButton
+            courseId={data.courseId}
+            userId={data.userId}
+          ></RatingButton>
+          <Button onClick={() => setExpandedPlayer(!expandedPlayer)}>
+            {expandedPlayer ? "Mặc định" : "Chế độ rạp chiếu"}
+          </Button>
+        </div>
       </div>
     </>
   );

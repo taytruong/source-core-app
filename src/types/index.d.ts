@@ -1,6 +1,8 @@
 import { TUpdateCourseParams } from "./index.d";
 import { ICourse } from "../database/course.md";
 import { ILesson } from "../database/lesson.md";
+import { ICoupon } from "../database/coupon.md";
+import { ECouponType } from "./enum";
 
 export type LinkActiveProps = {
   url: string;
@@ -47,6 +49,7 @@ export type TGetAllCourseParams = {
   status?: string;
 };
 
+//Omit ko lấy lectures từ ICourse
 export interface TCourseUpdateParams extends Omit<ICourse, "lectures"> {
   lectures: TUpdateCourseLecture[];
 }
@@ -105,4 +108,44 @@ export type TCreateOrderParams = {
   amount?: number;
   discount?: number;
   coupon?: string;
+};
+
+export type TCreateCouponParams = {
+  title: string;
+  code: string;
+  type: ECouponType;
+  value?: numner;
+  start_date?: Date;
+  end_date?: Date;
+  active?: boolean;
+  limit?: number;
+  courses?: string[];
+};
+
+export type TUpdateCouponParams = {
+  _id: string;
+  updateData: Partial<TCreateCouponParams>;
+};
+
+export type TCouponParams = Omit<ICoupon, "courses"> & {
+  courses: {
+    _id: string;
+    title: string;
+  }[];
+};
+
+export interface StudyCourseProps extends Omit<ICourse, "lectures"> {
+  lectures: {
+    lessons: {
+      slug: string;
+    }[];
+  }[];
+}
+
+export type TRatingIcon = "awesome" | "good" | "meh" | "bad" | "terrible";
+export type TCreateRatingParams = {
+  rate: number;
+  content: string;
+  user: string;
+  course: string;
 };

@@ -15,51 +15,95 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ECouponType } from "@/src/types/enum";
-import { couponTypes } from "@/src/constanst";
+import { couponFormSchema, couponTypes } from "@/src/constanst";
 import { format } from "date-fns";
-import { createCoupon } from "@/src/lib/actions/coupon.action";
+import { updateCoupon } from "@/src/lib/actions/coupon.action";
 import { toast } from "sonner";
-import { redirect } from "next/navigation";
+import InputFormatCurrency from "@/components/ui/input-format";
+import { TCouponParams } from "@/src/types";
+import { debounce } from "lodash";
+import { getAllCourse } from "@/src/lib/actions/course.action";
+import { Checkbox } from "@/components/ui/checkbox";
+import { IconCancel } from "@/src/components/icons";
 
-const formSchema = z.object({
-  title: z
-    .string({ message: "Tiêu đề không được để trống" })
-    .min(3, "Tiêu đề phải có ít nhất 3 ký tự"),
-  code: z
-    .string({ message: "Mã giảm giá không được để trống" })
-    .min(3, "Mã giảm giá phải có ít nhất 3 ký tự")
-    .max(10, "Mã giảm giá không được quá 10 ký tự"),
-  startDate: z.string().optional(),
-  endDate: z.string().optional(),
-  active: z.boolean().optional(),
-  value: z.number().optional(),
-  type: z.string().optional(),
-  courses: z.array(z.string()).optional(),
-  limit: z.number().optional(),
-});
-const UpdateCouponForm = () => {
-  const [startDate, setStartDate] = useState<Date>();
-  const [endDate, setEndDate] = useState<Date>();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
+  const [findCourse, setFindCourse] = useState<any[] | undefined>([]);
+  const [selectedCourses, setSelectedCourses] = useState<any[]>([]);
+  const [startDate, setStartDate] = useState<Date>(
+    data.start_date || new Date(),
+  );
+  const [endDate, setEndDate] = useState<Date>(data.end_date || new Date());
+  const form = useForm<z.infer<typeof couponFormSchema>>({
+    resolver: zodResolver(couponFormSchema),
     defaultValues: {
-      title: "",
+      title: data.title,
+      code: data.code,
+      active: data.active,
+      value: data.value.toString(),
+      limit: data.limit,
+      type: data.type,
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  useEffect(() => {
+    if (data.courses) {
+      setSelectedCourses(data.courses);
+    }
+  }, [data.courses]);
+
+  async function onSubmit(values: z.infer<typeof couponFormSchema>) {
     try {
-      const newCoupon = await createCoupon(values);
-      if (newCoupon.code) {
-        toast.success("Tạo mã giảm giá thành công");
-        redirect("/manage/coupon");
+      const couponType = values.type;
+      const couponValue = Number(values.value?.replace(/,/g, ""));
+      if (
+        couponType === ECouponType.PERCENT &&
+        couponValue &&
+        (couponValue > 100 || couponValue < 0)
+      ) {
+        form.setError("value", {
+          message: "Giá trị không hợp lệ",
+        });
+        return;
+      }
+      const updatedCoupon = await updateCoupon({
+        _id: data._id.toString(),
+        updateData: {
+          ...values,
+          value: couponValue,
+          start_date: startDate,
+          end_date: endDate,
+          courses: selectedCourses,
+        },
+      });
+      if (updatedCoupon.code) {
+        toast.success("Cập nhật mã (coupon) giảm giá thành công");
       }
     } catch (error) {
       console.log("🚀 ~ onSubmit ~ error:", error);
     }
   }
+  const handleSearchCourse = debounce(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      const courseList = await getAllCourse({ search: value });
+      setFindCourse(courseList);
+      if (!value) setFindCourse([]);
+    },
+    500,
+  );
+
+  const handleSelectCourse = (checked: boolean | string, course: any) => {
+    if (checked) {
+      setSelectedCourses((prev) => [...prev, course]);
+    } else {
+      setSelectedCourses((prev) =>
+        prev.filter((selectedCourse) => selectedCourse._id !== course._id),
+      );
+    }
+  };
+
   const couponTypeWatch = form.watch("type");
 
   return (
@@ -85,7 +129,9 @@ const UpdateCouponForm = () => {
               <Input
                 placeholder="Mã giảm giá"
                 {...field}
+                className="font-semibold uppercase"
                 onChange={(e) => field.onChange(e.target.value.toUpperCase())}
+                disabled
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -93,7 +139,7 @@ const UpdateCouponForm = () => {
         />
         <Controller
           control={form.control}
-          name="startDate"
+          name="start_date"
           render={({ field, fieldState }) => (
             <Field>
               <FieldLabel>Ngày bắt đầu</FieldLabel>
@@ -104,7 +150,7 @@ const UpdateCouponForm = () => {
                     {startDate ? (
                       format(startDate, "dd/MM/yyyy")
                     ) : (
-                      <span>Pick a date</span>
+                      <span>Chọn ngày bắt đầu</span>
                     )}
                   </Button>
                 </PopoverTrigger>
@@ -115,7 +161,7 @@ const UpdateCouponForm = () => {
                   <Calendar
                     mode="single"
                     selected={startDate}
-                    onSelect={setStartDate}
+                    onSelect={setStartDate as any}
                   />
                 </PopoverContent>
               </Popover>
@@ -125,10 +171,10 @@ const UpdateCouponForm = () => {
         />
         <Controller
           control={form.control}
-          name="endDate"
+          name="end_date"
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel>Ngày kết thúc</FieldLabel>
+              <FieldLabel>Chọn ngày kết thúc</FieldLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button variant={"outline"} className="w-full">
@@ -147,7 +193,7 @@ const UpdateCouponForm = () => {
                   <Calendar
                     mode="single"
                     selected={endDate}
-                    onSelect={setEndDate}
+                    onSelect={setEndDate as any}
                   />
                 </PopoverContent>
               </Popover>
@@ -162,8 +208,8 @@ const UpdateCouponForm = () => {
             <Field>
               <FieldLabel>Loại coupon</FieldLabel>
               <RadioGroup
-                defaultValue={ECouponType.PERCENT}
-                className="flex gap-5"
+                value={field.value}
+                className="flex gap-5 h-12"
                 onValueChange={field.onChange}
               >
                 {couponTypes.map((type) => (
@@ -180,18 +226,31 @@ const UpdateCouponForm = () => {
         <Controller
           control={form.control}
           name="value"
-          render={({ field, fieldState }) => (
-            <Field>
-              <FieldLabel>Giá trị</FieldLabel>
-              <Input
-                type="number"
-                placeholder="20%"
-                {...field}
-                onChange={(e) => field.onChange(e.target.valueAsNumber)}
-              />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </Field>
-          )}
+          render={({ field, fieldState }) => {
+            return (
+              <Field>
+                <FieldLabel>Giá trị</FieldLabel>
+                <>
+                  {couponTypeWatch === ECouponType.PERCENT ? (
+                    <Input
+                      placeholder="100"
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    />
+                  ) : (
+                    <InputFormatCurrency
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      placeholder="100"
+                    />
+                  )}
+                </>
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            );
+          }}
         />
         <Controller
           control={form.control}
@@ -199,7 +258,7 @@ const UpdateCouponForm = () => {
           render={({ field, fieldState }) => (
             <Field>
               <FieldLabel>Trạng thái</FieldLabel>
-              <div>
+              <div className="flex flex-col justify-center h-12">
                 <Switch
                   checked={field.value}
                   onCheckedChange={field.onChange}
@@ -218,7 +277,7 @@ const UpdateCouponForm = () => {
               <FieldLabel>Số lượng tối đa</FieldLabel>
               <Input
                 type="number"
-                placeholder="25"
+                placeholder="100"
                 {...field}
                 onChange={(e) => field.onChange(e.target.valueAsNumber)}
               />
@@ -232,7 +291,51 @@ const UpdateCouponForm = () => {
           render={({ field, fieldState }) => (
             <Field>
               <FieldLabel>Khóa học</FieldLabel>
-              <Input placeholder="Tìm kiếm khóa học ..." />
+              <Input
+                placeholder="Tìm kiếm khóa học ..."
+                onChange={handleSearchCourse}
+              />
+              {findCourse && findCourse.length > 0 && (
+                <div className="flex flex-col gap-2 mt-5!">
+                  {findCourse?.map((course) => (
+                    <Label
+                      key={course.title}
+                      className="flex items-center gap-2 font-medium text-sm cursor-pointer"
+                      htmlFor={course.title}
+                    >
+                      <Checkbox
+                        id={course.title}
+                        className="shirk-0 size-3.5 text-slate-400"
+                        onCheckedChange={(checked) =>
+                          handleSelectCourse(checked, course)
+                        }
+                        checked={selectedCourses.some(
+                          (el) => el._id === course._id,
+                        )}
+                      />
+                      <span>{course.title}</span>
+                    </Label>
+                  ))}
+                </div>
+              )}
+              {selectedCourses.length > 0 && (
+                <div className="flex items-start flex-wrap gap-2 mt-5!">
+                  {selectedCourses?.map((course) => (
+                    <div
+                      key={course.title}
+                      className="inline-flex items-center gap-2 font-medium text-sm px-3 py-1 rounded-lg border border-slate-400 bg-white"
+                    >
+                      <span>{course.title}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleSelectCourse(false, course)}
+                      >
+                        <IconCancel className="size-5 text-gray-400 hover:text-gray-600" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}

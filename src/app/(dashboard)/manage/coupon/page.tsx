@@ -16,18 +16,14 @@ import {
   TableAction,
 } from "@/src/components/common";
 import Link from "next/link";
-import {
-  IconArrowLeft,
-  IconDelete,
-  IconEdit,
-  IconPlus,
-} from "@/src/components/icons";
+import { IconArrowLeft, IconPlus } from "@/src/components/icons";
 import { Input } from "@/components/ui/input";
 
 import { commonClassNames } from "@/src/constanst";
 import IconArrowRight from "@/src/components/icons/IconArrowRight";
 import { getCoupons } from "@/src/lib/actions/coupon.action";
 import TableActionItem from "@/src/components/common/TableActionItem";
+import ActionDeleteCoupon from "./ActionDeleteCoupon";
 
 const page = async ({
   searchParams,
@@ -45,6 +41,7 @@ const page = async ({
     status: searchParams.status,
   });
   const coupons = await getCoupons({});
+
   return (
     <>
       <HoverTooltip
@@ -124,10 +121,7 @@ const page = async ({
                       label="Cập nhật thông tin khóa học"
                       url={`/manage/coupon/update?code=${item.code}`}
                     ></TableActionItem>
-                    <TableActionItem
-                      type="delete"
-                      label="Xóa khóa học"
-                    ></TableActionItem>
+                    <ActionDeleteCoupon code={item.code}></ActionDeleteCoupon>
                   </TableAction>
                 </TableCell>
               </TableRow>
