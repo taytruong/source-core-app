@@ -10,7 +10,7 @@ const page = async () => {
       <Heading>Khám phá</Heading>
       <CourseGrid>
         {courses?.length > 0 &&
-          courses?.map((item, index) => (
+          courses?.map((item) => (
             <CourseItem key={item.slug} data={item}></CourseItem>
           ))}
       </CourseGrid>

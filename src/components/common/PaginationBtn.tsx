@@ -3,12 +3,12 @@ import { IconArrowLeft } from "../icons";
 import IconArrowRight from "../icons/IconArrowRight";
 import { commonClassNames } from "@/src/constanst";
 
-const PanigationBtn = ({
+const PaginationBtn = ({
   page,
   onClickPrev,
   onClickNext,
 }: {
-  page: number;
+  page?: number;
   onClickPrev?: () => void;
   onClickNext?: () => void;
 }) => {
@@ -34,4 +34,4 @@ const PanigationBtn = ({
   );
 };
 
-export default PanigationBtn;
+export default PaginationBtn;

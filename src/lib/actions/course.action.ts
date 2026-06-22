@@ -1,7 +1,9 @@
 "use server";
 import {
+  StudyCourseProps,
   TCourseUpdateParams,
   TCreateCourseParams,
+  TFilterData,
   TGetAllCourseParams,
   TUpdateCourseParams,
 } from "@/src/types";
@@ -11,10 +13,11 @@ import Course, { ICourse } from "@/src/database/course.md";
 import { revalidatePath } from "next/cache";
 import Lecture from "@/src/database/lecture.md";
 import Lesson from "@/src/database/lesson.md";
-import { ECourseStatus } from "@/src/types/enum";
+import { ECourseStatus, ERatingStatus } from "@/src/types/enum";
+import Rating from "@/src/database/rating.md";
 
 export async function getAllCourse(
-  params: TGetAllCourseParams,
+  params: TFilterData,
 ): Promise<ICourse[] | undefined> {
   try {
     connectToDatabase();
@@ -40,7 +43,7 @@ export async function getAllCourse(
 
 export async function getAllCoursePublic(
   params: TGetAllCourseParams,
-): Promise<ICourse[] | undefined> {
+): Promise<StudyCourseProps[] | undefined> {
   try {
     connectToDatabase();
     const { page = 1, limit = 10, search } = params;
@@ -55,7 +58,7 @@ export async function getAllCoursePublic(
       .skip(skip)
       .limit(limit)
       .sort({ create_at: -1 });
-    return courses;
+    return JSON.parse(JSON.stringify(courses));
   } catch (error) {
     console.log("🚀 ~ getAllCourse ~ error:", error);
   }
@@ -70,23 +73,31 @@ export async function getCourseBySlug({
     connectToDatabase();
 
     //populate("lectures") when using ref: "Lecture" in course.md.ts
-    const findCourse = await Course.findOne({ slug }).populate({
-      path: "lectures",
-      model: Lecture,
-      select: "_id title", // select để lấy ra trong lectures
-      match: {
-        _destroy: false,
-      },
-
-      // select để lấy ra trong Lesson của lectures
-      populate: {
-        path: "lessons",
-        model: Lesson,
+    const findCourse = await Course.findOne({ slug })
+      .populate({
+        path: "lectures",
+        model: Lecture,
+        select: "_id title", // select để lấy ra trong lectures
         match: {
           _destroy: false,
         },
-      },
-    });
+
+        // select để lấy ra trong Lesson của lectures
+        populate: {
+          path: "lessons",
+          model: Lesson,
+          match: {
+            _destroy: false,
+          },
+        },
+      })
+      .populate({
+        path: "rating",
+        model: Rating,
+        match: {
+          status: ERatingStatus.ACTIVE,
+        },
+      });
     return findCourse;
   } catch (error) {
     console.log("🚀 ~ getCourseBySlug ~ error:", error);
@@ -161,7 +172,7 @@ export async function getCourseLessonsInfo({ slug }: { slug: string }): Promise<
       });
     const lessons = course?.lectures.map((l: any) => l.lessons).flat();
     const duration = lessons.reduce(
-      (acc: number, cur: any) => acc + cur.duration,
+      (acc: number, cur: any) => acc + (cur?.duration || 0),
       0,
     );
     return { duration, lessons: lessons.length };

@@ -1,6 +1,6 @@
-import React, { ComponentProps } from "react";
+import React from "react";
 
-const IconArrowLeft = () => {
+const IconDoubleArrowLeft = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,10 +13,10 @@ const IconArrowLeft = () => {
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        d="M15.75 19.5L8.25 12l7.5-7.5"
+        d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5"
       />
     </svg>
   );
 };
 
-export default IconArrowLeft;
+export default IconDoubleArrowLeft;

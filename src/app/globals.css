@@ -12,6 +12,9 @@
     -webkit-appearance: none;
     margin: 0;
   }
+  button:disabled {
+    @apply cursor-not-allowed;
+  }
 }
 
 @layer components {

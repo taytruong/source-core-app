@@ -1,6 +1,6 @@
 import PageNotFound from "@/src/app/not-found";
 import { IconChecked } from "@/src/components/icons";
-import { courseLevelTitle } from "@/src/constanst";
+import { courseLevelTitle, ratingList } from "@/src/constanst";
 import {
   getCourseBySlug,
   getCourseLessonsInfo,
@@ -46,6 +46,8 @@ const page = async ({
     slug: data.slug,
   });
 
+  const ratings = data.rating.map((r: any) => r.content);
+
   return (
     <div className="grid lg:grid-cols-[2fr_1fr] gap-10 min-h-screen">
       <div>
@@ -69,6 +71,16 @@ const page = async ({
               className="w-full h-full object-cover rounded-lg"
             />
           )}
+        </div>
+        <div className="flex flex-wrap gap-2 mb-5">
+          {ratings.map((rating, index) => (
+            <div
+              key={index}
+              className="p-2 px-4 rounded-full bg-linear-to-tr from-primary to-yellow-400 text-sm font-medium text-white"
+            >
+              {rating}
+            </div>
+          ))}
         </div>
         <h1 className="font-bold text-3xl mb-5">{data?.title}</h1>
         <BoxSection title="Mô tả">

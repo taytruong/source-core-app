@@ -1,0 +1,176 @@
+"use client";
+
+import { Heading, StatusBadge, TableAction } from "@/src/components/common";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import useQueryString from "@/src/hooks/useQueryString";
+import { ERatingStatus } from "@/src/types/enum";
+import { Input } from "@/components/ui/input";
+import TableActionItem from "@/src/components/common/TableActionItem";
+import { allValue, ratingList, ratingStatus } from "@/src/constanst";
+import { TRatingItem } from "@/src/types";
+import Image from "next/image";
+import { deleteRating, updateRating } from "@/src/lib/actions/rating.action";
+import Swal from "sweetalert2";
+import Link from "next/link";
+
+const RatingManage = ({ ratings }: { ratings: any }) => {
+  const { handleSearchData, handleSelectStatus } = useQueryString();
+
+  const handleUpdateRating = async (id: string) => {
+    try {
+      await updateRating(id);
+    } catch (error) {
+      console.log("🚀 ~ handleUpdateRating ~ error:", error);
+    }
+  };
+
+  const handleDeleteRating = async (id: string) => {
+    try {
+      Swal.fire({
+        title: "Bạn có muốn xóa đánh giá không?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Thoát",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await deleteRating(id);
+        }
+      });
+    } catch (error) {
+      console.log("🚀 ~ handleDeleteRating ~ error:", error);
+    }
+  };
+
+  return (
+    <div>
+      <div className="flex flex-col lg:flex-row lg:items-center gap-5 justify-between mb-10">
+        <Heading className="">Quản lý đánh giá</Heading>
+        <div className="flex gap-3">
+          <div className="w-full lg:w-75">
+            <Input
+              placeholder="Tìm kiếm đánh giá..."
+              onChange={handleSearchData}
+            />
+          </div>
+          <Select
+            onValueChange={(value) =>
+              handleSelectStatus(value as ERatingStatus)
+            }
+            defaultValue={allValue}
+          >
+            <SelectTrigger className="w-full max-w-48" size="lg">
+              <SelectValue placeholder="Chọn trạng thái" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value={allValue}>Tất cả</SelectItem>
+                {ratingStatus.map((status) => (
+                  <SelectItem
+                    value={status.value}
+                    key={status.value}
+                    className={status.className}
+                  >
+                    {status.title}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+      <Table className="table-responsive">
+        <TableHeader>
+          <TableRow>
+            <TableHead>STT</TableHead>
+            <TableHead>Tiêu đề</TableHead>
+            <TableHead>Khóa học</TableHead>
+            <TableHead>Thành viên</TableHead>
+            <TableHead>Trạng thái</TableHead>
+            <TableHead>Hành động</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {ratings.length > 0 &&
+            ratings.map((rating: TRatingItem, index: number) => {
+              const ratingStatusItem = ratingStatus.find(
+                (item) => item.value === rating.status,
+              );
+              const icon = ratingList.find(
+                (item) => item.value === rating.rate,
+              )?.title;
+              return (
+                <TableRow key={rating.rate}>
+                  <TableCell className="w-10 p-7">{index + 1}</TableCell>
+                  <TableCell>
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-2">
+                        <strong>{rating.content}</strong>
+                        <Image
+                          width={20}
+                          height={20}
+                          alt=""
+                          src={`/rating/${icon}.png`}
+                        />
+                      </div>
+                      <time>
+                        {new Date(rating.create_at).toLocaleDateString("vi-VI")}
+                      </time>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Link
+                      href={`/course/${rating.course.slug}`}
+                      className="font-semibold hover:text-primary transition-all"
+                      target="_blank"
+                    >
+                      {rating.course.title}
+                    </Link>
+                  </TableCell>
+                  <TableCell>
+                    <strong>{rating.user.name}</strong>
+                  </TableCell>
+                  <TableCell>
+                    <StatusBadge item={ratingStatusItem}></StatusBadge>
+                  </TableCell>
+                  <TableCell>
+                    <TableAction>
+                      {rating.status !== ERatingStatus.ACTIVE && (
+                        <TableActionItem
+                          type="approve"
+                          label="Cập nhật trạng thái"
+                          onClick={() => handleUpdateRating(rating._id)}
+                        ></TableActionItem>
+                      )}
+                      <TableActionItem
+                        type="delete"
+                        label="Xóa trạng thái"
+                        onClick={() => handleDeleteRating(rating._id)}
+                      ></TableActionItem>
+                    </TableAction>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
+
+export default RatingManage;

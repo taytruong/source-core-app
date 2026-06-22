@@ -4,6 +4,7 @@ import {
   IconExplore,
   IconOrder,
   IconPlay,
+  IconStar,
   IconStudy,
   IconTicket,
   IconUsers,
@@ -14,6 +15,7 @@ import {
   ECourseLevel,
   ECourseStatus,
   EOrderStatus,
+  ERatingStatus,
 } from "../types/enum";
 
 export const menuItems: MenuItemProps[] = [
@@ -48,6 +50,11 @@ export const menuItems: MenuItemProps[] = [
     icon: <IconTicket className="size-5" />,
   },
   {
+    url: "/manage/rating",
+    title: "Quản lý đánh giá",
+    icon: <IconStar className="size-5" />,
+  },
+  {
     url: "/manage/comment",
     title: "Quản lý bình luận",
     icon: <IconComment className="size-5" />,
@@ -59,11 +66,6 @@ export const courseStatus: {
   value: ECourseStatus;
   className?: string;
 }[] = [
-  {
-    title: "Mặc định",
-    value: ECourseStatus.DEFAULT,
-    className: "",
-  },
   {
     title: "Đã duyệt",
     value: ECourseStatus.APPROVED,
@@ -232,5 +234,35 @@ export const ratingList: {
   {
     title: "terrible",
     value: 1,
+  },
+];
+
+export const ratingStatus: {
+  title: string;
+  value: ERatingStatus;
+  className?: string;
+}[] = [
+  {
+    title: "Đã duyệt",
+    value: ERatingStatus.ACTIVE,
+    className: "text-green-500",
+  },
+  {
+    title: "Chờ duyệt",
+    value: ERatingStatus.UNACTIVE,
+    className: "text-orange-500",
+  },
+];
+
+export const allValue = "ALL";
+export const ITEM_PER_PAGE = 10;
+export const couponStatus = [
+  {
+    title: "Đang kích hoạt",
+    value: 1,
+  },
+  {
+    title: "Chưa kích hoạt",
+    value: 0,
   },
 ];

@@ -134,6 +134,8 @@ export type TCouponParams = Omit<ICoupon, "courses"> & {
   }[];
 };
 
+export type TCouponItem = Omit<ICoupon, "_id" | "courses">;
+
 export interface StudyCourseProps extends Omit<ICourse, "lectures"> {
   lectures: {
     lessons: {
@@ -148,4 +150,27 @@ export type TCreateRatingParams = {
   content: string;
   user: string;
   course: string;
+};
+
+type TRatingItem = {
+  _id: string;
+  content: string;
+  rate: number;
+  create_at: string;
+  course: {
+    title: string;
+    slug: string;
+  };
+  user: {
+    name: string;
+  };
+  status: ERatingStatus;
+};
+
+export type TFilterData = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  status?: string;
+  active?: boolean;
 };

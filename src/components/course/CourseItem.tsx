@@ -1,13 +1,15 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IconClock, IconEye, IconStar } from "../icons";
 import { commonClassNames } from "@/src/constanst";
 import { StudyCourseProps } from "@/src/types";
 import { formatMinutesToHour, formatViews } from "@/src/utils";
 import { getCourseLessonsInfo } from "@/src/lib/actions/course.action";
 
-const CourseItem = async ({
+const CourseItem = ({
   data,
   cta,
   url = "",
@@ -16,8 +18,17 @@ const CourseItem = async ({
   cta?: string;
   url?: string;
 }) => {
-  const { duration }: any =
-    (await getCourseLessonsInfo({ slug: data.slug })) || 0;
+  const [duration, setDuration] = useState(0);
+  useEffect(() => {
+    async function getDuration() {
+      const res = await getCourseLessonsInfo({ slug: data.slug });
+      setDuration(res?.duration || 0);
+    }
+    getDuration();
+  }, [data.slug]);
+
+  // const { duration }: any =
+  //   (await getCourseLessonsInfo({ slug: data.slug })) || 0;
   const courseUrl = url || `/course/${data.slug}`;
   const courseInfo = [
     {
@@ -25,7 +36,7 @@ const CourseItem = async ({
       icon: (className?: string) => <IconEye className={className} />,
     },
     {
-      title: data?.rating[0],
+      title: 5,
       icon: (className?: string) => <IconStar className={className} />,
     },
     {

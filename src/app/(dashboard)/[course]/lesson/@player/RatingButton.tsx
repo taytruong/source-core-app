@@ -27,40 +27,45 @@ const RatingButton = ({
   courseId: string;
   userId: string;
 }) => {
-  const [ratingValute, setRatingValute] = useState(-1);
+  const [ratingValue, setRatingValue] = useState(-1);
   const [ratingContent, setRatingContent] = useState("");
-  const [isAlreadyRating, setIsAlreadyRating] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useLayoutEffect(() => {
-    async function checkRating() {
-      const res = await getRatingByUserId(userId);
-      setIsAlreadyRating(res || false);
-    }
-    checkRating();
-  }, []);
-
-  const handleRatingCoursee = async () => {
+  const handleRatingCourse = async () => {
+    setIsLoading(true);
     try {
+      const isAlreadyRated = await getRatingByUserId(userId);
+      if (isAlreadyRated) {
+        toast.warning("Bạn đã đánh giá khóa học này rồi");
+        setIsLoading(false);
+        return;
+      }
+      if (!ratingContent || ratingValue === -1) {
+        toast.warning("Vui lòng chọn đánh giá và nhập nội dung đánh giá");
+        return;
+      }
       const res = await createRating({
-        rate: ratingValute,
+        rate: ratingValue,
         content: ratingContent,
         user: userId,
         course: courseId,
       });
       if (res) {
         toast.success("Đánh giá thành công");
+        setRatingContent("");
+        setRatingValue(-1);
       }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  if (isAlreadyRating) return null;
+  const isDisable = isLoading || ratingValue === -1 || !ratingContent;
 
   return (
     <Dialog>
-      <DialogTrigger
-        className="flex items-center gap-3 rounded-lg bg-primary text-sm font-medium px-5 text-white disabled:opacity-50 disabled:cursor-not-allowed"
-        disabled={isAlreadyRating}
-      >
+      <DialogTrigger className="flex items-center gap-3 rounded-lg bg-primary text-sm font-medium px-5 text-white disabled:opacity-50 disabled:cursor-not-allowed">
         <IconStar />
         <span>Đánh giá khóa học</span>
       </DialogTrigger>
@@ -76,12 +81,12 @@ const RatingButton = ({
                   key={rating.title}
                   className="flex flex-col gap-3 text-center text-xs items-center"
                   type="button"
-                  onClick={() => setRatingValute(rating.value)}
+                  onClick={() => setRatingValue(rating.value)}
                 >
                   <span
                     className={cn(
                       "flexCenter size-10 rounded-full bg-gray-200",
-                      ratingValute === rating.value && "bg-primary",
+                      ratingValue === rating.value && "bg-primary",
                     )}
                   >
                     <Image
@@ -100,11 +105,14 @@ const RatingButton = ({
               placeholder="Đánh giá của bạn"
               className="h-50 resize-none"
               onChange={(e) => setRatingContent(e.target.value)}
+              value={ratingContent}
             />
             <Button
               variant="primary"
               className="w-full mt-5"
-              onClick={handleRatingCoursee}
+              onClick={handleRatingCourse}
+              disabled={isDisable}
+              isLoading={isLoading}
             >
               Gửi đánh giá
             </Button>

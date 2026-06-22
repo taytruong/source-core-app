@@ -1,11 +1,16 @@
 import React from "react";
 import HoverTooltip from "./HoverTooltip";
 import { commonClassNames } from "@/src/constanst";
-import { IconDelete, IconDocument, IconEdit, IconEye } from "../icons";
+import {
+  IconCheck,
+  IconDelete,
+  IconDocument,
+  IconEdit,
+  IconEye,
+} from "../icons";
 import Link from "next/link";
-import { fa } from "zod/v4/locales";
 
-type TableActionIcon = "edit" | "delete" | "view" | "doc";
+type TableActionIcon = "edit" | "delete" | "view" | "doc" | "approve";
 const TableActionItem = ({
   onClick,
   type,
@@ -24,6 +29,7 @@ const TableActionItem = ({
     delete: <IconDelete />,
     view: <IconEye />,
     doc: <IconDocument />,
+    approve: <IconCheck />,
   };
   if (url)
     return (

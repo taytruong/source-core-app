@@ -10,15 +10,8 @@ import {
 } from "@/components/ui/table";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { commonClassNames, courseStatus } from "@/src/constanst";
-import {
-  IconArrowLeft,
-  IconDelete,
-  IconDocument,
-  IconEdit,
-  IconEye,
-  IconPlus,
-} from "../icons";
+import { allValue, courseStatus } from "@/src/constanst";
+import { IconPlus } from "../icons";
 import Link from "next/link";
 import { ICourse } from "@/src/database/course.md";
 import Swal from "sweetalert2";
@@ -26,7 +19,6 @@ import { updateCourse } from "@/src/lib/actions/course.action";
 import { ECourseStatus } from "@/src/types/enum";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
-import IconArrowRight from "../icons/IconArrowRight";
 import { Heading, HoverTooltip, StatusBadge, TableAction } from "../common";
 import {
   Select,
@@ -39,10 +31,9 @@ import {
 import { debounce } from "lodash";
 import useQueryString from "@/src/hooks/useQueryString";
 import TableActionItem from "../common/TableActionItem";
-import PanigationBtn from "../common/PanigationBtn";
 
 const CourseManage = ({ courses }: { courses: ICourse[] }) => {
-  const { createQueryString, pathname, router } = useQueryString();
+  const { handleSearchData, handleSelectStatus } = useQueryString();
   const handleDeleteCourseItem = (slug: string) => {
     Swal.fire({
       title: "Bạn có chắc chắn xóa không?",
@@ -87,26 +78,15 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
             path: "/manage/course",
           });
           toast.success("Cập nhật trạng thái thành công!");
-          router.push(
-            `${pathname}?${createQueryString("status", "")}&${createQueryString("search", "")}`,
-          );
+          // router.push(
+          //   `${pathname}?${createQueryString("status", "")}&${createQueryString("search", "")}`,
+          // );
         }
       });
     } catch (error) {
       console.log("🚀 ~ handleChangeStatus ~ error:", error);
     }
   };
-
-  const handleSelectStatus = (status: ECourseStatus) => {
-    router.push(`${pathname}?${createQueryString("status", status)}`);
-  };
-
-  const handleSearchCourse = debounce(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      router.push(`${pathname}?${createQueryString("search", e.target.value)}`);
-    },
-    500,
-  );
 
   const [page, setPage] = useState(1);
 
@@ -116,9 +96,9 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
     if (type === "next") setPage((next) => next + 1);
   };
 
-  useEffect(() => {
-    router.push(`${pathname}?${createQueryString("page", page.toString())}`);
-  }, [page]);
+  // useEffect(() => {
+  //   router.push(`${pathname}?${createQueryString("page", page.toString())}`);
+  // }, [page]);
 
   return (
     <>
@@ -139,19 +119,21 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
           <div className="w-full lg:w-75">
             <Input
               placeholder="Tìm kiếm khóa học ..."
-              onChange={(e) => handleSearchCourse(e)}
+              onChange={handleSearchData}
             />
           </div>
           <Select
             onValueChange={(value) =>
               handleSelectStatus(value as ECourseStatus)
             }
+            defaultValue={allValue}
           >
             <SelectTrigger className="w-full max-w-48" size="lg">
               <SelectValue placeholder="Chọn trạng thái" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
+                <SelectItem value={allValue}>Tất cả</SelectItem>
                 {courseStatus.map((status) => (
                   <SelectItem
                     value={status.value}
@@ -253,11 +235,11 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
             })}
         </TableBody>
       </Table>
-      <PanigationBtn
+      {/* <PanigationBtn
         page={page}
         onClickNext={() => handleChagePage("next")}
         onClickPrev={() => handleChagePage("prev")}
-      ></PanigationBtn>
+      ></PanigationBtn> */}
     </>
   );
 };

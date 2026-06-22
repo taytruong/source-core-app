@@ -9,7 +9,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import React from "react";
-import { commonClassNames, courseStatus, orderStatus } from "@/src/constanst";
+import {
+  allValue,
+  commonClassNames,
+  courseStatus,
+  orderStatus,
+} from "@/src/constanst";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { EOrderStatus } from "@/src/types/enum";
@@ -34,6 +39,8 @@ import IconArrowRight from "@/src/components/icons/IconArrowRight";
 import useQueryString from "@/src/hooks/useQueryString";
 import { updateOrder } from "@/src/lib/actions/order.action";
 import { toast } from "sonner";
+import Pagination from "@/src/components/common/Pagination";
+import EmptyData from "@/src/components/common/EmptyData";
 
 interface IOrderManageProps {
   _id: string;
@@ -53,8 +60,16 @@ interface IOrderManageProps {
   };
 }
 
-const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
-  const { createQueryString, pathname, router } = useQueryString();
+const OrderManage = ({
+  orders = [],
+  totalPages,
+  total,
+}: {
+  orders: IOrderManageProps[];
+  totalPages: number;
+  total: number;
+}) => {
+  const { handleSearchData, handleSelectStatus } = useQueryString();
 
   const handleUpdateOrder = async ({
     orderId,
@@ -84,16 +99,6 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
     }
   };
 
-  const handleSelectStatus = (status: EOrderStatus) => {
-    router.push(`${pathname}?${createQueryString("status", status)}`);
-  };
-
-  const handleSearchOrder = debounce(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      router.push(`${pathname}?${createQueryString("search", e.target.value)}`);
-    },
-    500,
-  );
   return (
     <>
       <HoverTooltip
@@ -113,17 +118,19 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
           <div className="w-full lg:w-75">
             <Input
               placeholder="Tìm kiếm đơn hàng ..."
-              onChange={(e) => handleSearchOrder(e)}
+              onChange={handleSearchData}
             />
           </div>
           <Select
             onValueChange={(value) => handleSelectStatus(value as EOrderStatus)}
+            defaultValue={allValue}
           >
             <SelectTrigger className="w-full max-w-48" size="lg">
               <SelectValue placeholder="Chọn trạng thái" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
+                <SelectItem value={allValue}>Tất cả</SelectItem>
                 {courseStatus.map((status) => (
                   <SelectItem
                     value={status.value}
@@ -152,6 +159,7 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
+          {orders.length === 0 && <EmptyData text="Không có đơn hàng" />}
           {orders.length > 0 &&
             orders.map((order, index) => {
               const orderStatusItem = orderStatus.find(
@@ -224,14 +232,7 @@ const OrderManage = ({ orders = [] }: { orders: IOrderManageProps[] }) => {
             })}
         </TableBody>
       </Table>
-      <div className="flex items-center justify-end gap-3 mt-5">
-        <button type="button" className={commonClassNames.iconPagination}>
-          <IconArrowLeft />
-        </button>
-        <button type="button" className={commonClassNames.iconPagination}>
-          <IconArrowRight />
-        </button>
-      </div>
+      <Pagination totalPages={totalPages} total={total}></Pagination>
     </>
   );
 };

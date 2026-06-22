@@ -39,7 +39,11 @@ export async function fetchOrder(params: any) {
       .sort({ create_at: -1 })
       .skip(skip)
       .limit(limit);
-    return JSON.parse(JSON.stringify(orders));
+    const total = await Order.countDocuments(query);
+    return {
+      orders: JSON.parse(JSON.stringify(orders)),
+      total,
+    };
   } catch (error) {
     console.log("🚀 ~ fetchOrder ~ error:", error);
   }

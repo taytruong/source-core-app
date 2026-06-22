@@ -1,6 +1,6 @@
 import React, { ComponentProps } from "react";
 
-const IconArrowRight = (props: ComponentProps<"svg">) => {
+const IconArrowRight = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,7 +8,7 @@ const IconArrowRight = (props: ComponentProps<"svg">) => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      {...props}
+      className="size-4"
     >
       <path
         strokeLinecap="round"

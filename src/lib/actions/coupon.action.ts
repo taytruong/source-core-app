@@ -4,10 +4,13 @@ import Coupon, { ICoupon } from "@/src/database/coupon.md";
 import { connectToDatabase } from "../mongoose";
 import { revalidatePath } from "next/cache";
 import {
+  TCouponItem,
   TCouponParams,
   TCreateCouponParams,
+  TFilterData,
   TUpdateCouponParams,
 } from "@/src/types";
+import { QueryFilter } from "mongoose";
 
 export async function createCoupon(params: TCreateCouponParams) {
   try {
@@ -42,11 +45,34 @@ export async function updateCoupon(params: TUpdateCouponParams) {
   }
 }
 
-export async function getCoupons(params: any): Promise<ICoupon[] | undefined> {
+export async function getCoupons(params: TFilterData): Promise<
+  | {
+      coupons: TCouponItem[] | undefined;
+      total: number;
+    }
+  | undefined
+> {
   try {
     connectToDatabase();
-    const coupons = await Coupon.find(params).sort({ create_at: -1 });
-    return JSON.parse(JSON.stringify(coupons));
+    const { page = 1, limit = 10, search, active } = params;
+    const skip = (page - 1) * limit;
+    const query: QueryFilter<typeof Coupon> = {};
+    if (search) {
+      // hoặc = lấy ra code của Coupon
+      query.$or = [{ code: { $regex: search, $options: "i" } }];
+    }
+
+    if (active) query.active = Boolean(Number(active));
+
+    const coupons = await Coupon.find(query)
+      .skip(skip)
+      .limit(limit)
+      .sort({ create_at: -1 });
+    const total = await Coupon.countDocuments(query);
+    return {
+      coupons: JSON.parse(JSON.stringify(coupons)),
+      total,
+    };
   } catch (error) {
     console.log("🚀 ~ createCoupon ~ error:", error);
   }
