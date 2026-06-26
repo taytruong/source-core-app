@@ -2,10 +2,10 @@ import React from "react";
 import LessonSaveUrl from "../LessonSaveUrl";
 import { getCourseBySlug } from "@/src/lib/actions/course.action";
 import { findAllLessons } from "@/src/lib/actions/lesson.action";
-import { Heading } from "@/src/components/common";
 import VideoPlayer from "./VideoPlayer";
 import { auth } from "@clerk/nextjs/server";
 import { getUserInfo } from "@/src/lib/actions/user.actions";
+import { Heading } from "@/src/shared/components";
 
 const page = async ({
   params,

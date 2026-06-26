@@ -1,7 +1,7 @@
 import React from "react";
 import CouponManage from "./CouponManage";
 import { getCoupons } from "@/src/lib/actions/coupon.action";
-import { ITEM_PER_PAGE } from "@/src/constanst";
+import { ITEM_PER_PAGE } from "@/src/shared/constants";
 const page = async ({
   searchParams,
 }: {

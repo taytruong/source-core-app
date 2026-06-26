@@ -7,15 +7,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { fetchOrder } from "@/src/lib/actions/order.action";
-import { ECouponType, EOrderStatus } from "@/src/types/enum";
-import {
-  Heading,
-  HoverTooltip,
-  StatusBadge,
-  TableAction,
-} from "@/src/components/common";
+} from "@/src/shared/components/ui/table";
+import { ECouponType } from "@/src/types/enum";
 import {
   Select,
   SelectContent,
@@ -23,16 +16,22 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/src/shared/components/ui/select";
 import Link from "next/link";
-import { IconPlus } from "@/src/components/icons";
-import { Input } from "@/components/ui/input";
-import { allValue, commonClassNames, couponStatus } from "@/src/constanst";
-import TableActionItem from "@/src/components/common/TableActionItem";
+import { IconPlus } from "@/src/shared/components/icons";
+import { Input } from "@/src/shared/components/ui/input";
 import ActionDeleteCoupon from "./ActionDeleteCoupon";
 import { TCouponItem } from "@/src/types";
 import useQueryString from "@/src/hooks/useQueryString";
-import Pagination from "@/src/components/common/Pagination";
+import {
+  BadgeStatus,
+  Heading,
+  HoverTooltip,
+  Pagination,
+  TableAction,
+  TableActionItem,
+} from "@/src/shared/components";
+import { allValue, couponStatus } from "@/src/shared/constants";
 
 const CouponManage = ({
   coupons,
@@ -122,19 +121,19 @@ const CouponManage = ({
                 </TableCell>
                 <TableCell>
                   {item.active ? (
-                    <StatusBadge
+                    <BadgeStatus
                       item={{
                         title: "Đang hoạt động",
                         className: "text-green-500",
                       }}
-                    ></StatusBadge>
+                    ></BadgeStatus>
                   ) : (
-                    <StatusBadge
+                    <BadgeStatus
                       item={{
                         title: "Chưa kích hoạt",
                         className: "text-orange-500",
                       }}
-                    ></StatusBadge>
+                    ></BadgeStatus>
                   )}
                 </TableCell>
                 <TableCell>

@@ -3,7 +3,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@/src/shared/components/ui/tooltip";
 const HoverTooltip = ({
   children,
   label,

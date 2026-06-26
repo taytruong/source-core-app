@@ -3,8 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { IconClock, IconEye, IconStar } from "../icons";
-import { commonClassNames } from "@/src/constanst";
+import { IconClock, IconEye, IconStar } from "../../shared/components/icons";
+import { commonClassNames } from "@/src/shared/constants";
 import { StudyCourseProps } from "@/src/types";
 import { formatMinutesToHour, formatViews } from "@/src/utils";
 import { getCourseLessonsInfo } from "@/src/lib/actions/course.action";

@@ -4,23 +4,28 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { commonClassNames } from "@/src/constanst";
+} from "@/src/shared/components/ui/accordion";
 import React, { MouseEvent, useState } from "react";
-import { IconCancel, IconCheck, IconDelete, IconEdit } from "../icons";
-import { Button } from "@/components/ui/button";
+import {
+  IconCancel,
+  IconCheck,
+  IconDelete,
+  IconEdit,
+} from "../../shared/components/icons";
+import { Button } from "@/src/shared/components/ui/button";
 import { createLecture, updateLecture } from "@/src/lib/actions/lecture.action";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
 import { TCourseUpdateParams, TUpdateCourseLecture } from "@/src/types";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/src/shared/components/ui/input";
 import { cn } from "@/lib/utils";
 
 import { createLesson, updateLesson } from "@/src/lib/actions/lesson.action";
 import { ILesson } from "@/src/database/lesson.md";
-import { HoverTooltip } from "../common";
 import slugify from "slugify";
 import LessonItemUpdate from "../lesson/LessonItemUpdate";
+import { HoverTooltip } from "@/src/shared/components";
+import { commonClassNames } from "@/src/shared/constants";
 
 const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
   const lectures = course.lectures;

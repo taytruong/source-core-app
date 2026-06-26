@@ -2,30 +2,37 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@/src/shared/components/ui/button";
+import { Calendar } from "@/src/shared/components/ui/calendar";
+import { Input } from "@/src/shared/components/ui/input";
+import { Label } from "@/src/shared/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Switch } from "@/components/ui/switch";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+} from "@/src/shared/components/ui/popover";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@/src/shared/components/ui/radio-group";
+import { Switch } from "@/src/shared/components/ui/switch";
+import {
+  Field,
+  FieldError,
+  FieldLabel,
+} from "@/src/shared/components/ui/field";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import React, { useState } from "react";
 import { ECouponType } from "@/src/types/enum";
-import { couponFormSchema, couponTypes } from "@/src/constanst";
+import { couponFormSchema, couponTypes } from "@/src/shared/constants";
 import { format } from "date-fns";
 import { createCoupon } from "@/src/lib/actions/coupon.action";
 import { toast } from "sonner";
 import { debounce } from "lodash";
 import { getAllCourse } from "@/src/lib/actions/course.action";
-import { Checkbox } from "@/components/ui/checkbox";
-import { IconCancel } from "@/src/components/icons";
-import InputFormatCurrency from "@/components/ui/input-format";
+import { Checkbox } from "@/src/shared/components/ui/checkbox";
+import { IconCancel } from "@/src/shared/components/icons";
+import InputFormatCurrency from "@/src/shared/components/ui/input-format";
 import { useRouter } from "next/navigation";
 
 const NewCouponForm = () => {
@@ -90,7 +97,7 @@ const NewCouponForm = () => {
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       const courseList = await getAllCourse({ search: value });
-      setFindCourse(courseList);
+      setFindCourse(courseList?.courses);
       if (!value) setFindCourse([]);
     },
     500,

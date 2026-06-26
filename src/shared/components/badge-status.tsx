@@ -1,17 +1,16 @@
 import { cn } from "@/lib/utils";
-import { commonClassNames } from "@/src/constanst";
+import { commonClassNames } from "@/src/shared/constants";
 import React from "react";
 
-const StatusBadge = ({
-  item,
-  onClick,
-}: {
+interface BadgeStatusProps {
   item?: {
     className?: string;
     title: string;
   };
   onClick?: () => void;
-}) => {
+}
+
+const BadgeStatus = ({ item, onClick }: BadgeStatusProps) => {
   if (!item) return null;
   return (
     <span
@@ -23,4 +22,4 @@ const StatusBadge = ({
   );
 };
 
-export default StatusBadge;
+export default BadgeStatus;

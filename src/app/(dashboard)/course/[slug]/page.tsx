@@ -1,6 +1,6 @@
 import PageNotFound from "@/src/app/not-found";
-import { IconChecked } from "@/src/components/icons";
-import { courseLevelTitle, ratingList } from "@/src/constanst";
+import { IconChecked } from "@/src/shared/components/icons";
+import { courseLevelTitle, ratingList } from "@/src/shared/constants";
 import {
   getCourseBySlug,
   getCourseLessonsInfo,
@@ -13,7 +13,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
+} from "@/src/shared/components/ui/accordion";
 import LessonContent from "@/src/components/lesson/LessonContent";
 import { auth } from "@clerk/nextjs/server";
 import { getUserInfo } from "@/src/lib/actions/user.actions";

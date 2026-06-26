@@ -1,4 +1,4 @@
-import { Heading } from "@/src/components/common";
+import { Heading } from "@/src/shared/components";
 import UpdateCouponForm from "./UpdateCouponForm";
 import { getCouponByCode } from "@/src/lib/actions/coupon.action";
 

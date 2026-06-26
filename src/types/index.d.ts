@@ -3,6 +3,7 @@ import { ICourse } from "../database/course.md";
 import { ILesson } from "../database/lesson.md";
 import { ICoupon } from "../database/coupon.md";
 import { ECouponType } from "./enum";
+import { IComment } from "../database/comment.md";
 
 export type LinkActiveProps = {
   url: string;
@@ -174,3 +175,10 @@ export type TFilterData = {
   status?: string;
   active?: boolean;
 };
+
+export interface ICommentItem extends Omit<IComment, "user"> {
+  user: {
+    name: string;
+    avatar: string;
+  };
+}

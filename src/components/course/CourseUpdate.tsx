@@ -5,17 +5,21 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { Button } from "@/components/ui/button";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/src/shared/components/ui/button";
+import {
+  Field,
+  FieldError,
+  FieldLabel,
+} from "@/src/shared/components/ui/field";
+import { Input } from "@/src/shared/components/ui/input";
 import { updateCourse } from "@/src/lib/actions/course.action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { Textarea } from "@/components/ui/textarea";
+import { Textarea } from "@/src/shared/components/ui/textarea";
 import { ECourseLevel, ECourseStatus } from "@/src/types/enum";
 import { ICourse } from "@/src/database/course.md";
 import { useImmer } from "use-immer";
-import { IconAdd } from "../icons";
+import { IconAdd } from "../../shared/components/icons";
 import {
   Select,
   SelectContent,
@@ -23,8 +27,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { courseLevel, courseStatus } from "@/src/constanst";
+} from "@/src/shared/components/ui/select";
+import { courseLevel, courseStatus } from "@/src/shared/constants";
 import { UploadButton } from "@/src/utils/uploadthing";
 import Image from "next/image";
 
@@ -42,7 +46,6 @@ const formSchema = z.object({
       ECourseStatus.APPROVED,
       ECourseStatus.PENDING,
       ECourseStatus.REJECTED,
-      ECourseStatus.DEFAULT,
     ])
     .optional(),
   level: z
@@ -92,7 +95,6 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
-    console.log("🚀 ~ onSubmit ~ values:", values);
     try {
       const res = await updateCourse({
         slug: data.slug,
@@ -128,6 +130,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
   }
 
   const imageWatch = form.watch("image");
+
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <div className="grid grid-cols-2 gap-8 mt-10 mb-6">

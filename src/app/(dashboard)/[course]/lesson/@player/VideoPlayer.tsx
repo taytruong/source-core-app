@@ -2,7 +2,7 @@
 import React from "react";
 import LessonNavigation from "../LessonNavigation";
 import useGlobalStore from "@/src/store";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/src/shared/components/ui/button";
 import RatingButton from "./RatingButton";
 
 // process host url for YT

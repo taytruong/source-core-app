@@ -1,17 +1,16 @@
 "use client";
 import React from "react";
-import { menuItems } from "@/src/constanst";
-import { MenuItemProps } from "@/src/types";
-import { LinkActive } from "../common";
 import { useAuth, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import IconLogin from "../icons/IconLogin";
 import Image from "next/image";
+import { MenuItem } from "@/src/shared/components";
+import IconLogin from "@/src/shared/components/icons/IconLogin";
+import { menuItems } from "@/src/shared/constants";
 
 const Sidebar = () => {
   const { userId } = useAuth();
   return (
-    <div className="hidden p-5 border-r border-r-gray-200 bg-linear-to-r from-orange-200 to-white lg:flex flex-col fixed top-0 left-0 bottom-0 w-75">
+    <div className="hidden p-5 border-r border-r-gray-200 bg-linear-to-r from-orange-200 to-white/40 lg:flex flex-col fixed top-0 left-0 bottom-0 w-70 shadow-sm">
       <a
         href="/"
         className="font-medium text-3xl mb-11 flex items-end text-primary justify-center"
@@ -61,21 +60,5 @@ const Sidebar = () => {
     </div>
   );
 };
-
-export function MenuItem({
-  url = "/",
-  title = "",
-  icon,
-  onlyIcon,
-}: MenuItemProps) {
-  return (
-    <ul>
-      <LinkActive url={url}>
-        {icon}
-        {onlyIcon ? null : title}
-      </LinkActive>
-    </ul>
-  );
-}
 
 export default Sidebar;

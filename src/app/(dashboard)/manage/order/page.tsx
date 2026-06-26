@@ -1,18 +1,10 @@
 import React from "react";
-import OrderManage from "./OrderManage";
 import { fetchOrder } from "@/src/lib/actions/order.action";
-import { EOrderStatus } from "@/src/types/enum";
-import { ITEM_PER_PAGE } from "@/src/constanst";
+import { ITEM_PER_PAGE } from "@/src/shared/constants";
+import OrderManagePage from "@/src/modules/order/pages/order-manage-page";
+import { OrderManagePageParams } from "@/src/modules/order/types/order.types";
 
-const page = async ({
-  searchParams,
-}: {
-  searchParams: {
-    page: number;
-    search: string;
-    status: EOrderStatus;
-  };
-}) => {
+const page = async ({ searchParams }: OrderManagePageParams) => {
   const data = await fetchOrder({
     page: searchParams.page || 1,
     limit: ITEM_PER_PAGE,
@@ -25,11 +17,11 @@ const page = async ({
   const totalPages = Math.ceil(total / ITEM_PER_PAGE);
 
   return (
-    <OrderManage
+    <OrderManagePage
       orders={orders}
       totalPages={totalPages}
       total={total}
-    ></OrderManage>
+    ></OrderManagePage>
   );
 };
 

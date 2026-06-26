@@ -1,6 +1,6 @@
-import { CourseGrid, Heading } from "@/src/components/common";
 import CourseItem from "@/src/components/course/CourseItem";
 import { getAllCoursePublic } from "@/src/lib/actions/course.action";
+import { CourseGrid, Heading } from "@/src/shared/components";
 import React from "react";
 
 const page = async () => {

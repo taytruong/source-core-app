@@ -1,7 +1,7 @@
-import { TableCell, TableRow } from "@/components/ui/table";
+import { TableCell, TableRow } from "@/src/shared/components/ui/table";
 import React from "react";
 
-const EmptyData = ({ text }: { text?: string }) => {
+const EmptySpace = ({ text }: { text?: string }) => {
   return (
     <TableRow>
       <TableCell colSpan={99}>
@@ -13,4 +13,4 @@ const EmptyData = ({ text }: { text?: string }) => {
   );
 };
 
-export default EmptyData;
+export default EmptySpace;

@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { IconNext, IconPrevious } from "@/src/components/icons";
+import { Button } from "@/src/shared/components/ui/button";
+import { IconNext, IconPrevious } from "@/src/shared/components/icons";
 
 import { useRouter } from "next/navigation";
 import React from "react";

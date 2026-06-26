@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { IconPlay } from "../icons";
+import { IconPlay } from "../../shared/components/icons";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@/src/shared/components/ui/checkbox";
 import { createHistory } from "@/src/lib/actions/history.action";
 
 const LessonItem = ({

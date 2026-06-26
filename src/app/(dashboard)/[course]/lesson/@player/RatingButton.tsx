@@ -7,12 +7,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { IconStar } from "@/src/components/icons";
-import { ratingList } from "@/src/constanst";
+} from "@/src/shared/components/ui/dialog";
+import { IconStar } from "@/src/shared/components/icons";
+import { ratingList } from "@/src/shared/constants";
 import Image from "next/image";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { Textarea } from "@/src/shared/components/ui/textarea";
+import { Button } from "@/src/shared/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   createRating,

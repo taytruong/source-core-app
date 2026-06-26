@@ -1,8 +1,12 @@
 "use client"; // vì có usePathname của next -> chỉ nên dùng cho server  component
-import { LinkActiveProps } from "@/src/types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+
+interface LinkActiveProps {
+  url: string;
+  children?: React.ReactNode;
+}
 
 const LinkActive = ({ url, children }: LinkActiveProps) => {
   const pathName = usePathname();

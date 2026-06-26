@@ -8,15 +8,15 @@ import {
   IconStudy,
   IconTicket,
   IconUsers,
-} from "../components/icons";
-import { MenuItemProps, TRatingIcon } from "../types";
+} from "@/src/shared/components/icons";
+import { MenuItemProps, TRatingIcon } from "@/src/types";
 import {
   ECouponType,
   ECourseLevel,
   ECourseStatus,
   EOrderStatus,
   ERatingStatus,
-} from "../types/enum";
+} from "@/src/types/enum";
 
 export const menuItems: MenuItemProps[] = [
   {
@@ -266,3 +266,5 @@ export const couponStatus = [
     value: 0,
   },
 ];
+
+export const MAX_COMMENT_LEVEL = 3;

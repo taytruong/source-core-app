@@ -1,6 +1,6 @@
-import { Heading } from "@/src/components/common";
 import CourseUpdate from "@/src/components/course/CourseUpdate";
 import { getCourseBySlug } from "@/src/lib/actions/course.action";
+import { Heading } from "@/src/shared/components";
 import React from "react";
 
 const page = async ({

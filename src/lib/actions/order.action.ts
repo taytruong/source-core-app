@@ -3,7 +3,7 @@ import Order from "@/src/database/order.md";
 import { connectToDatabase } from "../mongoose";
 import { TCreateOrderParams } from "@/src/types";
 import Course from "@/src/database/course.md";
-import User from "@/src/database/user.modal";
+import User from "@/src/database/user.md";
 import { QueryFilter } from "mongoose";
 import { EOrderStatus } from "@/src/types/enum";
 import { revalidatePath } from "next/cache";
@@ -39,7 +39,9 @@ export async function fetchOrder(params: any) {
       .sort({ create_at: -1 })
       .skip(skip)
       .limit(limit);
+
     const total = await Order.countDocuments(query);
+
     return {
       orders: JSON.parse(JSON.stringify(orders)),
       total,
@@ -52,6 +54,7 @@ export async function fetchOrder(params: any) {
 export async function createOrder(params: TCreateOrderParams) {
   try {
     connectToDatabase();
+    // if (!params.coupon) delete params.coupon;
     const newOrder = await Order.create(params);
     // used apply coupon
     if (params.coupon) {

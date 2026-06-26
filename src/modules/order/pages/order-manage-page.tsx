@@ -7,18 +7,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/src/shared/components/ui/table";
 import React from "react";
 import {
   allValue,
   commonClassNames,
   courseStatus,
   orderStatus,
-} from "@/src/constanst";
-import Link from "next/link";
+} from "@/src/shared/constants";
 import Swal from "sweetalert2";
-import { EOrderStatus } from "@/src/types/enum";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -26,49 +23,27 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { debounce } from "lodash";
-import { Heading, HoverTooltip, StatusBadge } from "@/src/components/common";
-import {
-  IconArrowLeft,
-  IconCancel,
-  IconCheck,
-  IconPlus,
-} from "@/src/components/icons";
-import IconArrowRight from "@/src/components/icons/IconArrowRight";
+} from "@/src/shared/components/ui/select";
+import { IconCancel, IconCheck } from "@/src/shared/components/icons";
 import useQueryString from "@/src/hooks/useQueryString";
 import { updateOrder } from "@/src/lib/actions/order.action";
 import { toast } from "sonner";
-import Pagination from "@/src/components/common/Pagination";
-import EmptyData from "@/src/components/common/EmptyData";
+import { OrderManageProps } from "../types/order.types";
+import { EOrderStatus } from "@/src/shared/types/enum";
+import { Input } from "@/src/shared/components/ui/input";
+import {
+  BadgeStatus,
+  EmptySpace,
+  Heading,
+  HoverTooltip,
+  Pagination,
+} from "@/src/shared/components";
 
-interface IOrderManageProps {
-  _id: string;
-  code: string;
-  total: number;
-  amount: number;
-  discount: number;
-  status: EOrderStatus;
-  coupon: {
-    code: string;
-  };
-  course: {
-    title: string;
-  };
-  user: {
-    name: string;
-  };
-}
-
-const OrderManage = ({
+const OrderManagePage = ({
   orders = [],
   totalPages,
   total,
-}: {
-  orders: IOrderManageProps[];
-  totalPages: number;
-  total: number;
-}) => {
+}: OrderManageProps) => {
   const { handleSearchData, handleSelectStatus } = useQueryString();
 
   const handleUpdateOrder = async ({
@@ -101,21 +76,10 @@ const OrderManage = ({
 
   return (
     <>
-      <HoverTooltip
-        label="Tạo khóa học mới"
-        className="fixed right-5 bottom-5"
-        labelClassName="bg-primary"
-        IsColorArrow
-      >
-        <Link href="/manage/course/new">
-          <IconPlus className="size-10 rounded-full bg-primary flexCenter text-white p-2 hover:animate-[spin_0.8s_linear_0.5]" />
-        </Link>
-      </HoverTooltip>
-
       <div className="flex flex-col lg:flex-row lg:items-center gap-5 justify-between mb-10">
         <Heading>Quản lý đơn hàng</Heading>
         <div className="flex gap-3">
-          <div className="w-full lg:w-75">
+          <div className="w-full lg:w-75 xl:w-95">
             <Input
               placeholder="Tìm kiếm đơn hàng ..."
               onChange={handleSearchData}
@@ -159,7 +123,7 @@ const OrderManage = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {orders.length === 0 && <EmptyData text="Không có đơn hàng" />}
+          {orders.length === 0 && <EmptySpace text="Không có đơn hàng" />}
           {orders.length > 0 &&
             orders.map((order, index) => {
               const orderStatusItem = orderStatus.find(
@@ -172,7 +136,7 @@ const OrderManage = ({
                     <strong>{order.code}</strong>
                   </TableCell>
                   <TableCell>{order.course.title}</TableCell>
-                  <TableCell>{order.user.name}</TableCell>
+                  <TableCell>{order.user?.name}</TableCell>
                   <TableCell>
                     <div className="flex flex-col gap-2">
                       <span>{order.amount.toLocaleString("us-US")}</span>
@@ -188,7 +152,7 @@ const OrderManage = ({
                     <strong>{order.coupon?.code || ""}</strong>
                   </TableCell>
                   <TableCell>
-                    <StatusBadge item={orderStatusItem}></StatusBadge>
+                    <BadgeStatus item={orderStatusItem}></BadgeStatus>
                   </TableCell>
                   <TableCell>
                     {order.status !== EOrderStatus.CANCEL && (
@@ -237,4 +201,4 @@ const OrderManage = ({
   );
 };
 
-export default OrderManage;
+export default OrderManagePage;

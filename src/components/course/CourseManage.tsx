@@ -7,19 +7,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import React, { useEffect, useState } from "react";
+} from "@/src/shared/components/ui/table";
+import React, { useState } from "react";
 import Image from "next/image";
-import { allValue, courseStatus } from "@/src/constanst";
-import { IconPlus } from "../icons";
+import { allValue, courseStatus } from "@/src/shared/constants";
+import { IconPlus } from "../../shared/components/icons";
 import Link from "next/link";
 import { ICourse } from "@/src/database/course.md";
 import Swal from "sweetalert2";
 import { updateCourse } from "@/src/lib/actions/course.action";
 import { ECourseStatus } from "@/src/types/enum";
 import { toast } from "sonner";
-import { Input } from "@/components/ui/input";
-import { Heading, HoverTooltip, StatusBadge, TableAction } from "../common";
+import { Input } from "@/src/shared/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -27,12 +26,26 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { debounce } from "lodash";
+} from "@/src/shared/components/ui/select";
 import useQueryString from "@/src/hooks/useQueryString";
-import TableActionItem from "../common/TableActionItem";
+import {
+  BadgeStatus,
+  Heading,
+  HoverTooltip,
+  Pagination,
+  TableAction,
+  TableActionItem,
+} from "@/src/shared/components";
 
-const CourseManage = ({ courses }: { courses: ICourse[] }) => {
+const CourseManage = ({
+  courses,
+  totalPages,
+  total,
+}: {
+  courses: ICourse[] | undefined;
+  totalPages: number;
+  total: number;
+}) => {
   const { handleSearchData, handleSelectStatus } = useQueryString();
   const handleDeleteCourseItem = (slug: string) => {
     Swal.fire({
@@ -159,7 +172,8 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {courses.length > 0 &&
+          {courses &&
+            courses.length > 0 &&
             courses.map((courses, index) => {
               const courseStatusTitleItem = courseStatus.find(
                 (item) => item.value === courses.status,
@@ -196,12 +210,12 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
                   <TableCell>
                     <HoverTooltip label="Có thể chuyển sang 'Đã duyệt' / 'Chờ duyệt'">
                       <button>
-                        <StatusBadge
+                        <BadgeStatus
                           item={courseStatusTitleItem}
                           onClick={() =>
                             handleChangeStatus(courses.slug, courses.status)
                           }
-                        ></StatusBadge>
+                        ></BadgeStatus>
                       </button>
                     </HoverTooltip>
                   </TableCell>
@@ -235,11 +249,7 @@ const CourseManage = ({ courses }: { courses: ICourse[] }) => {
             })}
         </TableBody>
       </Table>
-      {/* <PanigationBtn
-        page={page}
-        onClickNext={() => handleChagePage("next")}
-        onClickPrev={() => handleChagePage("prev")}
-      ></PanigationBtn> */}
+      <Pagination totalPages={totalPages} total={total}></Pagination>
     </>
   );
 };

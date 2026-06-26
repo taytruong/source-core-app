@@ -68,7 +68,9 @@ export async function getCoupons(params: TFilterData): Promise<
       .skip(skip)
       .limit(limit)
       .sort({ create_at: -1 });
+
     const total = await Coupon.countDocuments(query);
+
     return {
       coupons: JSON.parse(JSON.stringify(coupons)),
       total,

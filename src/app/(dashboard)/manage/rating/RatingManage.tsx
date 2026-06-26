@@ -1,6 +1,5 @@
 "use client";
 
-import { Heading, StatusBadge, TableAction } from "@/src/components/common";
 import {
   Table,
   TableBody,
@@ -8,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/src/shared/components/ui/table";
 import {
   Select,
   SelectContent,
@@ -16,17 +15,22 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/src/shared/components/ui/select";
 import useQueryString from "@/src/hooks/useQueryString";
 import { ERatingStatus } from "@/src/types/enum";
-import { Input } from "@/components/ui/input";
-import TableActionItem from "@/src/components/common/TableActionItem";
-import { allValue, ratingList, ratingStatus } from "@/src/constanst";
+import { Input } from "@/src/shared/components/ui/input";
+import { allValue, ratingList, ratingStatus } from "@/src/shared/constants";
 import { TRatingItem } from "@/src/types";
 import Image from "next/image";
 import { deleteRating, updateRating } from "@/src/lib/actions/rating.action";
 import Swal from "sweetalert2";
 import Link from "next/link";
+import {
+  BadgeStatus,
+  Heading,
+  TableAction,
+  TableActionItem,
+} from "@/src/shared/components";
 
 const RatingManage = ({ ratings }: { ratings: any }) => {
   const { handleSearchData, handleSelectStatus } = useQueryString();
@@ -143,10 +147,10 @@ const RatingManage = ({ ratings }: { ratings: any }) => {
                     </Link>
                   </TableCell>
                   <TableCell>
-                    <strong>{rating.user.name}</strong>
+                    <strong>{rating.user?.name}</strong>
                   </TableCell>
                   <TableCell>
-                    <StatusBadge item={ratingStatusItem}></StatusBadge>
+                    <BadgeStatus item={ratingStatusItem}></BadgeStatus>
                   </TableCell>
                   <TableCell>
                     <TableAction>

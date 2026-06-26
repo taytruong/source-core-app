@@ -1,5 +1,5 @@
 "use client";
-import { lastLessonKey } from "@/src/constanst";
+import { lastLessonKey } from "@/src/shared/constants";
 import React, { useEffect } from "react";
 
 const LessonSaveUrl = ({ url, course }: { url: string; course: string }) => {

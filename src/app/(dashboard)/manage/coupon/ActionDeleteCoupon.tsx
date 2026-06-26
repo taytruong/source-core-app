@@ -1,6 +1,6 @@
 "use client";
-import TableActionItem from "@/src/components/common/TableActionItem";
 import { deleteCoupon } from "@/src/lib/actions/coupon.action";
+import { TableActionItem } from "@/src/shared/components";
 import React from "react";
 import Swal from "sweetalert2";
 

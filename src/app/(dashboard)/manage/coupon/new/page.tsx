@@ -1,4 +1,4 @@
-import { Heading } from "@/src/components/common";
+import { Heading } from "@/src/shared/components";
 import NewCouponForm from "./NewCouponForm";
 
 const page = () => {

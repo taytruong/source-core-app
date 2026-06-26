@@ -2,7 +2,7 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { connectToDatabase } from "../mongoose";
-import User from "@/src/database/user.modal";
+import User from "@/src/database/user.md";
 import History, { IHistory } from "@/src/database/history.md";
 import { TCreateHistoryParams } from "@/src/types";
 import { revalidatePath } from "next/cache";

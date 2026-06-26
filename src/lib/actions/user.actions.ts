@@ -1,6 +1,6 @@
 "use server";
 
-import User, { IUser } from "@/src/database/user.modal";
+import User, { IUser } from "@/src/database/user.md";
 import { connectToDatabase } from "../mongoose";
 import { TCreateUserParams } from "@/src/types";
 import { auth } from "@clerk/nextjs/server";

@@ -4,9 +4,28 @@
 @config "../../tailwind.config.ts";
 
 @layer base {
-  body {
+  /* body {
     @apply bg-gray-100 antialiased;
+  } */
+
+  /*get background wall.png*/
+  body {
+    position: relative;
+    background-image: url("/wall.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
   }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.65);
+    pointer-events: none;
+    z-index: -1;
+  }
+
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;

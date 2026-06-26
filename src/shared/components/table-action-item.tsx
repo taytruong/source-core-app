@@ -1,14 +1,15 @@
 import React from "react";
-import HoverTooltip from "./HoverTooltip";
-import { commonClassNames } from "@/src/constanst";
+import HoverTooltip from "./hover-tooltip";
+import { commonClassNames } from "@/src/shared/constants";
+
+import Link from "next/link";
 import {
   IconCheck,
   IconDelete,
   IconDocument,
   IconEdit,
   IconEye,
-} from "../icons";
-import Link from "next/link";
+} from "@/src/shared/components/icons";
 
 type TableActionIcon = "edit" | "delete" | "view" | "doc" | "approve";
 const TableActionItem = ({

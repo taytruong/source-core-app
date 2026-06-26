@@ -1,6 +1,6 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { IUser } from "@/src/database/user.modal";
+import { Button } from "@/src/shared/components/ui/button";
+import { IUser } from "@/src/database/user.md";
 import { createOrder } from "@/src/lib/actions/order.action";
 import { createOrderCode } from "@/src/utils";
 import { useRouter } from "next/navigation";

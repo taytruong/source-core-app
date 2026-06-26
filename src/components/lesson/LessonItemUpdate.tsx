@@ -1,17 +1,21 @@
 "use client";
 import { ILesson } from "@/src/database/lesson.md";
 import React, { useEffect, useRef } from "react";
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import {
+  Field,
+  FieldError,
+  FieldLabel,
+} from "@/src/shared/components/ui/field";
+import { Input } from "@/src/shared/components/ui/input";
 import z from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/src/shared/components/ui/button";
 import Link from "next/link";
 import { updateLesson } from "@/src/lib/actions/lesson.action";
 import { toast } from "sonner";
 import { Editor } from "@tinymce/tinymce-react";
-import { editorOptions } from "@/src/constanst";
+import { editorOptions } from "@/src/shared/constants";
 import { useTheme } from "next-themes";
 
 const formSchema = z.object({

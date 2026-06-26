@@ -6,14 +6,18 @@ import { Controller, useForm } from "react-hook-form";
 import * as z from "zod";
 import slugify from "slugify";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/src/shared/components/ui/button";
 
-import { Field, FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import {
+  Field,
+  FieldError,
+  FieldLabel,
+} from "@/src/shared/components/ui/field";
+import { Input } from "@/src/shared/components/ui/input";
 import { createCourse } from "@/src/lib/actions/course.action";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { IUser } from "@/src/database/user.modal";
+import { IUser } from "@/src/database/user.md";
 
 const formSchema = z.object({
   title: z.string().min(10, "Tên khóa học ít nhất có 10 ký tự"),
@@ -32,20 +36,6 @@ function CourseNewAdd({ user }: { user: IUser }) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // toast("You submitted the following values:", {
-    //   description: (
-    //     <pre className="mt-2 w-[320px] overflow-x-auto rounded-md bg-code p-4 text-code-foreground">
-    //       <code>{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    //   position: "bottom-right",
-    //   classNames: {
-    //     content: "flex flex-col gap-2",
-    //   },
-    //   style: {
-    //     "--border-radius": "calc(var(--radius)  + 4px)",
-    //   } as React.CSSProperties,
-    // });
     setIsSubmitting(true);
     try {
       const data = {

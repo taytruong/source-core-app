@@ -16,9 +16,13 @@ import Lesson from "@/src/database/lesson.md";
 import { ECourseStatus, ERatingStatus } from "@/src/types/enum";
 import Rating from "@/src/database/rating.md";
 
-export async function getAllCourse(
-  params: TFilterData,
-): Promise<ICourse[] | undefined> {
+export async function getAllCourse(params: TFilterData): Promise<
+  | {
+      courses: ICourse[] | undefined;
+      total: number;
+    }
+  | undefined
+> {
   try {
     connectToDatabase();
     const { page = 1, limit = 10, search, status } = params;
@@ -35,7 +39,13 @@ export async function getAllCourse(
       .skip(skip)
       .limit(limit)
       .sort({ create_at: -1 });
-    return JSON.parse(JSON.stringify(courses));
+
+    const total = await Course.countDocuments(query);
+
+    return {
+      courses: JSON.parse(JSON.stringify(courses)),
+      total,
+    };
   } catch (error) {
     console.log("🚀 ~ getAllCourse ~ error:", error);
   }

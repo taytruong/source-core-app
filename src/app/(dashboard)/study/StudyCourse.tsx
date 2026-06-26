@@ -1,7 +1,7 @@
 "use client";
-import { CourseGrid } from "@/src/components/common";
 import CourseItem from "@/src/components/course/CourseItem";
-import { lastLessonKey } from "@/src/constanst";
+import { lastLessonKey } from "@/src/shared/constants";
+import { CourseGrid } from "@/src/shared/components";
 import { StudyCourseProps } from "@/src/types";
 import React from "react";
 

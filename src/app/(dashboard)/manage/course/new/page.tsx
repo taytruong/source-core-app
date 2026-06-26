@@ -1,6 +1,6 @@
-import { Heading } from "@/src/components/common";
 import CourseNewAdd from "@/src/components/course/CourseNewAdd";
 import { getUserInfo } from "@/src/lib/actions/user.actions";
+import { Heading } from "@/src/shared/components";
 import { auth } from "@clerk/nextjs/server";
 import React from "react";
 
