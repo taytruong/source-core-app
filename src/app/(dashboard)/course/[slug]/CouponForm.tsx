@@ -1,22 +1,17 @@
 "use client";
-import { Input } from "@/src/shared/components/ui/input";
-import { getValidateCode } from "@/src/lib/actions/coupon.action";
-import { ECouponType } from "@/src/types/enum";
 import { debounce } from "lodash";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { toast } from "sonner";
 
+import { getValidateCode } from "@/src/lib/actions/coupon.action";
+import { Input } from "@/src/shared/components/ui/input";
+import { ECouponType } from "@/src/types/enum";
+
 const CouponForm = ({
-  setPrice,
   courseId,
   originalPrice,
   setCouponId,
+  setPrice,
 }: {
   courseId: string;
   setPrice: Dispatch<SetStateAction<number>>;
@@ -41,10 +36,12 @@ const CouponForm = ({
       });
       const couponType = response?.type;
       let finalPrice = originalPrice;
+
       if (!response) {
         toast.error("Mã giảm giá không hợp lệ");
         setCouponCode("");
         setCouponId("");
+
         return;
       }
 
@@ -71,8 +68,8 @@ const CouponForm = ({
   return (
     <div className="mt-5 relative">
       <Input
-        placeholder="Nhập mã giảm giá"
         className="pr-20 uppercase font-medium"
+        placeholder="Nhập mã giảm giá"
         onChange={handleChangeCoupon}
         defaultValue={couponCode}
         // ref={inputRef}

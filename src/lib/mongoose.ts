@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 // singelton connection :  check đã connect chưa ? nếu có MONGODB_URL is already connected
 let isConnected: boolean = false;
+
 export const connectToDatabase = async () => {
   if (!process.env.MONGODB_URL) {
     throw new Error("MONGODB_URL is not set");
@@ -20,6 +21,8 @@ export const connectToDatabase = async () => {
     });
     isConnected = true;
   } catch (error) {
-    console.log("Error while connecting to database");
+    console.log("Error while connecting to database", error);
   }
 };
+
+export default connectToDatabase();

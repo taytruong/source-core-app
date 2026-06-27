@@ -1,9 +1,9 @@
-import { TUpdateCourseParams } from "./index.d";
+import { IComment } from "../database/comment.md";
+import { ICoupon } from "../database/coupon.md";
 import { ICourse } from "../database/course.md";
 import { ILesson } from "../database/lesson.md";
-import { ICoupon } from "../database/coupon.md";
 import { ECouponType } from "./enum";
-import { IComment } from "../database/comment.md";
+import { TUpdateCourseParams } from "./index.d";
 
 export type LinkActiveProps = {
   url: string;

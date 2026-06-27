@@ -1,5 +1,6 @@
-import { ECommentStatus } from "@/src/shared/types/enum";
 import { Document, model, models, Schema, Types } from "mongoose";
+
+import { ECommentStatus } from "@/src/shared/types/enum";
 
 export interface Comment extends Document {
   _id: Types.ObjectId;
@@ -47,4 +48,5 @@ const commentSchema = new Schema<Comment>({
 
 const CommentSchema =
   models.Comment || model<Comment>("Comment", commentSchema);
+
 export default CommentSchema;

@@ -1,9 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import CommentForm from "./CommentForm";
-import { ICommentItem } from "@/src/types";
-import { MAX_COMMENT_LEVEL } from "@/src/shared/constants";
+
 import { cn } from "@/lib/utils";
+import { MAX_COMMENT_LEVEL } from "@/src/shared/constants";
+import { ICommentItem } from "@/src/types";
+
+import CommentForm from "./CommentForm";
 
 interface CommentReplyProps {
   comment: ICommentItem;
@@ -13,6 +15,7 @@ interface CommentReplyProps {
 
 const CommentReply = ({ comment, lessonId, userId }: CommentReplyProps) => {
   const [showReplyComment, setShowReplyComment] = useState(false);
+
   return (
     <>
       <div className="flex items-center gap-5 text-sm text-gray-400 font-medium">
@@ -30,7 +33,7 @@ const CommentReply = ({ comment, lessonId, userId }: CommentReplyProps) => {
           </>
         )}
       </div>
-      {showReplyComment && (
+      {!!showReplyComment && (
         <div className="mt-3">
           <CommentForm
             isReply

@@ -1,13 +1,18 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
+import Swal from "sweetalert2";
+
+import useQueryString from "@/src/hooks/useQueryString";
+import { deleteRating, updateRating } from "@/src/lib/actions/rating.action";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/src/shared/components/ui/table";
+  BadgeStatus,
+  Heading,
+  TableAction,
+  TableActionItem,
+} from "@/src/shared/components";
+import { Input } from "@/src/shared/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -16,21 +21,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/shared/components/ui/select";
-import useQueryString from "@/src/hooks/useQueryString";
-import { ERatingStatus } from "@/src/types/enum";
-import { Input } from "@/src/shared/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/src/shared/components/ui/table";
 import { allValue, ratingList, ratingStatus } from "@/src/shared/constants";
 import { TRatingItem } from "@/src/types";
-import Image from "next/image";
-import { deleteRating, updateRating } from "@/src/lib/actions/rating.action";
-import Swal from "sweetalert2";
-import Link from "next/link";
-import {
-  BadgeStatus,
-  Heading,
-  TableAction,
-  TableActionItem,
-} from "@/src/shared/components";
+import { ERatingStatus } from "@/src/types/enum";
 
 const RatingManage = ({ ratings }: { ratings: any }) => {
   const { handleSearchData, handleSelectStatus } = useQueryString();
@@ -73,10 +74,10 @@ const RatingManage = ({ ratings }: { ratings: any }) => {
             />
           </div>
           <Select
+            defaultValue={allValue}
             onValueChange={(value) =>
               handleSelectStatus(value as ERatingStatus)
             }
-            defaultValue={allValue}
           >
             <SelectTrigger className="w-full max-w-48" size="lg">
               <SelectValue placeholder="Chọn trạng thái" />
@@ -86,9 +87,9 @@ const RatingManage = ({ ratings }: { ratings: any }) => {
                 <SelectItem value={allValue}>Tất cả</SelectItem>
                 {ratingStatus.map((status) => (
                   <SelectItem
-                    value={status.value}
                     key={status.value}
                     className={status.className}
+                    value={status.value}
                   >
                     {status.title}
                   </SelectItem>
@@ -118,6 +119,7 @@ const RatingManage = ({ ratings }: { ratings: any }) => {
               const icon = ratingList.find(
                 (item) => item.value === rating.rate,
               )?.title;
+
               return (
                 <TableRow key={rating.rate}>
                   <TableCell className="w-10 p-7">{index + 1}</TableCell>
@@ -126,10 +128,10 @@ const RatingManage = ({ ratings }: { ratings: any }) => {
                       <div className="flex items-center gap-2">
                         <strong>{rating.content}</strong>
                         <Image
-                          width={20}
-                          height={20}
                           alt=""
+                          height={20}
                           src={`/rating/${icon}.png`}
+                          width={20}
                         />
                       </div>
                       <time>
@@ -139,8 +141,8 @@ const RatingManage = ({ ratings }: { ratings: any }) => {
                   </TableCell>
                   <TableCell>
                     <Link
-                      href={`/course/${rating.course.slug}`}
                       className="font-semibold hover:text-primary transition-all"
+                      href={`/course/${rating.course.slug}`}
                       target="_blank"
                     >
                       {rating.course.title}
@@ -150,22 +152,22 @@ const RatingManage = ({ ratings }: { ratings: any }) => {
                     <strong>{rating.user?.name}</strong>
                   </TableCell>
                   <TableCell>
-                    <BadgeStatus item={ratingStatusItem}></BadgeStatus>
+                    <BadgeStatus item={ratingStatusItem} />
                   </TableCell>
                   <TableCell>
                     <TableAction>
                       {rating.status !== ERatingStatus.ACTIVE && (
                         <TableActionItem
-                          type="approve"
                           label="Cập nhật trạng thái"
+                          type="approve"
                           onClick={() => handleUpdateRating(rating._id)}
-                        ></TableActionItem>
+                         />
                       )}
                       <TableActionItem
-                        type="delete"
                         label="Xóa trạng thái"
+                        type="delete"
                         onClick={() => handleDeleteRating(rating._id)}
-                      ></TableActionItem>
+                       />
                     </TableAction>
                   </TableCell>
                 </TableRow>

@@ -1,4 +1,5 @@
 import { Document, model, models, Schema, Types } from "mongoose";
+
 import { ERatingStatus } from "../types/enum";
 
 export interface IRating extends Document {
@@ -41,4 +42,5 @@ const ratingSchema = new Schema<IRating>({
 });
 
 const Rating = models.Rating || model<IRating>("Rating", ratingSchema);
+
 export default Rating;

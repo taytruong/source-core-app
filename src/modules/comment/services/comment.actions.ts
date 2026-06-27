@@ -1,9 +1,11 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import User from "@/src/database/user.md";
 import { connectToDatabase } from "@/src/shared/lib/mongoose";
 import { ICommentItem } from "@/src/types";
-import { revalidatePath } from "next/cache";
+
 import CommentSchema, { Comment } from "./comment.schema";
 
 export async function createComment(params: {
@@ -17,8 +19,10 @@ export async function createComment(params: {
   try {
     connectToDatabase();
     const newComment = await CommentSchema.create(params);
+
     revalidatePath(params.path || "/");
     if (!newComment) return false;
+
     return true;
   } catch (error) {
     console.log("🚀 ~ createComment ~ error:", error);

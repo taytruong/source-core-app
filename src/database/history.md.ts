@@ -28,4 +28,5 @@ const historySchema = new Schema<IHistory>({
 });
 
 const History = models.History || model<IHistory>("History", historySchema);
+
 export default History;

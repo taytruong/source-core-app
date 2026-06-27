@@ -1,4 +1,5 @@
 import { Document, model, models, Schema, Types } from "mongoose";
+
 import { EUserRole, EUserStatus } from "../types/enum";
 
 export interface IUser extends Document {
@@ -57,4 +58,5 @@ const useSchema = new Schema<IUser>({
 });
 
 const User = models.User || model<IUser>("User", useSchema);
+
 export default User;

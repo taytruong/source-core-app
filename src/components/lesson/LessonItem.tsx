@@ -1,17 +1,19 @@
 "use client";
 
-import React from "react";
-import { IconPlay } from "../../shared/components/icons";
 import Link from "next/link";
+import React from "react";
+
 import { cn } from "@/lib/utils";
-import { Checkbox } from "@/src/shared/components/ui/checkbox";
 import { createHistory } from "@/src/lib/actions/history.action";
+import { Checkbox } from "@/src/shared/components/ui/checkbox";
+
+import { IconPlay } from "../../shared/components/icons";
 
 const LessonItem = ({
-  lesson,
-  url,
   isActive = false,
   isChecked = false,
+  lesson,
+  url,
 }: {
   lesson: {
     title: string;
@@ -35,6 +37,7 @@ const LessonItem = ({
       console.log("🚀 ~ handleCompleteLesson ~ error:", error);
     }
   };
+
   return (
     <div
       className={cn(
@@ -44,10 +47,10 @@ const LessonItem = ({
           : "",
       )}
     >
-      {url && (
+      {!!url && (
         <Checkbox
-          defaultChecked={isChecked}
           className="shirk-0 size-3.5 text-slate-400"
+          defaultChecked={isChecked}
           onCheckedChange={(checked) => handleCompleteLesson(checked)}
         />
       )}
@@ -55,8 +58,8 @@ const LessonItem = ({
       <IconPlay className="size-5 shrink-0" />
       {url ? (
         <Link
-          href={url}
           className={cn("line-clamp-1", isActive && "pointer-events-none")}
+          href={url}
         >
           {lesson.title}
         </Link>

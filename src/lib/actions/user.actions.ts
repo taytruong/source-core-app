@@ -1,13 +1,15 @@
 "use server";
 
-import User, { IUser } from "@/src/database/user.md";
-import { connectToDatabase } from "../mongoose";
-import { TCreateUserParams } from "@/src/types";
 import { auth } from "@clerk/nextjs/server";
+
 import Course, { ICourse } from "@/src/database/course.md";
-import { ECourseStatus } from "@/src/types/enum";
 import Lecture from "@/src/database/lecture.md";
 import Lesson from "@/src/database/lesson.md";
+import User, { IUser } from "@/src/database/user.md";
+import { TCreateUserParams } from "@/src/types";
+import { ECourseStatus } from "@/src/types/enum";
+
+import { connectToDatabase } from "../mongoose";
 
 export async function createUser(
   params: TCreateUserParams,
@@ -15,6 +17,7 @@ export async function createUser(
   try {
     connectToDatabase();
     const newUser: TCreateUserParams = await User.create(params);
+
     return newUser;
   } catch (error) {
     console.log(error);
@@ -29,7 +32,9 @@ export async function getUserInfo({
   try {
     connectToDatabase();
     const findUser = await User.findOne({ clerkId: userId });
+
     if (!findUser) return null;
+
     return findUser;
   } catch (error) {
     console.log(error);
@@ -57,7 +62,9 @@ export async function getUserCourses(): Promise<ICourse[] | undefined | null> {
         },
       },
     });
+
     if (!findUser) return null;
+
     return findUser.courses;
   } catch (error) {
     console.log(error);

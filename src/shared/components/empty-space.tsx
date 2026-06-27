@@ -1,5 +1,6 @@
-import { TableCell, TableRow } from "@/src/shared/components/ui/table";
 import React from "react";
+
+import { TableCell, TableRow } from "@/src/shared/components/ui/table";
 
 const EmptySpace = ({ text }: { text?: string }) => {
   return (

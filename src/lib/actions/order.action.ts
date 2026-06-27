@@ -1,20 +1,23 @@
 "use server";
-import Order from "@/src/database/order.md";
-import { connectToDatabase } from "../mongoose";
-import { TCreateOrderParams } from "@/src/types";
-import Course from "@/src/database/course.md";
-import User from "@/src/database/user.md";
 import { QueryFilter } from "mongoose";
-import { EOrderStatus } from "@/src/types/enum";
 import { revalidatePath } from "next/cache";
+
 import Coupon from "@/src/database/coupon.md";
+import Course from "@/src/database/course.md";
+import Order from "@/src/database/order.md";
+import User from "@/src/database/user.md";
+import { TCreateOrderParams } from "@/src/types";
+import { EOrderStatus } from "@/src/types/enum";
+
+import { connectToDatabase } from "../mongoose";
 
 export async function fetchOrder(params: any) {
   try {
     connectToDatabase();
-    const { page = 1, limit = 10, search, status } = params;
+    const { limit = 10, page = 1, search, status } = params;
     const skip = (page - 1) * limit;
     const query: QueryFilter<typeof Course> = {};
+
     if (search) {
       query.$or = [{ code: { $regex: search, $options: "i" } }];
     }
@@ -56,12 +59,14 @@ export async function createOrder(params: TCreateOrderParams) {
     connectToDatabase();
     // if (!params.coupon) delete params.coupon;
     const newOrder = await Order.create(params);
+
     // used apply coupon
     if (params.coupon) {
       await Coupon.findByIdAndUpdate(params.coupon, {
         $inc: { used: 1 },
       });
     }
+
     return JSON.parse(JSON.stringify(newOrder));
   } catch (error) {
     console.log("🚀 ~ createOrder ~ error:", error);
@@ -88,6 +93,7 @@ export async function updateOrder({
         model: User,
         select: "_id",
       });
+
     if (!findOrder) return;
     if (findOrder.status === EOrderStatus.CANCEL) return;
 
@@ -110,12 +116,13 @@ export async function updateOrder({
       findOrder.status === EOrderStatus.COMPLETE
     ) {
       findUser.courses = findUser.courses.filter(
-        (el: any) => el.toString() !== findOrder.course._id.toString(),
+        (element: any) => element.toString() !== findOrder.course._id.toString(),
       );
       await findUser.save();
     }
 
     revalidatePath("/manage/order");
+
     return {
       success: true,
     };
@@ -131,6 +138,7 @@ export async function getOrderDetails({ code }: { code: string }) {
       path: "course",
       select: "title",
     });
+
     return JSON.parse(JSON.stringify(order));
   } catch (error) {
     console.log("🚀 ~ getOrderDetails ~ error:", error);

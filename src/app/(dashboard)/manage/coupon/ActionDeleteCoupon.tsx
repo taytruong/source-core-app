@@ -1,8 +1,9 @@
 "use client";
-import { deleteCoupon } from "@/src/lib/actions/coupon.action";
-import { TableActionItem } from "@/src/shared/components";
 import React from "react";
 import Swal from "sweetalert2";
+
+import { deleteCoupon } from "@/src/lib/actions/coupon.action";
+import { TableActionItem } from "@/src/shared/components";
 
 const ActionDeleteCoupon = ({ code }: { code: string }) => {
   const handleDeleteCoupon = async (code: string) => {
@@ -22,12 +23,13 @@ const ActionDeleteCoupon = ({ code }: { code: string }) => {
       console.log("🚀 ~ handleDeleteCoupon ~ error:", error);
     }
   };
+
   return (
     <TableActionItem
-      type="delete"
       label="Xóa khóa học"
+      type="delete"
       onClick={() => handleDeleteCoupon(code)}
-    ></TableActionItem>
+     />
   );
 };
 

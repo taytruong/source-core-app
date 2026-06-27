@@ -1,8 +1,9 @@
+import React from "react";
+
 import LessonContent from "@/src/components/lesson/LessonContent";
 import { getCourseBySlug } from "@/src/lib/actions/course.action";
 import { getHistory } from "@/src/lib/actions/history.action";
 import { countLessonByCourseId } from "@/src/lib/actions/lesson.action";
-import React from "react";
 
 const page = async ({
   params,
@@ -18,6 +19,7 @@ const page = async ({
   const course = params.course;
   const slug = searchParams.slug;
   const findCourse = await getCourseBySlug({ slug: course });
+
   if (!findCourse) return null;
   const courseId = findCourse?._id.toString();
   const lectures = findCourse.lectures || [];
@@ -26,6 +28,7 @@ const page = async ({
   const completePercent = Math.floor(
     ((histories?.length || 0) / (lessonCount || 1)) * 100,
   );
+
   return (
     <div className="sticky top-5 right-0 max-h-[calc(100svh-100px)] overflow-y-auto">
       <div className="relative overflow-hidde h-3 w-full rounded-full border border-slate-200 bg-white mb-2">
@@ -34,7 +37,7 @@ const page = async ({
           style={{
             width: `${completePercent}%`,
           }}
-        ></div>
+         />
         <span
           className={`absolute inset-0 z-10 flex items-center justify-center text-xs font-semibold ${
             completePercent > 50 ? "text-white" : "text-black"
@@ -44,10 +47,10 @@ const page = async ({
         </span>
       </div>
       <LessonContent
-        lectures={lectures}
         course={course}
-        slug={slug}
         histories={histories ? JSON.parse(JSON.stringify(histories)) : []}
+        lectures={lectures}
+        slug={slug}
       />
     </div>
   );

@@ -1,12 +1,14 @@
-import { createUser } from "@/src/lib/actions/user.actions";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { Webhook } from "svix";
 
-export async function POST(req: Request) {
-  const svix_id = req.headers.get("svix-id") ?? "";
-  const svix_timestamp = req.headers.get("svix-timestamp") ?? "";
-  const svix_signature = req.headers.get("svix-signature") ?? "";
+import { createUser } from "@/src/lib/actions/user.actions";
+
+export async function POST(request: Request) {
+  const svix_id = request.headers.get("svix-id") ?? "";
+  const svix_timestamp = request.headers.get("svix-timestamp") ?? "";
+  const svix_signature = request.headers.get("svix-signature") ?? "";
+
   if (!process.env.WEBHOOK_SECRET) {
     throw new Error("Webhook secret is not set");
   }
@@ -15,27 +17,28 @@ export async function POST(req: Request) {
     return new Response("Bad Request", { status: 400 });
   }
 
-  const payload = await req.json();
+  const payload = await request.json();
   const body = JSON.stringify(payload);
 
   const sivx = new Webhook(process.env.WEBHOOK_SECRET);
 
-  let msg: WebhookEvent;
+  let message: WebhookEvent;
 
   try {
-    msg = sivx.verify(body, {
+    message = sivx.verify(body, {
       "svix-id": svix_id,
       "svix-timestamp": svix_timestamp,
       "svix-signature": svix_signature,
     }) as WebhookEvent;
-  } catch (err) {
+  } catch {
     return new Response("Bad Request", { status: 400 });
   }
 
-  const eventType = msg.type;
+  const eventType = message.type;
+
   if (eventType === "user.created") {
     // created user to database
-    const { id, email_addresses, username, image_url } = msg.data;
+    const { email_addresses, id, image_url, username } = message.data;
     const user = await createUser({
       clerkId: id,
       username: username!, // dấu "!" này là chắc chắn có username
@@ -43,6 +46,7 @@ export async function POST(req: Request) {
       email: email_addresses[0].email_address,
       avatar: image_url,
     });
+
     return NextResponse.json({
       message: "OK",
       user,

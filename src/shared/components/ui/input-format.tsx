@@ -10,8 +10,8 @@ const InputFormatCurrency = ({
 }: NumericFormatProps<InputAttributes>) => {
   return (
     <NumericFormat
-      className="h-10 w-full min-w-0 rounded border border-slate-400 focus:border-primary transition-all px-3 py-1 text-sm font-medium outline-none bg-white focus-primary"
       thousandSeparator
+      className="h-10 w-full min-w-0 rounded border border-slate-400 focus:border-primary transition-all px-3 py-1 text-sm font-medium outline-none bg-white focus-primary"
       {...props}
     />
   );

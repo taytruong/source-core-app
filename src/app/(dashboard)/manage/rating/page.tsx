@@ -1,7 +1,9 @@
 import React from "react";
-import RatingManage from "./RatingManage";
+
 import { getRatings } from "@/src/lib/actions/rating.action";
 import { ERatingStatus } from "@/src/types/enum";
+
+import RatingManage from "./RatingManage";
 
 const page = async ({
   searchParams,
@@ -18,7 +20,8 @@ const page = async ({
     search: searchParams.search || "",
     status: searchParams.status,
   });
-  return <RatingManage ratings={ratings}></RatingManage>;
+
+  return <RatingManage ratings={ratings} />;
 };
 
 export default page;

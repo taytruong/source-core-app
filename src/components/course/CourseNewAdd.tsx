@@ -1,23 +1,21 @@
 "use client";
-
-import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
-import * as z from "zod";
 import slugify from "slugify";
+import { toast } from "sonner";
+import * as z from "zod";
 
+import { IUser } from "@/src/database/user.md";
+import { createCourse } from "@/src/lib/actions/course.action";
 import { Button } from "@/src/shared/components/ui/button";
-
 import {
   Field,
   FieldError,
   FieldLabel,
 } from "@/src/shared/components/ui/field";
 import { Input } from "@/src/shared/components/ui/input";
-import { createCourse } from "@/src/lib/actions/course.action";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { IUser } from "@/src/database/user.md";
 
 const formSchema = z.object({
   title: z.string().min(10, "Tên khóa học ít nhất có 10 ký tự"),
@@ -49,8 +47,10 @@ function CourseNewAdd({ user }: { user: IUser }) {
         author: user._id,
       };
       const res = await createCourse(data);
+
       if (!res?.success) {
         toast.error(res?.message);
+
         return;
       }
       toast.success("Tạo khóa học thành công");
@@ -58,6 +58,7 @@ function CourseNewAdd({ user }: { user: IUser }) {
         router.push(`/manage/course/update?slug=${res.data.slug}`);
       }
     } catch (error) {
+      console.log("🚀 ~ onSubmit ~ error:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -68,45 +69,49 @@ function CourseNewAdd({ user }: { user: IUser }) {
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <div className="grid grid-cols-2 gap-8 mt-10 mb-6">
         <Controller
-          name="title"
           control={form.control}
+          name="title"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Tên khóa học *</FieldLabel>
               <Input
                 {...field}
                 aria-invalid={fieldState.invalid}
-                placeholder="Tên khóa học"
                 autoComplete="off"
+                placeholder="Tên khóa học"
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
 
         <Controller
-          name="slug"
           control={form.control}
+          name="slug"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Đường dẫn khóa học</FieldLabel>
               <Input
                 {...field}
                 aria-invalid={fieldState.invalid}
-                placeholder="khoa-hoc-lap-trinh"
                 autoComplete="off"
+                placeholder="khoa-hoc-lap-trinh"
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
       </div>
       <Button
-        variant={"primary"}
-        type="submit"
-        isLoading={isSubmitting}
         className="w-30"
         disabled={isSubmitting}
+        isLoading={isSubmitting}
+        type="submit"
+        variant={"primary"}
       >
         Tạo khóa học
       </Button>

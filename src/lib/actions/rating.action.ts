@@ -1,12 +1,14 @@
 "use server";
 
-import Rating from "@/src/database/rating.md";
-import { connectToDatabase } from "../mongoose";
-import { TCreateRatingParams, TFilterData, TRatingItem } from "@/src/types";
-import Course from "@/src/database/course.md";
-import { ERatingStatus } from "@/src/types/enum";
-import { revalidatePath } from "next/cache";
 import { QueryFilter } from "mongoose";
+import { revalidatePath } from "next/cache";
+
+import Course from "@/src/database/course.md";
+import Rating from "@/src/database/rating.md";
+import { TCreateRatingParams, TFilterData, TRatingItem } from "@/src/types";
+import { ERatingStatus } from "@/src/types/enum";
+
+import { connectToDatabase } from "../mongoose";
 
 export async function createRating(
   params: TCreateRatingParams,
@@ -18,11 +20,13 @@ export async function createRating(
       path: "rating",
       model: Rating,
     });
+
     if (findCourse.rating) {
       await findCourse.rating.push(newRating._id);
       await findCourse.save();
     }
     if (!newRating) return false;
+
     return true;
   } catch (error) {
     console.log("🚀 ~ createRating ~ error:", error);
@@ -35,6 +39,7 @@ export async function getRatingByUserId(
   try {
     connectToDatabase();
     const findRating = await Rating.findOne({ user: userId });
+
     return findRating?._id ? true : false;
   } catch (error) {
     console.log("🚀 ~ getRatingByUserId ~ error:", error);
@@ -46,6 +51,7 @@ export async function updateRating(id: string): Promise<boolean | undefined> {
     connectToDatabase();
     await Rating.findByIdAndUpdate(id, { status: ERatingStatus.ACTIVE });
     revalidatePath("/manage/rating");
+
     return true;
   } catch (error) {
     console.log("🚀 ~ deleteRating ~ error:", error);
@@ -57,6 +63,7 @@ export async function deleteRating(id: string): Promise<boolean | undefined> {
     connectToDatabase();
     await Rating.findByIdAndDelete(id);
     revalidatePath("/manage/rating");
+
     return true;
   } catch (error) {
     console.log("🚀 ~ deleteRating ~ error:", error);
@@ -68,9 +75,10 @@ export async function getRatings(
 ): Promise<TRatingItem | undefined> {
   try {
     connectToDatabase();
-    const { page = 1, limit = 10, search, status } = params;
+    const { limit = 10, page = 1, search, status } = params;
     const skip = (page - 1) * limit;
     const query: QueryFilter<typeof Rating> = {};
+
     if (search) {
       // hoặc = lấy ra content của Rating
       query.$or = [{ content: { $regex: search, $options: "i" } }];
@@ -90,6 +98,7 @@ export async function getRatings(
       .skip(skip)
       .limit(limit)
       .sort({ create_at: -1 });
+
     return JSON.parse(JSON.stringify(ratings));
   } catch (error) {
     console.log("🚀 ~ getRatings ~ error:", error);

@@ -1,10 +1,26 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+import { debounce } from "lodash";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
+
+import { updateCoupon } from "@/src/lib/actions/coupon.action";
+import { getAllCourse } from "@/src/lib/actions/course.action";
+import { IconCancel } from "@/src/shared/components/icons";
 import { Button } from "@/src/shared/components/ui/button";
 import { Calendar } from "@/src/shared/components/ui/calendar";
+import { Checkbox } from "@/src/shared/components/ui/checkbox";
+import {
+  Field,
+  FieldError,
+  FieldLabel,
+} from "@/src/shared/components/ui/field";
 import { Input } from "@/src/shared/components/ui/input";
+import InputFormatCurrency from "@/src/shared/components/ui/input-format";
 import { Label } from "@/src/shared/components/ui/label";
 import {
   Popover,
@@ -16,24 +32,9 @@ import {
   RadioGroupItem,
 } from "@/src/shared/components/ui/radio-group";
 import { Switch } from "@/src/shared/components/ui/switch";
-import {
-  Field,
-  FieldError,
-  FieldLabel,
-} from "@/src/shared/components/ui/field";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { useEffect, useState } from "react";
-import { ECouponType } from "@/src/types/enum";
 import { couponFormSchema, couponTypes } from "@/src/shared/constants";
-import { format } from "date-fns";
-import { updateCoupon } from "@/src/lib/actions/coupon.action";
-import { toast } from "sonner";
-import InputFormatCurrency from "@/src/shared/components/ui/input-format";
 import { TCouponParams } from "@/src/types";
-import { debounce } from "lodash";
-import { getAllCourse } from "@/src/lib/actions/course.action";
-import { Checkbox } from "@/src/shared/components/ui/checkbox";
-import { IconCancel } from "@/src/shared/components/icons";
+import { ECouponType } from "@/src/types/enum";
 
 const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
   const [findCourse, setFindCourse] = useState<any[] | undefined>([]);
@@ -64,6 +65,7 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
     try {
       const couponType = values.type;
       const couponValue = Number(values.value?.replace(/,/g, ""));
+
       if (
         couponType === ECouponType.PERCENT &&
         couponValue &&
@@ -72,6 +74,7 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
         form.setError("value", {
           message: "Giá trị không hợp lệ",
         });
+
         return;
       }
       const updatedCoupon = await updateCoupon({
@@ -84,6 +87,7 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
           courses: selectedCourses,
         },
       });
+
       if (updatedCoupon.code) {
         toast.success("Cập nhật mã (coupon) giảm giá thành công");
       }
@@ -95,6 +99,7 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       const courseList = await getAllCourse({ search: value });
+
       setFindCourse(courseList?.courses);
       if (!value) setFindCourse([]);
     },
@@ -103,10 +108,10 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
 
   const handleSelectCourse = (checked: boolean | string, course: any) => {
     if (checked) {
-      setSelectedCourses((prev) => [...prev, course]);
+      setSelectedCourses((previous) => [...previous, course]);
     } else {
-      setSelectedCourses((prev) =>
-        prev.filter((selectedCourse) => selectedCourse._id !== course._id),
+      setSelectedCourses((previous) =>
+        previous.filter((selectedCourse) => selectedCourse._id !== course._id),
       );
     }
   };
@@ -114,7 +119,7 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
   const couponTypeWatch = form.watch("type");
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
+    <form autoComplete="off" onSubmit={form.handleSubmit(onSubmit)}>
       <div className="grid grid-cols-2 gap-8 mt-10 mb-8">
         <Controller
           control={form.control}
@@ -123,7 +128,9 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Tiêu đề</FieldLabel>
               <Input placeholder="Tiêu đề" {...field} />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -136,11 +143,13 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
               <Input
                 placeholder="Mã giảm giá"
                 {...field}
+                disabled
                 className="font-semibold uppercase"
                 onChange={(e) => field.onChange(e.target.value.toUpperCase())}
-                disabled
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -152,7 +161,7 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
               <FieldLabel>Ngày bắt đầu</FieldLabel>
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant={"outline"} className="w-full">
+                  <Button className="w-full" variant={"outline"}>
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {startDate ? (
                       format(startDate, "dd/MM/yyyy")
@@ -162,8 +171,8 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
-                  className="w-auto p-0 bg-white shadow-md"
                   align="start"
+                  className="w-auto p-0 bg-white shadow-md"
                 >
                   <Calendar
                     mode="single"
@@ -172,7 +181,9 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
                   />
                 </PopoverContent>
               </Popover>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -184,7 +195,7 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
               <FieldLabel>Chọn ngày kết thúc</FieldLabel>
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant={"outline"} className="w-full">
+                  <Button className="w-full" variant={"outline"}>
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {endDate ? (
                       format(endDate, "dd/MM/yyyy")
@@ -194,8 +205,8 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
-                  className="w-auto p-0 bg-white shadow-md"
                   align="start"
+                  className="w-auto p-0 bg-white shadow-md"
                 >
                   <Calendar
                     mode="single"
@@ -204,7 +215,9 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
                   />
                 </PopoverContent>
               </Popover>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -215,18 +228,20 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
             <Field>
               <FieldLabel>Loại coupon</FieldLabel>
               <RadioGroup
-                value={field.value}
                 className="flex gap-5 h-12"
+                value={field.value}
                 onValueChange={field.onChange}
               >
                 {couponTypes.map((type) => (
-                  <div className="flex items-center space-x-2" key={type.value}>
-                    <RadioGroupItem value={type.value} id={type.value} />
+                  <div key={type.value} className="flex items-center space-x-2">
+                    <RadioGroupItem id={type.value} value={type.value} />
                     <Label htmlFor={type.value}>{type.title}</Label>
                   </div>
                 ))}
               </RadioGroup>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -247,12 +262,12 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
                   ) : (
                     <InputFormatCurrency
                       {...field}
-                      onChange={(e) => field.onChange(e.target.value)}
                       placeholder="100"
+                      onChange={(e) => field.onChange(e.target.value)}
                     />
                   )}
                 </>
-                {fieldState.invalid && (
+                {!!fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
                 )}
               </Field>
@@ -268,11 +283,13 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
               <div className="flex flex-col justify-center h-12">
                 <Switch
                   checked={field.value}
-                  onCheckedChange={field.onChange}
                   size="lg"
+                  onCheckedChange={field.onChange}
                 />
               </div>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -283,12 +300,14 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
             <Field>
               <FieldLabel>Số lượng tối đa</FieldLabel>
               <Input
-                type="number"
                 placeholder="100"
+                type="number"
                 {...field}
                 onChange={(e) => field.onChange(e.target.valueAsNumber)}
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
@@ -302,7 +321,7 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
                 placeholder="Tìm kiếm khóa học ..."
                 onChange={handleSearchCourse}
               />
-              {findCourse && findCourse.length > 0 && (
+              {!!findCourse && findCourse.length > 0 && (
                 <div className="flex flex-col gap-2 mt-5!">
                   {findCourse?.map((course) => (
                     <Label
@@ -311,14 +330,14 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
                       htmlFor={course.title}
                     >
                       <Checkbox
-                        id={course.title}
                         className="shirk-0 size-3.5 text-slate-400"
+                        id={course.title}
+                        checked={selectedCourses.some(
+                          (element) => element._id === course._id,
+                        )}
                         onCheckedChange={(checked) =>
                           handleSelectCourse(checked, course)
                         }
-                        checked={selectedCourses.some(
-                          (el) => el._id === course._id,
-                        )}
                       />
                       <span>{course.title}</span>
                     </Label>
@@ -343,12 +362,14 @@ const UpdateCouponForm = ({ data }: { data: TCouponParams }) => {
                   ))}
                 </div>
               )}
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && (
+                <FieldError errors={[fieldState.error]} />
+              )}
             </Field>
           )}
         />
       </div>
-      <Button variant="primary" className="w-37.5 ml-auto flex">
+      <Button className="w-37.5 ml-auto flex" variant="primary">
         Cập nhật
       </Button>
     </form>

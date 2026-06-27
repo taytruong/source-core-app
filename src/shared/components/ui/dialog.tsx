@@ -1,11 +1,11 @@
 "use client";
 
-import * as React from "react";
+import { XIcon } from "lucide-react";
 import { Dialog as DialogPrimitive } from "radix-ui";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/src/shared/components/ui/button";
-import { XIcon } from "lucide-react";
 
 function Dialog({
   ...props
@@ -48,8 +48,8 @@ function DialogOverlay({
 }
 
 function DialogContent({
-  className,
   children,
+  className,
   showCloseButton = true,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
@@ -67,9 +67,9 @@ function DialogContent({
         {...props}
       >
         {children}
-        {showCloseButton && (
-          <DialogPrimitive.Close data-slot="dialog-close" asChild>
-            <Button variant="ghost" className="absolute top-2 right-2">
+        {!!showCloseButton && (
+          <DialogPrimitive.Close asChild data-slot="dialog-close">
+            <Button className="absolute top-2 right-2" variant="ghost">
               <XIcon />
               <span className="sr-only">Close</span>
             </Button>
@@ -83,17 +83,17 @@ function DialogContent({
 function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      data-slot="dialog-header"
       className={cn("flex flex-col gap-2", className)}
+      data-slot="dialog-header"
       {...props}
     />
   );
 }
 
 function DialogFooter({
+  children,
   className,
   showCloseButton = false,
-  children,
   ...props
 }: React.ComponentProps<"div"> & {
   showCloseButton?: boolean;
@@ -108,7 +108,7 @@ function DialogFooter({
       {...props}
     >
       {children}
-      {showCloseButton && (
+      {!!showCloseButton && (
         <DialogPrimitive.Close asChild>
           <Button variant="outline">Close</Button>
         </DialogPrimitive.Close>
@@ -123,8 +123,8 @@ function DialogTitle({
 }: React.ComponentProps<typeof DialogPrimitive.Title>) {
   return (
     <DialogPrimitive.Title
-      data-slot="dialog-title"
       className={cn("text-base leading-none font-medium", className)}
+      data-slot="dialog-title"
       {...props}
     />
   );

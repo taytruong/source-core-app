@@ -1,19 +1,21 @@
-import { TUpdateCourseLecture } from "@/src/types";
 import React from "react";
+
+import { IHistory } from "@/src/database/history.md";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/src/shared/components/ui/accordion";
+import { TUpdateCourseLecture } from "@/src/types";
+
 import LessonItem from "./LessonItem";
-import { IHistory } from "@/src/database/history.md";
 
 const LessonContent = ({
-  lectures,
   course,
-  slug,
   histories = [],
+  lectures,
+  slug,
 }: {
   lectures: TUpdateCourseLecture[];
   course: string;
@@ -23,7 +25,7 @@ const LessonContent = ({
   return (
     <div className="flex flex-col gap-5">
       {lectures.map((item: TUpdateCourseLecture) => (
-        <Accordion type="single" collapsible key={item._id.toString()}>
+        <Accordion key={item._id.toString()} collapsible type="single">
           <AccordionItem value={item._id.toString()}>
             <AccordionTrigger>
               <div className="flex items-center gap-3 justify-between w-full pr-5">
@@ -34,14 +36,14 @@ const LessonContent = ({
               <div className="flex flex-col gap-3 mt-2">
                 {item.lessons.map((lesson) => (
                   <LessonItem
-                    lesson={lesson ? JSON.parse(JSON.stringify(lesson)) : {}}
                     key={lesson._id.toString()}
-                    url={!course ? "" : `/${course}/lesson?slug=${lesson.slug}`}
-                    isActive={!slug ? false : lesson.slug === slug}
+                    isActive={slug ? lesson.slug === slug : false}
+                    lesson={lesson ? JSON.parse(JSON.stringify(lesson)) : {}}
+                    url={course ? `/${course}/lesson?slug=${lesson.slug}` : ""}
                     isChecked={histories.some(
-                      (el) => el.lesson.toString() === lesson._id.toString(),
+                      (element) => element.lesson.toString() === lesson._id.toString(),
                     )}
-                  ></LessonItem>
+                   />
                 ))}
               </div>
             </AccordionContent>

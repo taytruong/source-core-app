@@ -1,6 +1,7 @@
+import React from "react";
+
 import PageNotFound from "@/src/app/not-found";
 import { getOrderDetails } from "@/src/lib/actions/order.action";
-import React from "react";
 
 const OrderDetails = async ({
   params,
@@ -12,7 +13,9 @@ const OrderDetails = async ({
   const orderDetails = await getOrderDetails({
     code: params.code,
   });
+
   if (!orderDetails) return <PageNotFound />;
+
   return (
     <div className="flex flex-col gap-5">
       <p>

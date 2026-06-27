@@ -1,6 +1,7 @@
-import { menuItems } from "@/src/shared/constants";
-import { MenuItem, Sidebar } from "@/src/shared/components";
 import React from "react";
+
+import { MenuItem, Sidebar } from "@/src/shared/components";
+import { menuItems } from "@/src/shared/constants";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -10,14 +11,14 @@ const layout = ({ children }: { children: React.ReactNode }) => {
         {menuItems.map((item, index) => (
           <MenuItem
             key={index}
-            url={item.url}
-            title={item.title}
-            icon={item.icon}
             onlyIcon
-          ></MenuItem>
+            icon={item.icon}
+            title={item.title}
+            url={item.url}
+           />
         ))}
       </div>
-      <div className="hidden lg:block"></div>
+      <div className="hidden lg:block" />
       <main className="p-5">{children}</main>
     </div>
   );

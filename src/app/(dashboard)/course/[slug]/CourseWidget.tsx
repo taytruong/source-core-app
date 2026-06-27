@@ -1,13 +1,15 @@
 "use client";
-import { IconPlay, IconStudy, IconUsers } from "@/src/shared/components/icons";
 import React, { useState } from "react";
+
+import { IconPlay, IconStudy, IconUsers } from "@/src/shared/components/icons";
+
 import ButtonEnroll from "./ButtonEnroll";
 import CouponForm from "./CouponForm";
 
 const CourseWidget = ({
   data,
-  findUser,
   duration,
+  findUser,
 }: {
   data: any;
   findUser: any;
@@ -50,16 +52,16 @@ const CourseWidget = ({
           </li>
         </ul>
         <ButtonEnroll
-          user={findUser ? JSON.parse(JSON.stringify(findUser)) : null}
-          courseId={data ? JSON.parse(JSON.stringify(data._id)) : null}
           amount={price}
           coupon={coupon}
-        ></ButtonEnroll>
-        <CouponForm
-          setCouponId={setCoupon}
-          originalPrice={data.price}
-          setPrice={setPrice}
           courseId={data ? JSON.parse(JSON.stringify(data._id)) : null}
+          user={findUser ? JSON.parse(JSON.stringify(findUser)) : null}
+         />
+        <CouponForm
+          courseId={data ? JSON.parse(JSON.stringify(data._id)) : null}
+          originalPrice={data.price}
+          setCouponId={setCoupon}
+          setPrice={setPrice}
         />
       </div>
     </>

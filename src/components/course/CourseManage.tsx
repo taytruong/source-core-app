@@ -1,23 +1,22 @@
 "use client";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/src/shared/components/ui/table";
-import React, { useState } from "react";
 import Image from "next/image";
-import { allValue, courseStatus } from "@/src/shared/constants";
-import { IconPlus } from "../../shared/components/icons";
 import Link from "next/link";
-import { ICourse } from "@/src/database/course.md";
-import Swal from "sweetalert2";
-import { updateCourse } from "@/src/lib/actions/course.action";
-import { ECourseStatus } from "@/src/types/enum";
+import React, { useState } from "react";
 import { toast } from "sonner";
+import Swal from "sweetalert2";
+
+import { ICourse } from "@/src/database/course.md";
+import useQueryString from "@/src/hooks/useQueryString";
+import { updateCourse } from "@/src/lib/actions/course.action";
+import {
+  BadgeStatus,
+  Heading,
+  HoverTooltip,
+  Pagination,
+  TableAction,
+  TableActionItem,
+} from "@/src/shared/components";
 import { Input } from "@/src/shared/components/ui/input";
 import {
   Select,
@@ -27,20 +26,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/shared/components/ui/select";
-import useQueryString from "@/src/hooks/useQueryString";
 import {
-  BadgeStatus,
-  Heading,
-  HoverTooltip,
-  Pagination,
-  TableAction,
-  TableActionItem,
-} from "@/src/shared/components";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/src/shared/components/ui/table";
+import { allValue, courseStatus } from "@/src/shared/constants";
+import { ECourseStatus } from "@/src/types/enum";
+
+import { IconPlus } from "../../shared/components/icons";
 
 const CourseManage = ({
   courses,
-  totalPages,
   total,
+  totalPages,
 }: {
   courses: ICourse[] | undefined;
   totalPages: number;
@@ -105,7 +107,7 @@ const CourseManage = ({
 
   const handleChagePage = (type: "prev" | "next") => {
     if (type === "prev" && page === 1) return;
-    if (type === "prev") setPage((prev) => prev - 1);
+    if (type === "prev") setPage((previous) => previous - 1);
     if (type === "next") setPage((next) => next + 1);
   };
 
@@ -116,10 +118,10 @@ const CourseManage = ({
   return (
     <>
       <HoverTooltip
-        label="Tạo khóa học mới"
-        className="fixed right-5 bottom-5"
-        labelClassName="bg-primary"
         IsColorArrow
+        className="fixed right-5 bottom-5"
+        label="Tạo khóa học mới"
+        labelClassName="bg-primary"
       >
         <Link href="/manage/course/new">
           <IconPlus className="size-10 rounded-full bg-primary flexCenter text-white p-2 hover:animate-[spin_0.8s_linear_0.5]" />
@@ -136,10 +138,10 @@ const CourseManage = ({
             />
           </div>
           <Select
+            defaultValue={allValue}
             onValueChange={(value) =>
               handleSelectStatus(value as ECourseStatus)
             }
-            defaultValue={allValue}
           >
             <SelectTrigger className="w-full max-w-48" size="lg">
               <SelectValue placeholder="Chọn trạng thái" />
@@ -149,9 +151,9 @@ const CourseManage = ({
                 <SelectItem value={allValue}>Tất cả</SelectItem>
                 {courseStatus.map((status) => (
                   <SelectItem
-                    value={status.value}
                     key={status.value}
                     className={status.className}
+                    value={status.value}
                   >
                     {status.title}
                   </SelectItem>
@@ -172,12 +174,11 @@ const CourseManage = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {courses &&
-            courses.length > 0 &&
-            courses.map((courses, index) => {
+          {!!courses && courses.length > 0 && courses.map((courses, index) => {
               const courseStatusTitleItem = courseStatus.find(
                 (item) => item.value === courses.status,
               );
+
               return (
                 <TableRow key={courses.slug}>
                   <TableCell className="w-10 p-7">{index + 1}</TableCell>
@@ -185,10 +186,10 @@ const CourseManage = ({
                     <div className="flex items-center gap-3">
                       <Image
                         alt=""
+                        className="shrink-0 size-16 rounded-lg object-cover"
+                        height={80}
                         src={courses.image}
                         width={80}
-                        height={80}
-                        className="shrink-0 size-16 rounded-lg object-cover"
                       />
                       <div className="flex flex-col gap-1">
                         <h3 className="font-medium text-sm lg:text-base whitespace-nowrap">
@@ -215,31 +216,31 @@ const CourseManage = ({
                           onClick={() =>
                             handleChangeStatus(courses.slug, courses.status)
                           }
-                        ></BadgeStatus>
+                         />
                       </button>
                     </HoverTooltip>
                   </TableCell>
                   <TableCell>
                     <TableAction>
                       <TableActionItem
-                        type="doc"
                         label="Cập nhật nội dụng cho người xem"
+                        type="doc"
                         url={`/manage/course/update-content?slug=${courses.slug}`}
                       />
                       <TableActionItem
-                        type="view"
-                        label="Xem khóa học"
-                        url={`/course/${courses.slug}`}
                         newTab
+                        label="Xem khóa học"
+                        type="view"
+                        url={`/course/${courses.slug}`}
                       />
                       <TableActionItem
-                        type="edit"
                         label="Cập nhật thông tin khóa học"
+                        type="edit"
                         url={`/manage/course/update?slug=${courses.slug}`}
                       />
                       <TableActionItem
-                        type="delete"
                         label="Xóa khóa học"
+                        type="delete"
                         onClick={() => handleDeleteCourseItem(courses.slug)}
                       />
                     </TableAction>
@@ -249,7 +250,7 @@ const CourseManage = ({
             })}
         </TableBody>
       </Table>
-      <Pagination totalPages={totalPages} total={total}></Pagination>
+      <Pagination total={total} totalPages={totalPages} />
     </>
   );
 };

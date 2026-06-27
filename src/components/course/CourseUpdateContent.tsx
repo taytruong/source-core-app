@@ -1,31 +1,32 @@
 "use client";
+import React, { MouseEvent, useState } from "react";
+import slugify from "slugify";
+import { toast } from "sonner";
+import Swal from "sweetalert2";
+
+import { cn } from "@/lib/utils";
+import { ILesson } from "@/src/database/lesson.md";
+import { createLecture, updateLecture } from "@/src/lib/actions/lecture.action";
+import { createLesson, updateLesson } from "@/src/lib/actions/lesson.action";
+import { HoverTooltip } from "@/src/shared/components";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/src/shared/components/ui/accordion";
-import React, { MouseEvent, useState } from "react";
+import { Button } from "@/src/shared/components/ui/button";
+import { Input } from "@/src/shared/components/ui/input";
+import { commonClassNames } from "@/src/shared/constants";
+import { TCourseUpdateParams, TUpdateCourseLecture } from "@/src/types";
+
 import {
   IconCancel,
   IconCheck,
   IconDelete,
   IconEdit,
 } from "../../shared/components/icons";
-import { Button } from "@/src/shared/components/ui/button";
-import { createLecture, updateLecture } from "@/src/lib/actions/lecture.action";
-import { toast } from "sonner";
-import Swal from "sweetalert2";
-import { TCourseUpdateParams, TUpdateCourseLecture } from "@/src/types";
-import { Input } from "@/src/shared/components/ui/input";
-import { cn } from "@/lib/utils";
-
-import { createLesson, updateLesson } from "@/src/lib/actions/lesson.action";
-import { ILesson } from "@/src/database/lesson.md";
-import slugify from "slugify";
 import LessonItemUpdate from "../lesson/LessonItemUpdate";
-import { HoverTooltip } from "@/src/shared/components";
-import { commonClassNames } from "@/src/shared/constants";
 
 const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
   const lectures = course.lectures;
@@ -96,6 +97,7 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
           path: `/manage/course/update-content?slug=${course.slug}`,
         },
       });
+
       if (res?.success) {
         toast.success("Cập nhật chương thành công!");
         setLectureIdEdit("");
@@ -113,10 +115,12 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
         lecture: lectureId,
         course: courseId,
         title: "Tiêu đề mới",
-        slug: `tieu-de-moi-${new Date().getTime().toString().slice(-3)}`,
+        slug: `tieu-de-moi-${Date.now().toString().slice(-3)}`,
       });
+
       if (res?.success) {
         toast.success("Thêm tập mới thành công!");
+
         return;
       }
       toast.error("Thêm tập mới thất bại!");
@@ -138,17 +142,20 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
           slug: slugify(lessonEdit, {
             lower: true,
             locale: "vi",
-            remove: /[*+~.()'"!:@]/g,
+            remove: /[!"'()*+.:@~]/g,
           }),
         },
         path: `/manage/course/update-content?slug=${course.slug}`,
       });
+
       if (res?.success) {
         toast.success("Cập nhật tập này thành công!");
         setLessonIdEdit("");
         setLessonEdit("");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log("🚀 ~ handleUpdateLesson ~ error:", error);
+    }
   };
 
   const handleDeleteLesson = async (
@@ -184,9 +191,9 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
   return (
     <div>
       <div className="flex flex-col gap-5">
-        {lectures.map((item: TUpdateCourseLecture, index) => (
+        {lectures.map((item: TUpdateCourseLecture) => (
           <div key={item._id.toString()}>
-            <Accordion type="single" collapsible={!lectureIdEdit}>
+            <Accordion collapsible={!lectureIdEdit} type="single">
               <AccordionItem value={item._id.toString()}>
                 <AccordionTrigger>
                   <div className="flex items-center gap-3 justify-between w-full pr-5">
@@ -194,8 +201,8 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
                       <>
                         <div className="w-full">
                           <Input
-                            placeholder="Tên chương"
                             defaultValue={item.title}
+                            placeholder="Tên chương"
                             onChange={(e) => setLectureEdit(e.target.value)}
                           />
                         </div>
@@ -269,9 +276,9 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
                     <div className="flex flex-col gap-3">
                       {item.lessons.map((lesson: ILesson) => (
                         <Accordion
-                          type="single"
-                          collapsible={!lessonIdEdit}
                           key={lesson._id.toString()}
+                          collapsible={!lessonIdEdit}
+                          type="single"
                         >
                           <AccordionItem value={lesson._id.toString()}>
                             <AccordionTrigger>
@@ -280,8 +287,8 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
                                   <>
                                     <div className="w-full">
                                       <Input
-                                        placeholder="Tên tập"
                                         defaultValue={lesson.title}
+                                        placeholder="Tên tập"
                                         onChange={(e) =>
                                           setLessonEdit(e.target.value)
                                         }
@@ -365,7 +372,7 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
                             <AccordionContent>
                               <LessonItemUpdate
                                 lesson={lesson}
-                              ></LessonItemUpdate>
+                               />
                             </AccordionContent>
                           </AccordionItem>
                         </Accordion>
@@ -376,17 +383,17 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateParams }) => {
               </AccordionItem>
             </Accordion>
             <Button
+              className="mt-5 ml-auto w-fit block"
               onClick={() =>
                 handleAddNewLesson(item._id.toString(), course._id.toString())
               }
-              className="mt-5 ml-auto w-fit block"
             >
               Thêm tập mới
             </Button>
           </div>
         ))}
       </div>
-      <Button onClick={handleAddNewLecture} className="mt-5">
+      <Button className="mt-5" onClick={handleAddNewLecture}>
         Thêm chương mới
       </Button>
     </div>

@@ -1,4 +1,11 @@
 "use server";
+import { QueryFilter } from "mongoose";
+import { revalidatePath } from "next/cache";
+
+import Course, { ICourse } from "@/src/database/course.md";
+import Lecture from "@/src/database/lecture.md";
+import Lesson from "@/src/database/lesson.md";
+import Rating from "@/src/database/rating.md";
 import {
   StudyCourseProps,
   TCourseUpdateParams,
@@ -7,14 +14,9 @@ import {
   TGetAllCourseParams,
   TUpdateCourseParams,
 } from "@/src/types";
-import { connectToDatabase } from "../mongoose";
-import { QueryFilter } from "mongoose";
-import Course, { ICourse } from "@/src/database/course.md";
-import { revalidatePath } from "next/cache";
-import Lecture from "@/src/database/lecture.md";
-import Lesson from "@/src/database/lesson.md";
 import { ECourseStatus, ERatingStatus } from "@/src/types/enum";
-import Rating from "@/src/database/rating.md";
+
+import { connectToDatabase } from "../mongoose";
 
 export async function getAllCourse(params: TFilterData): Promise<
   | {
@@ -25,9 +27,10 @@ export async function getAllCourse(params: TFilterData): Promise<
 > {
   try {
     connectToDatabase();
-    const { page = 1, limit = 10, search, status } = params;
+    const { limit = 10, page = 1, search, status } = params;
     const skip = (page - 1) * limit;
     const query: QueryFilter<typeof Course> = {};
+
     if (search) {
       // hoặc = lấy ra title của Course
       query.$or = [{ title: { $regex: search, $options: "i" } }];
@@ -56,9 +59,10 @@ export async function getAllCoursePublic(
 ): Promise<StudyCourseProps[] | undefined> {
   try {
     connectToDatabase();
-    const { page = 1, limit = 10, search } = params;
+    const { limit = 10, page = 1, search } = params;
     const skip = (page - 1) * limit;
     const query: QueryFilter<typeof Course> = {};
+
     if (search) {
       // hoặc = lấy ra title của Course
       query.$or = [{ title: { $regex: search, $options: "i" } }];
@@ -68,6 +72,7 @@ export async function getAllCoursePublic(
       .skip(skip)
       .limit(limit)
       .sort({ create_at: -1 });
+
     return JSON.parse(JSON.stringify(courses));
   } catch (error) {
     console.log("🚀 ~ getAllCourse ~ error:", error);
@@ -108,6 +113,7 @@ export async function getCourseBySlug({
           status: ERatingStatus.ACTIVE,
         },
       });
+
     return findCourse;
   } catch (error) {
     console.log("🚀 ~ getCourseBySlug ~ error:", error);
@@ -118,6 +124,7 @@ export async function createCourse(params: TCreateCourseParams) {
   try {
     connectToDatabase();
     const existCourse = await Course.findOne({ slug: params.slug });
+
     if (existCourse) {
       return {
         success: false,
@@ -125,6 +132,7 @@ export async function createCourse(params: TCreateCourseParams) {
       };
     }
     const course = await Course.create(params);
+
     return {
       success: true,
       data: JSON.parse(JSON.stringify(course)),
@@ -138,6 +146,7 @@ export async function updateCourse(params: TUpdateCourseParams) {
   try {
     connectToDatabase();
     const findCourse = await Course.findOne({ slug: params.slug });
+
     if (!findCourse) return;
     await Course.findOneAndUpdate({ slug: params.slug }, params.updateData, {
       new: true,
@@ -158,7 +167,9 @@ export async function updateCourseView({ slug }: { slug: string }) {
   try {
     connectToDatabase();
     await Course.findOneAndUpdate({ slug }, { $inc: { views: 1 } });
-  } catch (error) {}
+  } catch (error) {
+    console.log("🚀 ~ updateCourseView ~ error:", error);
+  }
 }
 
 export async function getCourseLessonsInfo({ slug }: { slug: string }): Promise<
@@ -180,11 +191,14 @@ export async function getCourseLessonsInfo({ slug }: { slug: string }): Promise<
           select: "duration",
         },
       });
-    const lessons = course?.lectures.map((l: any) => l.lessons).flat();
+    const lessons = course?.lectures.flatMap((l: any) => l.lessons);
     const duration = lessons.reduce(
-      (acc: number, cur: any) => acc + (cur?.duration || 0),
+      (accumulator: number, current: any) => accumulator + (current?.duration || 0),
       0,
     );
+
     return { duration, lessons: lessons.length };
-  } catch (error) {}
+  } catch (error) {
+    console.log("🚀 ~ getCourseLessonsInfo ~ error:", error);
+  }
 }

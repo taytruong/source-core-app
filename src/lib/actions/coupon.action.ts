@@ -1,8 +1,9 @@
 "use server";
 
-import Coupon, { ICoupon } from "@/src/database/coupon.md";
-import { connectToDatabase } from "../mongoose";
+import { QueryFilter } from "mongoose";
 import { revalidatePath } from "next/cache";
+
+import Coupon from "@/src/database/coupon.md";
 import {
   TCouponItem,
   TCouponParams,
@@ -10,21 +11,26 @@ import {
   TFilterData,
   TUpdateCouponParams,
 } from "@/src/types";
-import { QueryFilter } from "mongoose";
+
+import { connectToDatabase } from "../mongoose";
 
 export async function createCoupon(params: TCreateCouponParams) {
   try {
     connectToDatabase();
     const existCouppon = await Coupon.findOne({ code: params.code });
+
     if (existCouppon?.code) {
       return { error: "Mã giảm giá đã tồn tại !" };
     }
-    const couponRegex = /^[A-Z0-9]{3,10}$/;
+    const couponRegex = /^[\dA-Z]{3,10}$/;
+
     if (!couponRegex.test(params.code)) {
       return { error: "Mã giảm giá không hợp lệ !" };
     }
     const newCoupon = await Coupon.create(params);
+
     revalidatePath("/manage/coupon");
+
     return JSON.parse(JSON.stringify(newCoupon));
   } catch (error) {
     console.log("🚀 ~ createCoupon ~ error:", error);
@@ -38,7 +44,9 @@ export async function updateCoupon(params: TUpdateCouponParams) {
       params._id,
       params.updateData,
     );
+
     revalidatePath("/manage/coupon");
+
     return JSON.parse(JSON.stringify(updatedCoupon));
   } catch (error) {
     console.log("🚀 ~ createCoupon ~ error:", error);
@@ -54,9 +62,10 @@ export async function getCoupons(params: TFilterData): Promise<
 > {
   try {
     connectToDatabase();
-    const { page = 1, limit = 10, search, active } = params;
+    const { active, limit = 10, page = 1, search } = params;
     const skip = (page - 1) * limit;
     const query: QueryFilter<typeof Coupon> = {};
+
     if (search) {
       // hoặc = lấy ra code của Coupon
       query.$or = [{ code: { $regex: search, $options: "i" } }];
@@ -90,6 +99,7 @@ export async function getCouponByCode(
       select: "_id title",
     });
     const coupon = JSON.parse(JSON.stringify(findCoupon));
+
     return coupon;
   } catch (error) {
     console.log("🚀 ~ createCoupon ~ error:", error);
@@ -107,6 +117,7 @@ export async function getValidateCode(
     const coupon = JSON.parse(JSON.stringify(findCoupon));
     const couponCourses = coupon?.courses.map((course: any) => course._id);
     let isActive = true;
+
     if (!couponCourses.includes(params.courseId)) isActive = false;
     if (!coupon?.active) isActive = false;
     if (coupon?.used >= coupon?.limit) isActive = false;
@@ -114,6 +125,7 @@ export async function getValidateCode(
       isActive = false;
     if (coupon?.end_date && new Date(coupon?.end_date) < new Date())
       isActive = false;
+
     return isActive ? coupon : undefined;
   } catch (error) {
     console.log("🚀 ~ createCoupon ~ error:", error);

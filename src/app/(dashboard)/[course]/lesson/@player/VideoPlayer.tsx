@@ -1,13 +1,15 @@
 "use client";
 import React from "react";
-import LessonNavigation from "../LessonNavigation";
-import useGlobalStore from "@/src/store";
+
 import { Button } from "@/src/shared/components/ui/button";
+import useGlobalStore from "@/src/store";
+
+import LessonNavigation from "../LessonNavigation";
 import RatingButton from "./RatingButton";
 
 // process host url for YT
 export const getYoutubeVideoId = (url: string | undefined) => {
-  if (!url) return undefined;
+  if (!url) return;
   try {
     const parsedUrl = new URL(url);
 
@@ -17,15 +19,15 @@ export const getYoutubeVideoId = (url: string | undefined) => {
 
     return parsedUrl.searchParams.get("v");
   } catch {
-    return undefined;
+    
   }
 };
 
 const VideoPlayer = ({
-  videoId,
+  data,
   nextLesson,
   prevLesson,
-  data,
+  videoId,
 }: {
   videoId: string | undefined;
   nextLesson: string;
@@ -37,16 +39,17 @@ const VideoPlayer = ({
 }) => {
   const urlVideoId = getYoutubeVideoId(videoId);
   const { expandedPlayer, setExpandedPlayer } = useGlobalStore();
+
   return (
     <>
       <div className="relative mb-5 aspect-video">
         <iframe
-          className="w-full h-full object-fill rounded-xl"
-          src={`https://www.youtube.com/embed/${urlVideoId}?rel=0`}
-          allow="autoplay; encrypted-media; picture-in-picture"
-          referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
-        ></iframe>
+          allow="autoplay; encrypted-media; picture-in-picture"
+          className="w-full h-full object-fill rounded-xl"
+          referrerPolicy="strict-origin-when-cross-origin"
+          src={`https://www.youtube.com/embed/${urlVideoId}?rel=0`}
+         />
       </div>
       <div className="flex items-center justify-between mb-5">
         <LessonNavigation nextLesson={nextLesson} prevLesson={prevLesson} />
@@ -54,7 +57,7 @@ const VideoPlayer = ({
           <RatingButton
             courseId={data.courseId}
             userId={data.userId}
-          ></RatingButton>
+           />
           <Button onClick={() => setExpandedPlayer(!expandedPlayer)}>
             {expandedPlayer ? "Mặc định" : "Chế độ rạp chiếu"}
           </Button>

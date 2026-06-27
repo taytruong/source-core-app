@@ -1,4 +1,5 @@
 import { Document, model, models, Schema, Types } from "mongoose";
+
 import { ECourseLevel, ECourseStatus } from "../types/enum";
 
 export interface ICourse extends Document {
@@ -112,4 +113,5 @@ const courseSchema = new Schema<ICourse>({
 });
 
 const Course = models.Course || model<ICourse>("Course", courseSchema);
+
 export default Course;

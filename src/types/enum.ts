@@ -50,13 +50,13 @@ enum ERatingStatus {
 }
 
 export {
-  EUserStatus,
-  EUserRole,
-  ECourseStatus,
+  ECommentStatus,
+  ECouponType,
   ECourseLevel,
+  ECourseStatus,
   ELessonType,
   EOrderStatus,
-  ECouponType,
   ERatingStatus,
-  ECommentStatus,
+  EUserRole,
+  EUserStatus,
 };

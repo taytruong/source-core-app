@@ -1,4 +1,5 @@
 import { Document, model, models, Schema, Types } from "mongoose";
+
 import { ELessonType } from "../types/enum";
 
 export interface ILesson extends Document {
@@ -61,4 +62,5 @@ const lessonSchema = new Schema<ILesson>({
 });
 
 const Lesson = models.Lesson || model<ILesson>("Lesson", lessonSchema);
+
 export default Lesson;

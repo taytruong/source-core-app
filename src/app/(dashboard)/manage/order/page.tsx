@@ -1,8 +1,9 @@
 import React from "react";
+
 import { fetchOrder } from "@/src/lib/actions/order.action";
-import { ITEM_PER_PAGE } from "@/src/shared/constants";
 import OrderManagePage from "@/src/modules/order/pages/order-manage-page";
 import { OrderManagePageParams } from "@/src/modules/order/types/order.types";
+import { ITEM_PER_PAGE } from "@/src/shared/constants";
 
 const page = async ({ searchParams }: OrderManagePageParams) => {
   const data = await fetchOrder({
@@ -19,9 +20,9 @@ const page = async ({ searchParams }: OrderManagePageParams) => {
   return (
     <OrderManagePage
       orders={orders}
-      totalPages={totalPages}
       total={total}
-    ></OrderManagePage>
+      totalPages={totalPages}
+     />
   );
 };
 

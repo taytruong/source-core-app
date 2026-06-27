@@ -1,4 +1,5 @@
 import { Document, model, models, Schema, Types } from "mongoose";
+
 import { EOrderStatus } from "../types/enum";
 
 export interface IOrder extends Document {
@@ -54,4 +55,5 @@ const orderSchema = new Schema<IOrder>({
 });
 
 const Order = models.Order || model<IOrder>("Order", orderSchema);
+
 export default Order;

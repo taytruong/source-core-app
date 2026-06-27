@@ -1,12 +1,14 @@
+import { auth } from "@clerk/nextjs/server";
 import React from "react";
+
 import { getCourseBySlug } from "@/src/lib/actions/course.action";
 import { getLessonBySlug } from "@/src/lib/actions/lesson.action";
-import { auth } from "@clerk/nextjs/server";
 import { getUserInfo } from "@/src/lib/actions/user.actions";
+import { getCommentsByLesson } from "@/src/modules/comment/services/comment.actions";
+
 import CommentForm from "./CommentForm";
 import CommentItem from "./CommentItem";
 import CommentSorting from "./CommentSorting";
-import { getCommentsByLesson } from "@/src/modules/comment/services/comment.actions";
 
 const page = async ({
   params,
@@ -25,6 +27,7 @@ const page = async ({
   const course = params.course;
   const slug = searchParams.slug;
   const findCourse = await getCourseBySlug({ slug: course });
+
   if (!findCourse) return null;
   const lesson = await getLessonBySlug({
     slug: slug,
@@ -46,8 +49,8 @@ const page = async ({
       <CommentForm
         lessonId={commentLessonId}
         userId={commentUserId}
-      ></CommentForm>
-      {rootComments && rootComments?.length > 0 && (
+       />
+      {!!rootComments && rootComments?.length > 0 && (
         <div className="flex flex-col gap-10 mt-10">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-medium flex items-center gap-2">
@@ -56,17 +59,17 @@ const page = async ({
                 {comments?.length}
               </span>
             </h2>
-            <CommentSorting></CommentSorting>
+            <CommentSorting />
           </div>
           <div className="flex flex-col gap-5">
             {rootComments?.map((item) => (
               <CommentItem
                 key={item._id.toString()}
                 comment={item}
+                comments={comments || []}
                 lessonId={commentLessonId}
                 userId={commentUserId}
-                comments={comments || []}
-              ></CommentItem>
+               />
             ))}
           </div>
         </div>

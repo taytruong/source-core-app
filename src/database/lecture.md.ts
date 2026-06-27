@@ -41,4 +41,5 @@ const lectureSchema = new Schema<ILecture>({
 });
 
 const Lecture = models.Lecture || model<ILecture>("Lecture", lectureSchema);
+
 export default Lecture;

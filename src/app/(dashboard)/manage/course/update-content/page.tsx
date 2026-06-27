@@ -1,7 +1,8 @@
+import React from "react";
+
 import CourseUpdateContent from "@/src/components/course/CourseUpdateContent";
 import { getCourseBySlug } from "@/src/lib/actions/course.action";
 import { Heading } from "@/src/shared/components";
-import React from "react";
 
 const page = async ({
   searchParams,
@@ -11,7 +12,9 @@ const page = async ({
   };
 }) => {
   const findCourse = await getCourseBySlug({ slug: searchParams.slug });
+
   if (!findCourse) return;
+
   return (
     <>
       <Heading className="mb-10">
@@ -19,7 +22,7 @@ const page = async ({
       </Heading>
       <CourseUpdateContent
         course={JSON.parse(JSON.stringify(findCourse))}
-      ></CourseUpdateContent>
+       />
     </>
   );
 };

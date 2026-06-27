@@ -1,8 +1,9 @@
-import CourseManage from "@/src/components/course/CourseManage";
-import { ITEM_PER_PAGE } from "@/src/shared/constants";
-import { getAllCourse } from "@/src/lib/actions/course.action";
-import { ECourseStatus } from "@/src/types/enum";
 import React from "react";
+
+import CourseManage from "@/src/components/course/CourseManage";
+import { getAllCourse } from "@/src/lib/actions/course.action";
+import { ITEM_PER_PAGE } from "@/src/shared/constants";
+import { ECourseStatus } from "@/src/types/enum";
 
 const page = async ({
   searchParams,
@@ -27,9 +28,9 @@ const page = async ({
   return (
     <CourseManage
       courses={courses}
-      totalPages={totalPages}
       total={total}
-    ></CourseManage>
+      totalPages={totalPages}
+     />
   );
 };
 

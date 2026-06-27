@@ -1,16 +1,17 @@
 "use client";
-import React, { useTransition } from "react";
-import { Button } from "@/src/shared/components/ui/button";
-import { Textarea } from "@/src/shared/components/ui/textarea";
-import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
-import { Field, FieldError } from "@/src/shared/components/ui/field";
-import { toast } from "sonner";
-import { ICommentItem } from "@/src/types";
 import { usePathname, useSearchParams } from "next/navigation";
+import React, { useTransition } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import z from "zod";
+
 import { cn } from "@/lib/utils";
 import { createComment } from "@/src/modules/comment/services/comment.actions";
+import { Button } from "@/src/shared/components/ui/button";
+import { Field, FieldError } from "@/src/shared/components/ui/field";
+import { Textarea } from "@/src/shared/components/ui/textarea";
+import { ICommentItem } from "@/src/types";
 
 interface CommentFormProps {
   userId: string;
@@ -29,11 +30,11 @@ const formSchema = z.object({
 });
 
 const CommentForm = ({
-  userId,
-  lessonId,
+  closeReply,
   comment,
   isReply,
-  closeReply,
+  lessonId,
+  userId,
 }: CommentFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,8 +56,10 @@ const CommentForm = ({
         parentId: comment?._id.toString(),
         path,
       });
+
       if (!newComment) {
         toast.error("Đã comment thất bại");
+
         return;
       }
       toast.success("Đã comment thành công");
@@ -68,13 +71,13 @@ const CommentForm = ({
   return (
     <>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-5 relative"
         autoComplete="off"
+        className="flex flex-col gap-5 relative"
+        onSubmit={form.handleSubmit(onSubmit)}
       >
         <Controller
-          name="content"
           control={form.control}
+          name="content"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <Textarea
@@ -84,18 +87,18 @@ const CommentForm = ({
                 })}
                 {...field}
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
 
         <Button
           isLoading={isPending}
+          type="submit"
           variant="primary"
           className={cn("w-35 ml-auto rounded-lg h-10", {
             "w-24": isReply,
           })}
-          type="submit"
         >
           {isReply ? "Trả lời" : "Đăng bình luận"}
         </Button>

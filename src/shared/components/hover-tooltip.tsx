@@ -1,15 +1,17 @@
 import React from "react";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/src/shared/components/ui/tooltip";
+
 const HoverTooltip = ({
-  children,
-  label,
-  className,
-  labelClassName,
   IsColorArrow,
+  children,
+  className,
+  label,
+  labelClassName,
 }: {
   children?: React.ReactNode;
   className?: string;
@@ -25,9 +27,9 @@ const HoverTooltip = ({
         </TooltipTrigger>
 
         <TooltipContent
-          side="top"
           className={labelClassName}
           IsColorArrow={IsColorArrow}
+          side="top"
         >
           {label}
         </TooltipContent>

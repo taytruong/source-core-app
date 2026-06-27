@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { RadioGroup as RadioGroupPrimitive } from "radix-ui";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -11,8 +11,8 @@ function RadioGroup({
 }: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {
   return (
     <RadioGroupPrimitive.Root
-      data-slot="radio-group"
       className={cn("grid w-full gap-2", className)}
+      data-slot="radio-group"
       {...props}
     />
   );
@@ -32,8 +32,8 @@ function RadioGroupItem({
       {...props}
     >
       <RadioGroupPrimitive.Indicator
-        data-slot="radio-group-indicator"
         className="flex size-4 items-center justify-center"
+        data-slot="radio-group-indicator"
       >
         <span className="absolute top-1/2 left-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary" />
       </RadioGroupPrimitive.Indicator>

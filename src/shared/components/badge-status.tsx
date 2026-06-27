@@ -1,6 +1,7 @@
+import React from "react";
+
 import { cn } from "@/lib/utils";
 import { commonClassNames } from "@/src/shared/constants";
-import React from "react";
 
 interface BadgeStatusProps {
   item?: {
@@ -12,6 +13,7 @@ interface BadgeStatusProps {
 
 const BadgeStatus = ({ item, onClick }: BadgeStatusProps) => {
   if (!item) return null;
+
   return (
     <span
       className={cn(commonClassNames.status, item?.className)}

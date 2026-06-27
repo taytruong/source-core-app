@@ -1,7 +1,8 @@
+import React from "react";
+
 import CourseUpdate from "@/src/components/course/CourseUpdate";
 import { getCourseBySlug } from "@/src/lib/actions/course.action";
 import { Heading } from "@/src/shared/components";
-import React from "react";
 
 const page = async ({
   searchParams,
@@ -13,7 +14,9 @@ const page = async ({
   const findCourse = await getCourseBySlug({
     slug: searchParams.slug,
   });
+
   if (!findCourse) return null;
+
   return (
     <>
       <Heading className="mb-8">

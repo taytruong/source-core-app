@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/src/shared/components/ui/button";
@@ -44,16 +44,16 @@ const inputGroupAddonVariants = cva(
 );
 
 function InputGroupAddon({
-  className,
   align = "inline-start",
+  className,
   ...props
 }: React.ComponentProps<"div"> & VariantProps<typeof inputGroupAddonVariants>) {
   return (
     <div
-      role="group"
-      data-slot="input-group-addon"
-      data-align={align}
       className={cn(inputGroupAddonVariants({ align }), className)}
+      data-align={align}
+      data-slot="input-group-addon"
+      role="group"
       onClick={(e) => {
         if ((e.target as HTMLElement).closest("button")) {
           return;
@@ -85,18 +85,18 @@ const inputGroupButtonVariants = cva(
 
 function InputGroupButton({
   className,
+  size = "xs",
   type = "button",
   variant = "ghost",
-  size = "xs",
   ...props
 }: Omit<React.ComponentProps<typeof Button>, "size"> &
   VariantProps<typeof inputGroupButtonVariants>) {
   return (
     <Button
-      type={type}
-      data-size={size}
-      variant={variant}
       className={cn(inputGroupButtonVariants({ size }), className)}
+      data-size={size}
+      type={type}
+      variant={variant}
       {...props}
     />
   );
@@ -150,7 +150,7 @@ export {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
-  InputGroupText,
   InputGroupInput,
+  InputGroupText,
   InputGroupTextarea,
 };

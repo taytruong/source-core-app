@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { Tooltip as TooltipPrimitive } from "radix-ui";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -37,10 +37,10 @@ function TooltipTrigger({
 }
 
 function TooltipContent({
+  IsColorArrow = false,
+  children,
   className,
   sideOffset = 0,
-  children,
-  IsColorArrow = false,
   ...props
 }: TooltipContentProps) {
   return (

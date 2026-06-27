@@ -3,15 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { IconClock, IconEye, IconStar } from "../../shared/components/icons";
+
+import { getCourseLessonsInfo } from "@/src/lib/actions/course.action";
 import { commonClassNames } from "@/src/shared/constants";
 import { StudyCourseProps } from "@/src/types";
 import { formatMinutesToHour, formatViews } from "@/src/utils";
-import { getCourseLessonsInfo } from "@/src/lib/actions/course.action";
+
+import { IconClock, IconEye, IconStar } from "../../shared/components/icons";
 
 const CourseItem = ({
-  data,
   cta,
+  data,
   url = "",
 }: {
   data: StudyCourseProps;
@@ -19,9 +21,11 @@ const CourseItem = ({
   url?: string;
 }) => {
   const [duration, setDuration] = useState(0);
+
   useEffect(() => {
     async function getDuration() {
       const res = await getCourseLessonsInfo({ slug: data.slug });
+
       setDuration(res?.duration || 0);
     }
     getDuration();
@@ -44,17 +48,18 @@ const CourseItem = ({
       icon: (className?: string) => <IconClock className={className} />,
     },
   ];
+
   return (
     <div className="bg-white border border-gray-200 p-3 rounded-2xl flex flex-col">
-      <Link href={courseUrl} className="block h-48 relative">
+      <Link className="block h-48 relative" href={courseUrl}>
         <Image
-          src={data.image}
-          alt=""
-          width={300}
-          height={200}
-          className="w-full h-full object-cover rounded-lg"
-          sizes="@media (min-width:640px) 300px, 100vw"
           priority
+          alt=""
+          className="w-full h-full object-cover rounded-lg"
+          height={200}
+          sizes="@media (min-width:640px) 300px, 100vw"
+          src={data.image}
+          width={300}
         />
         {/* <span className="inline-block px-3 py-1 rounded-full absolute top-3 right-3 z-10 text-white font-medium text-xs bg-green-500">
           {data?.create_at.toLocaleDateString("vi-VI")}
@@ -65,7 +70,7 @@ const CourseItem = ({
         <div className="mt-auto">
           <div className="xl:flex xl:items-center xl:gap-3 xl:mb-5 text-xs text-gray-500 grid grid-cols-2 mb-0">
             {courseInfo.map((item, index) => (
-              <div className="flex items-center gap-2" key={index}>
+              <div key={index} className="flex items-center gap-2">
                 {item.icon("size-5")}
                 <span>{item.title}</span>
               </div>
@@ -74,7 +79,7 @@ const CourseItem = ({
               {data?.price?.toLocaleString("en-EN")}
             </span>
           </div>
-          <Link href={courseUrl} className={commonClassNames.primaryButton}>
+          <Link className={commonClassNames.primaryButton} href={courseUrl}>
             {cta || "Xem chi tiết"}
           </Link>
         </div>

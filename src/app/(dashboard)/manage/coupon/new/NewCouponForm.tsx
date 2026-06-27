@@ -1,10 +1,27 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+import { debounce } from "lodash";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
+
+import { createCoupon } from "@/src/lib/actions/coupon.action";
+import { getAllCourse } from "@/src/lib/actions/course.action";
+import { IconCancel } from "@/src/shared/components/icons";
 import { Button } from "@/src/shared/components/ui/button";
 import { Calendar } from "@/src/shared/components/ui/calendar";
+import { Checkbox } from "@/src/shared/components/ui/checkbox";
+import {
+  Field,
+  FieldError,
+  FieldLabel,
+} from "@/src/shared/components/ui/field";
 import { Input } from "@/src/shared/components/ui/input";
+import InputFormatCurrency from "@/src/shared/components/ui/input-format";
 import { Label } from "@/src/shared/components/ui/label";
 import {
   Popover,
@@ -16,24 +33,8 @@ import {
   RadioGroupItem,
 } from "@/src/shared/components/ui/radio-group";
 import { Switch } from "@/src/shared/components/ui/switch";
-import {
-  Field,
-  FieldError,
-  FieldLabel,
-} from "@/src/shared/components/ui/field";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import React, { useState } from "react";
-import { ECouponType } from "@/src/types/enum";
 import { couponFormSchema, couponTypes } from "@/src/shared/constants";
-import { format } from "date-fns";
-import { createCoupon } from "@/src/lib/actions/coupon.action";
-import { toast } from "sonner";
-import { debounce } from "lodash";
-import { getAllCourse } from "@/src/lib/actions/course.action";
-import { Checkbox } from "@/src/shared/components/ui/checkbox";
-import { IconCancel } from "@/src/shared/components/icons";
-import InputFormatCurrency from "@/src/shared/components/ui/input-format";
-import { useRouter } from "next/navigation";
+import { ECouponType } from "@/src/types/enum";
 
 const NewCouponForm = () => {
   const [startDate, setStartDate] = useState<Date>();
@@ -62,6 +63,7 @@ const NewCouponForm = () => {
     try {
       const couponType = values.type;
       const couponValue = Number(values.value?.replace(/,/g, ""));
+
       if (
         couponType === ECouponType.PERCENT &&
         couponValue &&
@@ -70,6 +72,7 @@ const NewCouponForm = () => {
         form.setError("value", {
           message: "Giá trị không hợp lệ",
         });
+
         return;
       }
       const newCoupon = await createCoupon({
@@ -79,8 +82,10 @@ const NewCouponForm = () => {
         end_date: endDate,
         courses: selectedCourses.map((course) => course._id),
       });
+
       if (newCoupon.error) {
         toast.error(newCoupon.error);
+
         return;
       }
       if (newCoupon.code) {
@@ -97,6 +102,7 @@ const NewCouponForm = () => {
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       const courseList = await getAllCourse({ search: value });
+
       setFindCourse(courseList?.courses);
       if (!value) setFindCourse([]);
     },
@@ -105,16 +111,16 @@ const NewCouponForm = () => {
 
   const handleSelectCourse = (checked: boolean | string, course: any) => {
     if (checked) {
-      setSelectedCourses((prev) => [...prev, course]);
+      setSelectedCourses((previous) => [...previous, course]);
     } else {
-      setSelectedCourses((prev) =>
-        prev.filter((selectedCourse) => selectedCourse._id !== course._id),
+      setSelectedCourses((previous) =>
+        previous.filter((selectedCourse) => selectedCourse._id !== course._id),
       );
     }
   };
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} autoComplete="off">
+    <form autoComplete="off" onSubmit={form.handleSubmit(onSubmit)}>
       <div className="grid grid-cols-2 gap-8 mt-10 mb-8">
         <Controller
           control={form.control}
@@ -123,7 +129,7 @@ const NewCouponForm = () => {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Tiêu đề</FieldLabel>
               <Input placeholder="Tiêu đề" {...field} />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
@@ -134,12 +140,12 @@ const NewCouponForm = () => {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Code</FieldLabel>
               <Input
-                placeholder="Mã giảm giá"
                 className="font-semibold uppercase"
+                placeholder="Mã giảm giá"
                 {...field}
                 onChange={(e) => field.onChange(e.target.value.toUpperCase())}
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
@@ -151,7 +157,7 @@ const NewCouponForm = () => {
               <FieldLabel>Ngày bắt đầu</FieldLabel>
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant={"outline"} className="w-full">
+                  <Button className="w-full" variant={"outline"}>
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {startDate ? (
                       format(startDate, "dd/MM/yyyy")
@@ -161,8 +167,8 @@ const NewCouponForm = () => {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
-                  className="w-auto p-0 bg-white shadow-md"
                   align="start"
+                  className="w-auto p-0 bg-white shadow-md"
                 >
                   <Calendar
                     mode="single"
@@ -171,7 +177,7 @@ const NewCouponForm = () => {
                   />
                 </PopoverContent>
               </Popover>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
@@ -183,7 +189,7 @@ const NewCouponForm = () => {
               <FieldLabel>Ngày kết thúc</FieldLabel>
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant={"outline"} className="w-full">
+                  <Button className="w-full" variant={"outline"}>
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {endDate ? (
                       format(endDate, "dd/MM/yyyy")
@@ -193,8 +199,8 @@ const NewCouponForm = () => {
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent
-                  className="w-auto p-0 bg-white shadow-md"
                   align="start"
+                  className="w-auto p-0 bg-white shadow-md"
                 >
                   <Calendar
                     mode="single"
@@ -203,7 +209,7 @@ const NewCouponForm = () => {
                   />
                 </PopoverContent>
               </Popover>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
@@ -214,23 +220,23 @@ const NewCouponForm = () => {
             <Field>
               <FieldLabel>Loại coupon</FieldLabel>
               <RadioGroup
-                defaultValue={ECouponType.PERCENT}
                 className="flex gap-5 h-12"
+                defaultValue={ECouponType.PERCENT}
                 onValueChange={field.onChange}
               >
                 {couponTypes.map((type) => (
                   <div
-                    className="flex items-center space-x-2 cursor-pointer"
                     key={type.value}
+                    className="flex items-center space-x-2 cursor-pointer"
                   >
-                    <RadioGroupItem value={type.value} id={type.value} />
-                    <Label htmlFor={type.value} className="cursor-pointer">
+                    <RadioGroupItem id={type.value} value={type.value} />
+                    <Label className="cursor-pointer" htmlFor={type.value}>
                       {type.title}
                     </Label>
                   </div>
                 ))}
               </RadioGroup>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
@@ -250,12 +256,12 @@ const NewCouponForm = () => {
                 ) : (
                   <InputFormatCurrency
                     {...field}
-                    onChange={(e) => field.onChange(e.target.value)}
                     placeholder="100"
+                    onChange={(e) => field.onChange(e.target.value)}
                   />
                 )}
               </>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
@@ -268,11 +274,11 @@ const NewCouponForm = () => {
               <div className="flex flex-col justify-center h-12">
                 <Switch
                   checked={field.value}
-                  onCheckedChange={field.onChange}
                   size="lg"
+                  onCheckedChange={field.onChange}
                 />
               </div>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
@@ -283,12 +289,12 @@ const NewCouponForm = () => {
             <Field>
               <FieldLabel>Số lượng tối đa</FieldLabel>
               <Input
-                type="number"
                 placeholder="100"
+                type="number"
                 {...field}
                 onChange={(e) => field.onChange(e.target.valueAsNumber)}
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
@@ -302,7 +308,7 @@ const NewCouponForm = () => {
                 placeholder="Tìm kiếm khóa học ..."
                 onChange={handleSearchCourse}
               />
-              {findCourse && findCourse.length > 0 && (
+              {!!findCourse && findCourse.length > 0 && (
                 <div className="flex flex-col gap-2 mt-5!">
                   {findCourse?.map((course) => (
                     <Label
@@ -311,14 +317,14 @@ const NewCouponForm = () => {
                       htmlFor={course.title}
                     >
                       <Checkbox
-                        id={course.title}
                         className="shirk-0 size-3.5 text-slate-400"
+                        id={course.title}
+                        checked={selectedCourses.some(
+                          (element) => element._id === course._id,
+                        )}
                         onCheckedChange={(checked) =>
                           handleSelectCourse(checked, course)
                         }
-                        checked={selectedCourses.some(
-                          (el) => el._id === course._id,
-                        )}
                       />
                       <span>{course.title}</span>
                     </Label>
@@ -343,12 +349,12 @@ const NewCouponForm = () => {
                   ))}
                 </div>
               )}
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
       </div>
-      <Button variant="primary" className="w-37.5 ml-auto flex">
+      <Button className="w-37.5 ml-auto flex" variant="primary">
         Tạo mã
       </Button>
     </form>

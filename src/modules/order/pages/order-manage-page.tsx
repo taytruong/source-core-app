@@ -1,21 +1,19 @@
 "use client";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/src/shared/components/ui/table";
-import React from "react";
-import {
-  allValue,
-  commonClassNames,
-  courseStatus,
-  orderStatus,
-} from "@/src/shared/constants";
+import { toast } from "sonner";
 import Swal from "sweetalert2";
+
+import useQueryString from "@/src/hooks/useQueryString";
+import { updateOrder } from "@/src/lib/actions/order.action";
+import {
+  BadgeStatus,
+  EmptySpace,
+  Heading,
+  HoverTooltip,
+  Pagination,
+} from "@/src/shared/components";
+import { IconCancel, IconCheck } from "@/src/shared/components/icons";
+import { Input } from "@/src/shared/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -24,25 +22,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/shared/components/ui/select";
-import { IconCancel, IconCheck } from "@/src/shared/components/icons";
-import useQueryString from "@/src/hooks/useQueryString";
-import { updateOrder } from "@/src/lib/actions/order.action";
-import { toast } from "sonner";
-import { OrderManageProps } from "../types/order.types";
-import { EOrderStatus } from "@/src/shared/types/enum";
-import { Input } from "@/src/shared/components/ui/input";
 import {
-  BadgeStatus,
-  EmptySpace,
-  Heading,
-  HoverTooltip,
-  Pagination,
-} from "@/src/shared/components";
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/src/shared/components/ui/table";
+import {
+  allValue,
+  commonClassNames,
+  courseStatus,
+  orderStatus,
+} from "@/src/shared/constants";
+import { EOrderStatus } from "@/src/shared/types/enum";
+
+import { OrderManageProps } from "../types/order.types";
 
 const OrderManagePage = ({
   orders = [],
-  totalPages,
   total,
+  totalPages,
 }: OrderManageProps) => {
   const { handleSearchData, handleSelectStatus } = useQueryString();
 
@@ -68,6 +69,7 @@ const OrderManagePage = ({
     }
     if (status === EOrderStatus.COMPLETE) {
       const res = await updateOrder({ orderId, status });
+
       if (res?.success) {
         toast.success("Cập nhật đơn hàng thành công");
       }
@@ -86,8 +88,8 @@ const OrderManagePage = ({
             />
           </div>
           <Select
-            onValueChange={(value) => handleSelectStatus(value as EOrderStatus)}
             defaultValue={allValue}
+            onValueChange={(value) => handleSelectStatus(value as EOrderStatus)}
           >
             <SelectTrigger className="w-full max-w-48" size="lg">
               <SelectValue placeholder="Chọn trạng thái" />
@@ -97,9 +99,9 @@ const OrderManagePage = ({
                 <SelectItem value={allValue}>Tất cả</SelectItem>
                 {courseStatus.map((status) => (
                   <SelectItem
-                    value={status.value}
                     key={status.value}
                     className={status.className}
+                    value={status.value}
                   >
                     {status.title}
                   </SelectItem>
@@ -129,6 +131,7 @@ const OrderManagePage = ({
               const orderStatusItem = orderStatus.find(
                 (item) => item.value === order.status,
               );
+
               return (
                 <TableRow key={order.code}>
                   <TableCell className="w-10 p-7">{index + 1}</TableCell>
@@ -152,7 +155,7 @@ const OrderManagePage = ({
                     <strong>{order.coupon?.code || ""}</strong>
                   </TableCell>
                   <TableCell>
-                    <BadgeStatus item={orderStatusItem}></BadgeStatus>
+                    <BadgeStatus item={orderStatusItem} />
                   </TableCell>
                   <TableCell>
                     {order.status !== EOrderStatus.CANCEL && (
@@ -160,8 +163,8 @@ const OrderManagePage = ({
                         {order.status === EOrderStatus.PENDING && (
                           <HoverTooltip label="Duyệt đơn hàng">
                             <button
-                              type="button"
                               className={commonClassNames.iconSetting}
+                              type="button"
                               onClick={() =>
                                 handleUpdateOrder({
                                   orderId: order._id,
@@ -176,8 +179,8 @@ const OrderManagePage = ({
 
                         <HoverTooltip label="Hủy đơn hàng">
                           <button
-                            type="button"
                             className={commonClassNames.iconSetting}
+                            type="button"
                             onClick={() =>
                               handleUpdateOrder({
                                 orderId: order._id,
@@ -196,7 +199,7 @@ const OrderManagePage = ({
             })}
         </TableBody>
       </Table>
-      <Pagination totalPages={totalPages} total={total}></Pagination>
+      <Pagination total={total} totalPages={totalPages} />
     </>
   );
 };

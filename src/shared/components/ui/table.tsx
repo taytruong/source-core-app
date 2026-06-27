@@ -7,12 +7,12 @@ import { cn } from "@/lib/utils";
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
     <div
-      data-slot="table-container"
       className="relative w-full overflow-x-auto border border-slate-300 bg-white rounded-lg"
+      data-slot="table-container"
     >
       <table
-        data-slot="table"
         className={cn("w-full caption-bottom text-sm", className)}
+        data-slot="table"
         {...props}
       />
     </div>
@@ -22,8 +22,8 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
 function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
   return (
     <thead
-      data-slot="table-header"
       className={cn("[&_tr]:border-b", className)}
+      data-slot="table-header"
       {...props}
     />
   );
@@ -32,8 +32,8 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
 function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
   return (
     <tbody
-      data-slot="table-body"
       className={cn("[&_tr:last-child]:border-0", className)}
+      data-slot="table-body"
       {...props}
     />
   );
@@ -97,8 +97,8 @@ function TableCaption({
 }: React.ComponentProps<"caption">) {
   return (
     <caption
-      data-slot="table-caption"
       className={cn("mt-4 text-sm text-muted-foreground", className)}
+      data-slot="table-caption"
       {...props}
     />
   );
@@ -106,11 +106,11 @@ function TableCaption({
 
 export {
   Table,
-  TableHeader,
   TableBody,
+  TableCaption,
+  TableCell,
   TableFooter,
   TableHead,
+  TableHeader,
   TableRow,
-  TableCell,
-  TableCaption,
 };

@@ -1,27 +1,7 @@
 "use client";
-import React from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/src/shared/components/ui/table";
-import { ECouponType } from "@/src/types/enum";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/src/shared/components/ui/select";
 import Link from "next/link";
-import { IconPlus } from "@/src/shared/components/icons";
-import { Input } from "@/src/shared/components/ui/input";
-import ActionDeleteCoupon from "./ActionDeleteCoupon";
-import { TCouponItem } from "@/src/types";
+import React from "react";
+
 import useQueryString from "@/src/hooks/useQueryString";
 import {
   BadgeStatus,
@@ -31,25 +11,48 @@ import {
   TableAction,
   TableActionItem,
 } from "@/src/shared/components";
+import { IconPlus } from "@/src/shared/components/icons";
+import { Input } from "@/src/shared/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/src/shared/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/src/shared/components/ui/table";
 import { allValue, couponStatus } from "@/src/shared/constants";
+import { TCouponItem } from "@/src/types";
+import { ECouponType } from "@/src/types/enum";
+
+import ActionDeleteCoupon from "./ActionDeleteCoupon";
 
 const CouponManage = ({
   coupons,
-  totalPages,
   total,
+  totalPages,
 }: {
   coupons: TCouponItem[] | undefined;
   totalPages: number;
   total: number;
 }) => {
-  const { handleSearchData, handleChangeQs } = useQueryString();
+  const { handleChangeQs, handleSearchData } = useQueryString();
+
   return (
     <>
       <HoverTooltip
-        label="Tạo mã giảm giá"
-        className="fixed right-5 bottom-5"
-        labelClassName="bg-primary"
         IsColorArrow
+        className="fixed right-5 bottom-5"
+        label="Tạo mã giảm giá"
+        labelClassName="bg-primary"
       >
         <Link href="/manage/coupon/new">
           <IconPlus className="size-10 rounded-full bg-primary flexCenter text-white p-2 hover:animate-[spin_0.8s_linear_0.5]" />
@@ -66,8 +69,8 @@ const CouponManage = ({
             />
           </div>
           <Select
-            onValueChange={(value) => handleChangeQs("active", value)}
             defaultValue={allValue}
+            onValueChange={(value) => handleChangeQs("active", value)}
           >
             <SelectTrigger className="w-full max-w-48" size="lg">
               <SelectValue placeholder="Chọn trạng thái" />
@@ -98,9 +101,7 @@ const CouponManage = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {coupons &&
-            coupons.length > 0 &&
-            coupons.map((item, index) => (
+          {!!coupons && coupons.length > 0 && coupons.map((item, index) => (
               <TableRow key={item.code}>
                 <TableCell className="w-10 p-7">{index + 1}</TableCell>
                 <TableCell>
@@ -126,31 +127,31 @@ const CouponManage = ({
                         title: "Đang hoạt động",
                         className: "text-green-500",
                       }}
-                    ></BadgeStatus>
+                     />
                   ) : (
                     <BadgeStatus
                       item={{
                         title: "Chưa kích hoạt",
                         className: "text-orange-500",
                       }}
-                    ></BadgeStatus>
+                     />
                   )}
                 </TableCell>
                 <TableCell>
                   <TableAction>
                     <TableActionItem
-                      type="edit"
                       label="Cập nhật thông tin khóa học"
+                      type="edit"
                       url={`/manage/coupon/update?code=${item.code}`}
-                    ></TableActionItem>
-                    <ActionDeleteCoupon code={item.code}></ActionDeleteCoupon>
+                     />
+                    <ActionDeleteCoupon code={item.code} />
                   </TableAction>
                 </TableCell>
               </TableRow>
             ))}
         </TableBody>
       </Table>
-      <Pagination totalPages={totalPages} total={total}></Pagination>
+      <Pagination total={total} totalPages={totalPages} />
     </>
   );
 };

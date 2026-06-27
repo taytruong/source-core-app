@@ -1,10 +1,16 @@
 "use client";
 
-import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { useImmer } from "use-immer";
 import * as z from "zod";
 
+import { ICourse } from "@/src/database/course.md";
+import { updateCourse } from "@/src/lib/actions/course.action";
 import { Button } from "@/src/shared/components/ui/button";
 import {
   Field,
@@ -12,14 +18,6 @@ import {
   FieldLabel,
 } from "@/src/shared/components/ui/field";
 import { Input } from "@/src/shared/components/ui/input";
-import { updateCourse } from "@/src/lib/actions/course.action";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { Textarea } from "@/src/shared/components/ui/textarea";
-import { ECourseLevel, ECourseStatus } from "@/src/types/enum";
-import { ICourse } from "@/src/database/course.md";
-import { useImmer } from "use-immer";
-import { IconAdd } from "../../shared/components/icons";
 import {
   Select,
   SelectContent,
@@ -28,9 +26,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/src/shared/components/ui/select";
+import { Textarea } from "@/src/shared/components/ui/textarea";
 import { courseLevel, courseStatus } from "@/src/shared/constants";
+import { ECourseLevel, ECourseStatus } from "@/src/types/enum";
 import { UploadButton } from "@/src/utils/uploadthing";
-import Image from "next/image";
+
+import { IconAdd } from "../../shared/components/icons";
 
 const formSchema = z.object({
   title: z.string().min(10, "Tên khóa học ít nhất có 10 ký tự"),
@@ -116,6 +117,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
           image: values.image,
         },
       });
+
       if (values.slug != data.slug) {
         router.replace(`/manage/course/update?slug=${values.slug}`);
       }
@@ -135,100 +137,107 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <div className="grid grid-cols-2 gap-8 mt-10 mb-6">
         <Controller
-          name="title"
           control={form.control}
+          name="title"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Tên khóa học *</FieldLabel>
               <Input
                 {...field}
                 aria-invalid={fieldState.invalid}
-                placeholder="Tên khóa học"
                 autoComplete="off"
+                placeholder="Tên khóa học"
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
 
         <Controller
-          name="slug"
           control={form.control}
+          name="slug"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Đường dẫn khóa học</FieldLabel>
               <Input
                 {...field}
                 aria-invalid={fieldState.invalid}
-                placeholder="khoa-hoc-lap-trinh"
                 autoComplete="off"
+                placeholder="khoa-hoc-lap-trinh"
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
 
         <Controller
-          name="price"
           control={form.control}
+          name="price"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Giá khuyến mãi</FieldLabel>
               <Input
                 {...field}
-                type="number"
                 placeholder="599.000"
+                type="number"
                 onChange={(e) => field.onChange(Number(e.target.value))}
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
 
         <Controller
-          name="sale_price"
           control={form.control}
+          name="sale_price"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Giá gốc</FieldLabel>
               <Input
                 {...field}
-                type="number"
                 placeholder="999.000"
+                type="number"
                 onChange={(e) => field.onChange(Number(e.target.value))}
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
 
         <Controller
-          name="desc"
           control={form.control}
+          name="desc"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Mô tả chi tiết khóa học</FieldLabel>
               <Textarea
                 {...field}
                 aria-invalid={fieldState.invalid}
-                placeholder="Nhập mô tả ..."
                 autoComplete="off"
                 className="h-63"
+                placeholder="Nhập mô tả ..."
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
 
         <Controller
-          name="image"
           control={form.control}
+          name="image"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Ảnh bìa</FieldLabel>
               <>
                 <div className="h-63 bg-white rounded border border-gray-200 flex items-center justify-center relative">
-                  {!imageWatch ? (
+                  {imageWatch ? (
+                    <Image
+                      fill
+                      alt=""
+                      className="w-full h-full object-cover rounded-md"
+                      src={imageWatch}
+                    />
+                  ) : (
                     <UploadButton
                       endpoint="imageUploader"
                       className="
@@ -258,41 +267,34 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                         console.error(`ERROR! ${error.message}`);
                       }}
                     />
-                  ) : (
-                    <Image
-                      alt=""
-                      src={imageWatch}
-                      fill
-                      className="w-full h-full object-cover rounded-md"
-                    />
                   )}
                 </div>
               </>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
 
         <Controller
-          name="intro_url"
           control={form.control}
+          name="intro_url"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Đường dẫn khóa học</FieldLabel>
               <Input
                 {...field}
                 aria-invalid={fieldState.invalid}
-                placeholder="https://www.youtube.com/watch?=abcxyz"
                 autoComplete="off"
+                placeholder="https://www.youtube.com/watch?=abcxyz"
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
 
         <Controller
-          name="views"
           control={form.control}
+          name="views"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Số lượt xem</FieldLabel>
@@ -301,18 +303,18 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                 placeholder="1000"
                 onChange={(e) => field.onChange(Number(e.target.value))}
               />
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
 
         <Controller
-          name="status"
           control={form.control}
+          name="status"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Trạng thái</FieldLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <SelectTrigger size="lg">
                   <SelectValue placeholder="Trạng thái" />
                 </SelectTrigger>
@@ -320,9 +322,9 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                   <SelectGroup>
                     {courseStatus.map((status) => (
                       <SelectItem
-                        value={status.value}
                         key={status.value}
                         className={status.className}
+                        value={status.value}
                       >
                         {status.title}
                       </SelectItem>
@@ -330,60 +332,60 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
 
         <Controller
-          name="level"
           control={form.control}
+          name="level"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Trình độ</FieldLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select defaultValue={field.value} onValueChange={field.onChange}>
                 <SelectTrigger size="lg">
                   <SelectValue placeholder="Trình độ" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
                     {courseLevel.map((level) => (
-                      <SelectItem value={level.value} key={level.value}>
+                      <SelectItem key={level.value} value={level.value}>
                         {level.title}
                       </SelectItem>
                     ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
 
         <Controller
-          name="info.requirements"
           control={form.control}
+          name="info.requirements"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel className="flex items-center justify-between gap-5">
                 <span>Yêu cầu</span>
                 <button
                   className="text-primary"
+                  type="button"
                   onClick={() => {
                     setCourseInfo((draft) => {
                       draft.requirements.push(" ");
                     });
                   }}
-                  type="button"
                 >
                   <IconAdd className="size-5" />
                 </button>
               </FieldLabel>
               {courseInfo.requirements.map((r, index) => (
                 <Input
-                  value={r}
                   key={index}
                   placeholder={`Yêu cầu số ${index + 1}`}
+                  value={r}
                   onChange={(e) => {
                     setCourseInfo((draft) => {
                       draft.requirements[index] = e.target.value;
@@ -391,34 +393,34 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                   }}
                 />
               ))}
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
         <Controller
-          name="info.benefits"
           control={form.control}
+          name="info.benefits"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel className="flex items-center justify-between gap-5">
                 <span>Lợi ích</span>
                 <button
                   className="text-primary"
+                  type="button"
                   onClick={() => {
                     setCourseInfo((draft) => {
                       draft.benefits.push(" ");
                     });
                   }}
-                  type="button"
                 >
                   <IconAdd className="size-5" />
                 </button>
               </FieldLabel>
               {courseInfo.benefits.map((r, index) => (
                 <Input
-                  value={r}
                   key={index}
                   placeholder={`Lợi ích số ${index + 1}`}
+                  value={r}
                   onChange={(e) => {
                     setCourseInfo((draft) => {
                       draft.benefits[index] = e.target.value;
@@ -426,22 +428,23 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                   }}
                 />
               ))}
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
         <Controller
-          name="info.qa"
           control={form.control}
+          name="info.qa"
           render={({ field, fieldState }) => (
             <Field
-              data-invalid={fieldState.invalid}
               className="col-start-1 col-end-3"
+              data-invalid={fieldState.invalid}
             >
               <FieldLabel className="flex items-center justify-between gap-5">
                 <span>Hỏi đáp</span>
                 <button
                   className="text-primary"
+                  type="button"
                   onClick={() => {
                     setCourseInfo((draft) => {
                       draft.qa.push({
@@ -450,17 +453,16 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                       });
                     });
                   }}
-                  type="button"
                 >
                   <IconAdd className="size-5" />
                 </button>
               </FieldLabel>
               {courseInfo.qa.map((item, index) => (
-                <div className="grid grid-cols-2 gap-5" key={index}>
+                <div key={index} className="grid grid-cols-2 gap-5">
                   <Input
-                    value={item.question}
                     key={index}
                     placeholder={`Câu hỏi số ${index + 1}`}
+                    value={item.question}
                     onChange={(e) => {
                       setCourseInfo((draft) => {
                         draft.qa[index].question = e.target.value;
@@ -468,9 +470,9 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                     }}
                   />
                   <Input
-                    value={item.answer}
                     key={index}
                     placeholder={`Câu trả lời của câu hỏi số ${index + 1}`}
+                    value={item.answer}
                     onChange={(e) => {
                       setCourseInfo((draft) => {
                         draft.qa[index].answer = e.target.value;
@@ -479,17 +481,17 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                   />
                 </div>
               ))}
-              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              {!!fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}
         />
       </div>
       <Button
-        variant={"primary"}
-        type="submit"
-        isLoading={isSubmitting}
         className="w-37.5"
         disabled={isSubmitting}
+        isLoading={isSubmitting}
+        type="submit"
+        variant={"primary"}
       >
         Cập nhật khóa học
       </Button>

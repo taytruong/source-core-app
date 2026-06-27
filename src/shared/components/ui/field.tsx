@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import { useMemo } from "react";
 
 import { cn } from "@/lib/utils";
 import { Label } from "@/src/shared/components/ui/label";
@@ -76,10 +76,10 @@ function Field({
 }: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
   return (
     <div
-      role="group"
-      data-slot="field"
-      data-orientation={orientation}
       className={cn(fieldVariants({ orientation }), className)}
+      data-orientation={orientation}
+      data-slot="field"
+      role="group"
       {...props}
     />
   );
@@ -152,8 +152,8 @@ function FieldSeparator({
 }) {
   return (
     <div
-      data-slot="field-separator"
       data-content={!!children}
+      data-slot="field-separator"
       className={cn(
         "relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2",
         className,
@@ -161,7 +161,7 @@ function FieldSeparator({
       {...props}
     >
       <Separator className="absolute inset-0 top-1/2" />
-      {children && (
+      {!!children && (
         <span
           className="relative mx-auto block w-fit bg-background px-2 text-muted-foreground"
           data-slot="field-separator-content"
@@ -174,8 +174,8 @@ function FieldSeparator({
 }
 
 function FieldError({
-  className,
   children,
+  className,
   errors,
   ...props
 }: React.ComponentProps<"div"> & {
@@ -214,8 +214,8 @@ function FieldError({
 
   return (
     <div
-      role="alert"
       data-slot="field-error"
+      role="alert"
       className={cn(
         "text-sm font-normal text-destructive text-red-500",
         className,
@@ -229,13 +229,13 @@ function FieldError({
 
 export {
   Field,
-  FieldLabel,
+  FieldContent,
   FieldDescription,
   FieldError,
   FieldGroup,
+  FieldLabel,
   FieldLegend,
   FieldSeparator,
   FieldSet,
-  FieldContent,
   FieldTitle,
 };

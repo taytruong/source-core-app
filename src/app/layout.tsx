@@ -1,12 +1,15 @@
-import type { Metadata } from "next";
 import "./globals.css";
-import { work__sans } from "../utils";
-import { ClerkProvider } from "@clerk/nextjs";
-import { Toaster } from "sonner";
-import { TooltipProvider } from "@/src/shared/components/ui/tooltip";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/next";
+
 import { viVN } from "@clerk/localizations";
+import { ClerkProvider } from "@clerk/nextjs";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import type { Metadata } from "next";
+import { Toaster } from "sonner";
+
+import { TooltipProvider } from "@/src/shared/components/ui/tooltip";
+
+import { work__sans } from "../utils";
 
 export const metadata: Metadata = {
   title: "Course-app",

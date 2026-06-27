@@ -1,5 +1,15 @@
 "use client";
+import Image from "next/image";
 import React, { useEffect, useLayoutEffect, useState } from "react";
+import { toast } from "sonner";
+
+import { cn } from "@/lib/utils";
+import {
+  createRating,
+  getRatingByUserId,
+} from "@/src/lib/actions/rating.action";
+import { IconStar } from "@/src/shared/components/icons";
+import { Button } from "@/src/shared/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,17 +18,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/src/shared/components/ui/dialog";
-import { IconStar } from "@/src/shared/components/icons";
-import { ratingList } from "@/src/shared/constants";
-import Image from "next/image";
 import { Textarea } from "@/src/shared/components/ui/textarea";
-import { Button } from "@/src/shared/components/ui/button";
-import { cn } from "@/lib/utils";
-import {
-  createRating,
-  getRatingByUserId,
-} from "@/src/lib/actions/rating.action";
-import { toast } from "sonner";
+import { ratingList } from "@/src/shared/constants";
 
 const RatingButton = ({
   courseId,
@@ -35,13 +36,16 @@ const RatingButton = ({
     setIsLoading(true);
     try {
       const isAlreadyRated = await getRatingByUserId(userId);
+
       if (isAlreadyRated) {
         toast.warning("Bạn đã đánh giá khóa học này rồi");
         setIsLoading(false);
+
         return;
       }
       if (!ratingContent || ratingValue === -1) {
         toast.warning("Vui lòng chọn đánh giá và nhập nội dung đánh giá");
+
         return;
       }
       const res = await createRating({
@@ -50,12 +54,13 @@ const RatingButton = ({
         user: userId,
         course: courseId,
       });
+
       if (res) {
         toast.success("Đánh giá thành công");
         setRatingContent("");
         setRatingValue(-1);
       }
-    } catch (error) {
+    } catch {
     } finally {
       setIsLoading(false);
     }
@@ -90,11 +95,11 @@ const RatingButton = ({
                     )}
                   >
                     <Image
-                      width={20}
-                      height={20}
                       alt={rating.title}
-                      src={`/rating/${rating.title}.png`}
                       className="transition-transform duration-300 hover:scale-[2.1]"
+                      height={20}
+                      src={`/rating/${rating.title}.png`}
+                      width={20}
                     />
                   </span>
                   <span className="capitalize">{rating.title}</span>
@@ -102,17 +107,17 @@ const RatingButton = ({
               ))}
             </div>
             <Textarea
-              placeholder="Đánh giá của bạn"
               className="h-50 resize-none"
-              onChange={(e) => setRatingContent(e.target.value)}
+              placeholder="Đánh giá của bạn"
               value={ratingContent}
+              onChange={(e) => setRatingContent(e.target.value)}
             />
             <Button
-              variant="primary"
               className="w-full mt-5"
-              onClick={handleRatingCourse}
               disabled={isDisable}
               isLoading={isLoading}
+              variant="primary"
+              onClick={handleRatingCourse}
             >
               Gửi đánh giá
             </Button>

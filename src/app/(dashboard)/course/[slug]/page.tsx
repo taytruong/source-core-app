@@ -1,25 +1,26 @@
+import { auth } from "@clerk/nextjs/server";
+import Image from "next/image";
+
 import PageNotFound from "@/src/app/not-found";
-import { IconChecked } from "@/src/shared/components/icons";
-import { courseLevelTitle, ratingList } from "@/src/shared/constants";
+import LessonContent from "@/src/components/lesson/LessonContent";
 import {
   getCourseBySlug,
   getCourseLessonsInfo,
   updateCourseView,
 } from "@/src/lib/actions/course.action";
-import { ECourseStatus } from "@/src/types/enum";
-import Image from "next/image";
+import { getUserInfo } from "@/src/lib/actions/user.actions";
+import { IconChecked } from "@/src/shared/components/icons";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/src/shared/components/ui/accordion";
-import LessonContent from "@/src/components/lesson/LessonContent";
-import { auth } from "@clerk/nextjs/server";
-import { getUserInfo } from "@/src/lib/actions/user.actions";
-import CourseWidget from "./CourseWidget";
-import AlreadyEnroll from "./AlreadyEnroll";
+import { courseLevelTitle } from "@/src/shared/constants";
+import { ECourseStatus } from "@/src/types/enum";
 import { formatMinutesToHour } from "@/src/utils";
+
+import CourseWidget from "./CourseWidget";
 
 const page = async ({
   params,
@@ -32,6 +33,7 @@ const page = async ({
   const data = await getCourseBySlug({
     slug: params.slug,
   });
+
   if (!data) return null;
   if (data.status !== ECourseStatus.APPROVED) return <PageNotFound />;
   const { userId } = await auth();
@@ -55,20 +57,20 @@ const page = async ({
           {data.intro_url ? (
             <>
               <iframe
-                width="1401"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                className="w-full h-full object-fill rounded-lg"
                 height="788"
                 src={`https://www.youtube.com/embed/${videoId}`}
                 title=""
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                className="w-full h-full object-fill rounded-lg"
-              ></iframe>
+                width="1401"
+              />
             </>
           ) : (
             <Image
-              src={data.image}
-              alt=""
               fill
+              alt=""
               className="w-full h-full object-cover rounded-lg"
+              src={data.image}
             />
           )}
         </div>
@@ -97,7 +99,7 @@ const page = async ({
           </div>
         </BoxSection>
         <BoxSection title="Nội dung khóa học">
-          <LessonContent lectures={lectures} course="" slug="" />
+          <LessonContent course="" lectures={lectures} slug="" />
         </BoxSection>
         <BoxSection title="Yêu cầu">
           {data.info.requirements.map((r, index) => (
@@ -121,7 +123,7 @@ const page = async ({
         </BoxSection>
         <BoxSection title="Hỏi đáp ?">
           {data.info.qa.map((qa, index) => (
-            <Accordion type="single" collapsible key={index}>
+            <Accordion key={index} collapsible type="single">
               <AccordionItem value={qa.question}>
                 <AccordionTrigger>{qa.question}</AccordionTrigger>
                 <AccordionContent className="mt-2.5">
@@ -134,13 +136,13 @@ const page = async ({
       </div>
       <div>
         {userCourses?.includes(data._id.toString()) ? (
-          <AlreadyEnroll></AlreadyEnroll>
+          <alreadyEnroll />
         ) : (
           <CourseWidget
-            findUser={findUser ? JSON.parse(JSON.stringify(findUser)) : null}
             data={data ? JSON.parse(JSON.stringify(data)) : null}
             duration={formatMinutesToHour(duration)}
-          ></CourseWidget>
+            findUser={findUser ? JSON.parse(JSON.stringify(findUser)) : null}
+          />
         )}
       </div>
     </div>
@@ -148,8 +150,8 @@ const page = async ({
 };
 
 function BoxInfo({
-  title,
   children,
+  title,
 }: {
   title: string;
   children: React.ReactNode;
@@ -163,8 +165,8 @@ function BoxInfo({
 }
 
 function BoxSection({
-  title,
   children,
+  title,
 }: {
   title: string;
   children: React.ReactNode;

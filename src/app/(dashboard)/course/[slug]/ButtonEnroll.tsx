@@ -1,17 +1,17 @@
 "use client";
-import { Button } from "@/src/shared/components/ui/button";
-import { IUser } from "@/src/database/user.md";
-import { createOrder } from "@/src/lib/actions/order.action";
-import { createOrderCode } from "@/src/utils";
 import { useRouter } from "next/navigation";
-import React from "react";
 import { toast } from "sonner";
 
+import { IUser } from "@/src/database/user.md";
+import { createOrder } from "@/src/lib/actions/order.action";
+import { Button } from "@/src/shared/components/ui/button";
+import { createOrderCode } from "@/src/utils";
+
 const ButtonEnroll = ({
-  user,
-  courseId,
   amount,
   coupon,
+  courseId,
+  user,
 }: {
   user: IUser | null | undefined;
   courseId: string;
@@ -22,6 +22,7 @@ const ButtonEnroll = ({
   const handleEnrollCourse = async () => {
     if (!user?.name) {
       toast.error("Vui lòng đăng nhập");
+
       return;
     }
 
@@ -33,12 +34,14 @@ const ButtonEnroll = ({
       amount: amount,
       coupon,
     });
+
     if (newOrder.code) {
       router.push(`/order/${newOrder.code}`);
     }
   };
+
   return (
-    <Button variant="primary" className="w-full" onClick={handleEnrollCourse}>
+    <Button className="w-full" variant="primary" onClick={handleEnrollCourse}>
       Mua khóa học
     </Button>
   );

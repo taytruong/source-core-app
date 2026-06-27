@@ -1,7 +1,10 @@
 import React from "react";
-import CouponManage from "./CouponManage";
+
 import { getCoupons } from "@/src/lib/actions/coupon.action";
 import { ITEM_PER_PAGE } from "@/src/shared/constants";
+
+import CouponManage from "./CouponManage";
+
 const page = async ({
   searchParams,
 }: {
@@ -17,15 +20,17 @@ const page = async ({
     search: searchParams.search || "",
     active: searchParams.active,
   });
+
   if (!data) return null;
   const { coupons, total } = data;
   const totalPages = Math.ceil(total / ITEM_PER_PAGE);
+
   return (
     <CouponManage
       coupons={coupons}
-      totalPages={totalPages}
       total={total}
-    ></CouponManage>
+      totalPages={totalPages}
+     />
   );
 };
 

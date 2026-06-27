@@ -1,11 +1,13 @@
 "use client";
-import { formatDate, getRepliesComment, timeAgo } from "@/src/utils";
 import Image from "next/image";
-import CommentReply from "./CommentReply";
 import React from "react";
+
+import { cn } from "@/lib/utils";
 import { ICommentItem } from "@/src/types";
 import { ECommentStatus } from "@/src/types/enum";
-import { cn } from "@/lib/utils";
+import { formatDate, getRepliesComment, timeAgo } from "@/src/utils";
+
+import CommentReply from "./CommentReply";
 
 interface ICommentItemProps {
   comment: ICommentItem;
@@ -16,9 +18,9 @@ interface ICommentItemProps {
 
 const CommentItem = ({
   comment,
+  comments = [],
   lessonId,
   userId,
-  comments = [],
 }: ICommentItemProps) => {
   // replies gọi đệ quy để reply comment
   const replies = getRepliesComment(comments, comment._id.toString());
@@ -40,18 +42,18 @@ const CommentItem = ({
       >
         <div className="size-10 rounded-full border border-slate-300 shadow-sm shrink-0">
           <Image
-            src={comment.user.avatar}
             alt={comment.user.name}
-            width={40}
-            height={40}
             className="rounded-full object-cover"
+            height={40}
+            src={comment.user.avatar}
+            width={40}
           />
         </div>
         <div className="flex flex-col gap-1 w-full">
           <div className="flex justify-between mb-1 font-medium text-sm">
             <div className="flex items-center gap-2">
               <h4 className="">{comment.user.name}</h4>
-              <span className="rounded-full size-1 bg-gray-500"></span>
+              <span className="rounded-full size-1 bg-gray-500" />
               <span className=" text-gray-500 text-xs">
                 {timeAgo(comment.create_at)}
               </span>
@@ -68,9 +70,9 @@ const CommentItem = ({
             </div>
             {!isPending && (
               <CommentReply
+                comment={comment}
                 lessonId={lessonId}
                 userId={userId}
-                comment={comment}
               />
             )}
           </div>
@@ -81,10 +83,10 @@ const CommentItem = ({
           <CommentItem
             key={reply._id.toString()}
             comment={reply}
+            comments={comments}
             lessonId={lessonId}
             userId={userId}
-            comments={comments}
-          ></CommentItem>
+           />
         ))}
     </>
   );

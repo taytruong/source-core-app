@@ -1,4 +1,5 @@
 import { Document, model, models, Schema, Types } from "mongoose";
+
 import { ECouponType } from "../types/enum";
 
 export interface ICoupon extends Document {
@@ -63,4 +64,5 @@ const couponSchema = new Schema<ICoupon>({
 });
 
 const Coupon = models.Coupon || model<ICoupon>("Coupon", couponSchema);
+
 export default Coupon;

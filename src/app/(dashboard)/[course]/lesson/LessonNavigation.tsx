@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/src/shared/components/ui/button";
-import { IconNext, IconPrevious } from "@/src/shared/components/icons";
-
 import { useRouter } from "next/navigation";
 import React from "react";
+
+import { IconNext, IconPrevious } from "@/src/shared/components/icons";
+import { Button } from "@/src/shared/components/ui/button";
 
 const LessonNavigation = ({
   nextLesson,
@@ -19,15 +19,15 @@ const LessonNavigation = ({
     <div className="flex gap-3">
       <Button
         className="size-8 rounded-md border border-slate-200 flex items-center justify-center p-1.5 transition-all"
-        onClick={() => (!prevLesson ? null : router.push(prevLesson))}
         disabled={!prevLesson}
+        onClick={() => (prevLesson ? router.push(prevLesson) : null)}
       >
         <IconPrevious />
       </Button>
       <Button
         className="size-8 rounded-md border border-slate-200 flex items-center justify-center p-1.5 transition-all"
-        onClick={() => (!nextLesson ? null : router.push(nextLesson))}
         disabled={!nextLesson}
+        onClick={() => (nextLesson ? router.push(nextLesson) : null)}
       >
         <IconNext />
       </Button>

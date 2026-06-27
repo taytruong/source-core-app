@@ -8,9 +8,10 @@ interface LinkActiveProps {
   children?: React.ReactNode;
 }
 
-const LinkActive = ({ url, children }: LinkActiveProps) => {
+const LinkActive = ({ children, url }: LinkActiveProps) => {
   const pathName = usePathname();
   const isActive = url === pathName;
+
   return (
     <Link
       href={url}

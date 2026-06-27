@@ -1,8 +1,6 @@
-import React from "react";
-import HoverTooltip from "./hover-tooltip";
-import { commonClassNames } from "@/src/shared/constants";
-
 import Link from "next/link";
+import React from "react";
+
 import {
   IconCheck,
   IconDelete,
@@ -10,14 +8,17 @@ import {
   IconEdit,
   IconEye,
 } from "@/src/shared/components/icons";
+import { commonClassNames } from "@/src/shared/constants";
+
+import HoverTooltip from "./hover-tooltip";
 
 type TableActionIcon = "edit" | "delete" | "view" | "doc" | "approve";
 const TableActionItem = ({
+  label,
+  newTab = false,
   onClick,
   type,
   url,
-  label,
-  newTab = false,
 }: {
   onClick?: () => void;
   type: TableActionIcon;
@@ -32,18 +33,20 @@ const TableActionItem = ({
     doc: <IconDocument />,
     approve: <IconCheck />,
   };
+
   if (url)
     return (
       <HoverTooltip label={label}>
         <Link
-          href={url}
           className={commonClassNames.iconSetting}
+          href={url}
           target={newTab ? "_blank" : undefined}
         >
           {icon[type]}
         </Link>
       </HoverTooltip>
     );
+
   return (
     <HoverTooltip label={label}>
       <button className={commonClassNames.iconSetting} onClick={onClick}>
