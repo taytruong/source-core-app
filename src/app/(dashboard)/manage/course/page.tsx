@@ -1,37 +1,17 @@
-import React from "react";
+import { CourseManageContainer } from '@/src/modules/course/pages/course-manage';
+import { CourseStatus } from '@/src/shared/constants';
 
-import CourseManage from "@/src/components/course/CourseManage";
-import { getAllCourse } from "@/src/lib/actions/course.action";
-import { ITEM_PER_PAGE } from "@/src/shared/constants";
-import { ECourseStatus } from "@/src/types/enum";
-
-const page = async ({
-  searchParams,
-}: {
+export interface CourseManagePageRootProps {
   searchParams: {
     page: number;
     search: string;
-    status: ECourseStatus;
+    status: CourseStatus;
   };
-}) => {
-  const data = await getAllCourse({
-    page: searchParams.page || 1,
-    limit: ITEM_PER_PAGE,
-    search: searchParams.search || "",
-    status: searchParams.status,
-  });
-
-  if (!data) return null;
-  const { courses, total } = data;
-  const totalPages = Math.ceil(total / ITEM_PER_PAGE);
-
-  return (
-    <CourseManage
-      courses={courses}
-      total={total}
-      totalPages={totalPages}
-     />
-  );
+}
+const CourseManagePageRoot = async ({
+  searchParams,
+}: CourseManagePageRootProps) => {
+  return <CourseManageContainer searchParams={searchParams} />;
 };
 
-export default page;
+export default CourseManagePageRoot;

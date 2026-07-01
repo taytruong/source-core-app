@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { toast } from "sonner";
-import Swal from "sweetalert2";
+import { toast } from 'sonner';
+import Swal from 'sweetalert2';
 
-import useQueryString from "@/src/hooks/useQueryString";
-import { updateOrder } from "@/src/lib/actions/order.action";
+import useQueryString from '@/src/hooks/use-query-string';
+import { updateOrder } from '@/src/lib/actions/order.action';
 import {
   BadgeStatus,
   EmptySpace,
   Heading,
   HoverTooltip,
   Pagination,
-} from "@/src/shared/components";
-import { IconCancel, IconCheck } from "@/src/shared/components/icons";
-import { Input } from "@/src/shared/components/ui/input";
+} from '@/src/shared/components';
+import { IconCancel, IconCheck } from '@/src/shared/components/icons';
+import { Input } from '@/src/shared/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -21,7 +21,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/shared/components/ui/select";
+} from '@/src/shared/components/ui/select';
 import {
   Table,
   TableBody,
@@ -29,16 +29,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/src/shared/components/ui/table";
+} from '@/src/shared/components/ui/table';
 import {
   allValue,
   commonClassNames,
   courseStatus,
   orderStatus,
-} from "@/src/shared/constants";
-import { EOrderStatus } from "@/src/shared/types/enum";
+} from '@/src/shared/constants';
+import { OrderStatus } from '@/src/shared/types/enum';
 
-import { OrderManageProps } from "../types/order.types";
+import { OrderManageProps } from '../types/order.types';
 
 const OrderManagePage = ({
   orders = [],
@@ -52,33 +52,33 @@ const OrderManagePage = ({
     status,
   }: {
     orderId: string;
-    status: EOrderStatus;
+    status: OrderStatus;
   }) => {
-    if (status === EOrderStatus.CANCEL) {
+    if (status === OrderStatus.CANCEL) {
       Swal.fire({
-        title: "Bạn có muốn hủy đơn hàng không?",
-        icon: "warning",
+        title: 'Bạn có muốn hủy đơn hàng không?',
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: "Xác nhận",
-        cancelButtonText: "Thoát",
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Thoát',
       }).then(async (result) => {
         if (result.isConfirmed) {
           await updateOrder({ orderId, status });
         }
       });
     }
-    if (status === EOrderStatus.COMPLETE) {
-      const res = await updateOrder({ orderId, status });
+    if (status === OrderStatus.COMPLETE) {
+      const response = await updateOrder({ orderId, status });
 
-      if (res?.success) {
-        toast.success("Cập nhật đơn hàng thành công");
+      if (response?.success) {
+        toast.success('Cập nhật đơn hàng thành công');
       }
     }
   };
 
   return (
     <>
-      <div className="flex flex-col lg:flex-row lg:items-center gap-5 justify-between mb-10">
+      <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
         <Heading>Quản lý đơn hàng</Heading>
         <div className="flex gap-3">
           <div className="w-full lg:w-75 xl:w-95">
@@ -89,9 +89,12 @@ const OrderManagePage = ({
           </div>
           <Select
             defaultValue={allValue}
-            onValueChange={(value) => handleSelectStatus(value as EOrderStatus)}
+            onValueChange={(value) => handleSelectStatus(value as OrderStatus)}
           >
-            <SelectTrigger className="w-full max-w-48" size="lg">
+            <SelectTrigger
+              className="w-full max-w-48"
+              size="lg"
+            >
               <SelectValue placeholder="Chọn trạng thái" />
             </SelectTrigger>
             <SelectContent>
@@ -142,25 +145,25 @@ const OrderManagePage = ({
                   <TableCell>{order.user?.name}</TableCell>
                   <TableCell>
                     <div className="flex flex-col gap-2">
-                      <span>{order.amount.toLocaleString("us-US")}</span>
+                      <span>{order.amount.toLocaleString('us-US')}</span>
                       {order.discount > 0 && (
-                        <span>{order.discount.toLocaleString("us-US")}</span>
+                        <span>{order.discount.toLocaleString('us-US')}</span>
                       )}
                       <strong className={orderStatusItem?.className}>
-                        {order.total.toLocaleString("us-US")}
+                        {order.total.toLocaleString('us-US')}
                       </strong>
                     </div>
                   </TableCell>
                   <TableCell>
-                    <strong>{order.coupon?.code || ""}</strong>
+                    <strong>{order.coupon?.code || ''}</strong>
                   </TableCell>
                   <TableCell>
                     <BadgeStatus item={orderStatusItem} />
                   </TableCell>
                   <TableCell>
-                    {order.status !== EOrderStatus.CANCEL && (
+                    {order.status !== OrderStatus.CANCEL && (
                       <div className="flex gap-3">
-                        {order.status === EOrderStatus.PENDING && (
+                        {order.status === OrderStatus.PENDING && (
                           <HoverTooltip label="Duyệt đơn hàng">
                             <button
                               className={commonClassNames.iconSetting}
@@ -168,7 +171,7 @@ const OrderManagePage = ({
                               onClick={() =>
                                 handleUpdateOrder({
                                   orderId: order._id,
-                                  status: EOrderStatus.COMPLETE,
+                                  status: OrderStatus.COMPLETE,
                                 })
                               }
                             >
@@ -184,7 +187,7 @@ const OrderManagePage = ({
                             onClick={() =>
                               handleUpdateOrder({
                                 orderId: order._id,
-                                status: EOrderStatus.CANCEL,
+                                status: OrderStatus.CANCEL,
                               })
                             }
                           >
@@ -199,7 +202,10 @@ const OrderManagePage = ({
             })}
         </TableBody>
       </Table>
-      <Pagination total={total} totalPages={totalPages} />
+      <Pagination
+        total={total}
+        totalPages={totalPages}
+      />
     </>
   );
 };

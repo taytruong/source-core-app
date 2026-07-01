@@ -1,8 +1,6 @@
-import React from "react";
-
-import CourseUpdateContent from "@/src/components/course/CourseUpdateContent";
-import { getCourseBySlug } from "@/src/lib/actions/course.action";
-import { Heading } from "@/src/shared/components";
+import CourseUpdateContent from '@/src/components/course/course-update-content';
+import { getCourseBySlug } from '@/src/lib/actions/course.action';
+import { Heading } from '@/src/shared/components';
 
 const page = async ({
   searchParams,
@@ -20,9 +18,7 @@ const page = async ({
       <Heading className="mb-10">
         Nội dung: <strong className="text-primary">{findCourse.title}</strong>
       </Heading>
-      <CourseUpdateContent
-        course={JSON.parse(JSON.stringify(findCourse))}
-       />
+      <CourseUpdateContent course={JSON.parse(JSON.stringify(findCourse))} />
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { EOrderStatus } from "@/src/shared/types/enum";
+import { OrderStatus } from '@/src/shared/types/enum';
 
 export interface OrderManageProps {
   totalPages: number;
@@ -9,7 +9,7 @@ export interface OrderManageProps {
     total: number;
     amount: number;
     discount: number;
-    status: EOrderStatus;
+    status: OrderStatus;
     coupon: {
       code: string;
     };
@@ -26,6 +26,6 @@ export interface OrderManagePageParams {
   searchParams: {
     page: number;
     search: string;
-    status: EOrderStatus;
+    status: OrderStatus;
   };
 }

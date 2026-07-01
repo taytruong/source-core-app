@@ -1,20 +1,20 @@
-import { WebhookEvent } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
-import { Webhook } from "svix";
+import { WebhookEvent } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
+import { Webhook } from 'svix';
 
-import { createUser } from "@/src/lib/actions/user.actions";
+import { createUser } from '@/src/lib/actions/user.actions';
 
 export async function POST(request: Request) {
-  const svix_id = request.headers.get("svix-id") ?? "";
-  const svix_timestamp = request.headers.get("svix-timestamp") ?? "";
-  const svix_signature = request.headers.get("svix-signature") ?? "";
+  const svixId = request.headers.get('svix-id') ?? '';
+  const svixTimestamp = request.headers.get('svix-timestamp') ?? '';
+  const svixSignature = request.headers.get('svix-signature') ?? '';
 
   if (!process.env.WEBHOOK_SECRET) {
-    throw new Error("Webhook secret is not set");
+    throw new Error('Webhook secret is not set');
   }
 
-  if (!svix_id || !svix_timestamp || !svix_signature) {
-    return new Response("Bad Request", { status: 400 });
+  if (!svixId || !svixTimestamp || !svixSignature) {
+    return new Response('Bad Request', { status: 400 });
   }
 
   const payload = await request.json();
@@ -26,33 +26,38 @@ export async function POST(request: Request) {
 
   try {
     message = sivx.verify(body, {
-      "svix-id": svix_id,
-      "svix-timestamp": svix_timestamp,
-      "svix-signature": svix_signature,
+      'svix-id': svixId,
+      'svix-timestamp': svixTimestamp,
+      'svix-signature': svixSignature,
     }) as WebhookEvent;
   } catch {
-    return new Response("Bad Request", { status: 400 });
+    return new Response('Bad Request', { status: 400 });
   }
 
   const eventType = message.type;
 
-  if (eventType === "user.created") {
+  if (eventType === 'user.created') {
     // created user to database
-    const { email_addresses, id, image_url, username } = message.data;
+    const {
+      email_addresses: emailAddresses,
+      id,
+      image_url: imageURL,
+      username,
+    } = message.data;
     const user = await createUser({
       clerkId: id,
       username: username!, // dấu "!" này là chắc chắn có username
       name: username!,
-      email: email_addresses[0].email_address,
-      avatar: image_url,
+      email: emailAddresses[0].email_address,
+      avatar: imageURL,
     });
 
     return NextResponse.json({
-      message: "OK",
+      message: 'OK',
       user,
     });
   }
   // Rest
 
-  return new Response("OK", { status: 200 });
+  return new Response('OK', { status: 200 });
 }

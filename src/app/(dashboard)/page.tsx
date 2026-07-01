@@ -1,23 +1,13 @@
-import React from "react";
+import { CourseDashboardPage } from '@/src/modules/course/pages';
+import { Heading } from '@/src/shared/components';
 
-import CourseItem from "@/src/components/course/CourseItem";
-import { getAllCoursePublic } from "@/src/lib/actions/course.action";
-import { CourseGrid, Heading } from "@/src/shared/components";
-
-const page = async () => {
-  const courses = (await getAllCoursePublic({})) || [];
-
+function HomePageRoot() {
   return (
-    <div>
+    <>
       <Heading>Khám phá</Heading>
-      <CourseGrid>
-        {courses?.length > 0 &&
-          courses?.map((item) => (
-            <CourseItem key={item.slug} data={item} />
-          ))}
-      </CourseGrid>
-    </div>
+      <CourseDashboardPage />
+    </>
   );
-};
+}
 
-export default page;
+export default HomePageRoot;

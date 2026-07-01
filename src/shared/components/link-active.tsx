@@ -1,7 +1,7 @@
-"use client"; // vì có usePathname của next -> chỉ nên dùng cho server  component
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React from "react";
+'use client'; // vì có usePathname của next -> chỉ nên dùng cho server  component
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import React from 'react';
 
 interface LinkActiveProps {
   url: string;
@@ -15,10 +15,10 @@ const LinkActive = ({ children, url }: LinkActiveProps) => {
   return (
     <Link
       href={url}
-      className={`p-3 rounded-md flex items-center gap-3 text-base transition-all ${
+      className={`flex items-center gap-3 rounded-md p-3 text-base transition-all ${
         isActive
-          ? "text-primary bg-primary/25 svg-animate font-medium"
-          : "hover:text-primary hover:bg-primary/10"
+          ? 'text-primary bg-primary/25 svg-animate font-medium'
+          : 'hover:text-primary hover:bg-primary/10'
       }`}
     >
       {children}

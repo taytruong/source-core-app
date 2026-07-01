@@ -1,33 +1,37 @@
-"use client";
-import { debounce } from "lodash";
-import React from "react";
+'use client';
+import { debounce } from 'lodash';
+import React from 'react';
 
-import useQueryString from "@/src/hooks/useQueryString";
 import {
   IconArrowLeft,
   IconArrowRight,
   IconDoubleArrowLeft,
   IconDoubleArrowRight,
-} from "@/src/shared/components/icons";
-import { ITEM_PER_PAGE } from "@/src/shared/constants";
+} from '@/src/shared/components/icons';
+import { ITEM_PER_PAGE } from '@/src/shared/constants';
 
-interface IPaginationProps {
+import useQueryString from '../hooks/use-query-string';
+
+interface PaginationProps {
   totalPages: number;
   total: number;
 }
-const Pagination = ({ total, totalPages }: IPaginationProps) => {
+const Pagination = ({ total, totalPages }: PaginationProps) => {
   const { currentPage, handleChangePage } = useQueryString();
-  const onInputChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
+  const onInputChange = debounce(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = Number(event.target.value);
 
-    if (value < 1) return;
-    handleChangePage(value);
-  }, 250);
+      if (value < 1) return;
+      handleChangePage(value);
+    },
+    250,
+  );
 
   if (total <= ITEM_PER_PAGE) return null;
 
   return (
-    <div className="mt-10 flexCenter gap-3">
+    <div className="flexCenter mt-10 gap-3">
       <PaginationButton
         disabled={currentPage === 1}
         onClick={() => handleChangePage(1)}
@@ -41,7 +45,7 @@ const Pagination = ({ total, totalPages }: IPaginationProps) => {
         <IconArrowLeft />
       </PaginationButton>
       <input
-        className="w-20 h-10 rounded-full bg-white outline-none text-center px-2 font-medium"
+        className="h-10 w-20 rounded-full bg-white px-2 text-center font-medium outline-none"
         placeholder="1"
         type="number"
         value={currentPage}
@@ -57,22 +61,22 @@ const Pagination = ({ total, totalPages }: IPaginationProps) => {
         disabled={currentPage === totalPages}
         onClick={() => handleChangePage(totalPages)}
       >
-        {" "}
+        {' '}
         <IconDoubleArrowRight />
       </PaginationButton>
     </div>
   );
 };
 
-interface IPaginationButton {
+interface PaginationButton {
   onClick: () => void;
   disabled: boolean;
   children: React.ReactNode;
 }
 
-function PaginationButton({ children, disabled, onClick }: IPaginationButton) {
+function PaginationButton({ children, disabled, onClick }: PaginationButton) {
   const paginationButtonClassNames =
-    "size-7 rounded-full bg-white shadow-sm p-2 flexCenter disabled:bg-gray-200";
+    'size-7 rounded-full bg-white shadow-sm p-2 flexCenter disabled:bg-gray-200';
 
   return (
     <button

@@ -1,8 +1,6 @@
-import React from "react";
-
-import CourseUpdate from "@/src/components/course/CourseUpdate";
-import { getCourseBySlug } from "@/src/lib/actions/course.action";
-import { Heading } from "@/src/shared/components";
+import CourseUpdate from '@/src/components/course/course-update';
+import { getCourseBySlug } from '@/src/lib/actions/course.action';
+import { Heading } from '@/src/shared/components';
 
 const page = async ({
   searchParams,

@@ -1,9 +1,7 @@
-import React from "react";
+import { getRatings } from '@/src/modules/rating/actions';
+import { RatingStatus } from '@/src/shared/constants';
 
-import { getRatings } from "@/src/lib/actions/rating.action";
-import { ERatingStatus } from "@/src/types/enum";
-
-import RatingManage from "./RatingManage";
+import RatingManage from './rating-manage';
 
 const page = async ({
   searchParams,
@@ -11,13 +9,13 @@ const page = async ({
   searchParams: {
     page: number;
     search: string;
-    status: ERatingStatus;
+    status: RatingStatus;
   };
 }) => {
   const ratings = await getRatings({
     page: searchParams.page || 1,
     limit: 10,
-    search: searchParams.search || "",
+    search: searchParams.search || '',
     status: searchParams.status,
   });
 

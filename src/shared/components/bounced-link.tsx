@@ -1,15 +1,21 @@
-import Link from "next/link";
+import Link from 'next/link';
 
-import { IconPlus } from "@/src/shared/components/icons";
+import { IconPlus } from '@/src/shared/components/icons';
+
+import HoverTooltip from './hover-tooltip';
 
 const BouncedLink = ({ url }: { url: string }) => {
   return (
-    <Link
-      className="size-10 rounded-full bg-primary flexCenter text-white fixed right-5 bottom-5 animate-bounce"
-      href={url}
+    <HoverTooltip
+      IsColorArrow
+      className="fixed right-5 bottom-5"
+      label="Tạo khóa học mới"
+      labelClassName="bg-primary"
     >
-      <IconPlus />
-    </Link>
+      <Link href={url}>
+        <IconPlus className="bg-primary flexCenter size-10 rounded-full p-2 text-white hover:animate-[spin_0.8s_linear_0.5]" />
+      </Link>
+    </HoverTooltip>
   );
 };
 

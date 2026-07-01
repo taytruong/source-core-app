@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "copy-tinymce": "xcopy node_modules\\tinymce public\\tinymce /E /I /Y",
     "format": "next lint --fix"
   },
   "devDependencies": {

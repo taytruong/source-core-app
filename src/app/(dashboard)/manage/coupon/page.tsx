@@ -1,9 +1,7 @@
-import React from "react";
+import { getCoupons } from '@/src/modules/coupon/actions/coupon.action';
+import { ITEM_PER_PAGE } from '@/src/shared/constants';
 
-import { getCoupons } from "@/src/lib/actions/coupon.action";
-import { ITEM_PER_PAGE } from "@/src/shared/constants";
-
-import CouponManage from "./CouponManage";
+import CouponManage from './coupon-manage';
 
 const page = async ({
   searchParams,
@@ -17,7 +15,7 @@ const page = async ({
   const data = await getCoupons({
     page: searchParams.page || 1,
     limit: ITEM_PER_PAGE,
-    search: searchParams.search || "",
+    search: searchParams.search || '',
     active: searchParams.active,
   });
 
@@ -30,7 +28,7 @@ const page = async ({
       coupons={coupons}
       total={total}
       totalPages={totalPages}
-     />
+    />
   );
 };
 

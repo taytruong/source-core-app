@@ -1,20 +1,21 @@
-import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { devtools, persist } from 'zustand/middleware';
 
 interface GlobalStataProps {
-  expandedPlayer: boolean;
-  setExpandedPlayer: (expanded: boolean) => void;
+  shouldExpandedPlayer: boolean;
+  setShouldExpandedPlayer: (expanded: boolean) => void;
 }
 
 const useGlobalStore = create<GlobalStataProps>()(
   devtools(
     persist(
       (set) => ({
-        expandedPlayer: false,
-        setExpandedPlayer: (expanded) => set({ expandedPlayer: expanded }),
+        shouldExpandedPlayer: false,
+        setShouldExpandedPlayer: (expanded) =>
+          set({ shouldExpandedPlayer: expanded }),
       }),
       {
-        name: "global-storage",
+        name: 'global-storage',
       },
     ),
   ),

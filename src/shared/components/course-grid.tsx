@@ -1,8 +1,12 @@
-import React from "react";
+import React from 'react';
 
-const CourseGrid = ({ children }: { children: React.ReactNode }) => {
+interface CourseGirdProps {
+  children: React.ReactNode;
+}
+
+const CourseGrid = ({ children }: CourseGirdProps) => {
   return (
-    <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-6 lg:gap-8 mt-8 course-slider">
+    <div className="3xl:grid-cols-6 course-slider mt-8 grid gap-4 lg:grid-cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4">
       {children}
     </div>
   );

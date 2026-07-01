@@ -1,9 +1,8 @@
-import { auth } from "@clerk/nextjs/server";
-import React from "react";
+import { auth } from '@clerk/nextjs/server';
 
-import CourseNewAdd from "@/src/components/course/CourseNewAdd";
-import { getUserInfo } from "@/src/lib/actions/user.actions";
-import { Heading } from "@/src/shared/components";
+import CourseAddNew from '@/src/components/course/course-add-new';
+import { getUserInfo } from '@/src/modules/user/actions';
+import { Heading } from '@/src/shared/components';
 
 const page = async () => {
   const { userId } = await auth();
@@ -16,7 +15,7 @@ const page = async () => {
   return (
     <>
       <Heading>Tạo khóa học mới</Heading>
-      <CourseNewAdd user={JSON.parse(JSON.stringify(mongoUser))} />
+      <CourseAddNew user={JSON.parse(JSON.stringify(mongoUser))} />
     </>
   );
 };
