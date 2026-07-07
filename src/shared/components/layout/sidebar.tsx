@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 
+import logo from '@/src/assets/logo.png';
 import { MenuItem } from '@/src/shared/components/common';
 import { menuItems } from '@/src/shared/constants';
 
@@ -17,7 +18,7 @@ const Sidebar = () => {
             alt="logo"
             className="object-cover"
             height={27}
-            src="/logo.png"
+            src={logo}
             width={32}
           />
         </span>
