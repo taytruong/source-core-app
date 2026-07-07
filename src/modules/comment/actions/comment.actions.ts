@@ -2,9 +2,9 @@
 
 import { revalidatePath } from 'next/cache';
 
-import { connectToDatabase } from '@/src/shared/lib/mongoose';
+import { connectToDatabase } from '@/src/shared/lib';
 import { CommentModel, UserModel } from '@/src/shared/schemas';
-import { CommentItem } from '@/src/types';
+import { CommentItemData } from '@/src/shared/types';
 
 export async function createComment(params: {
   content: string;
@@ -30,10 +30,10 @@ export async function createComment(params: {
 export async function getCommentsByLesson(
   lessonId: string,
   sort: 'recent' | 'oldest' = 'recent',
-): Promise<CommentItem[] | undefined> {
+): Promise<CommentItemData[] | undefined> {
   try {
     connectToDatabase();
-    const comments = await CommentModel.find<CommentItem>({
+    const comments = await CommentModel.find<CommentItemData>({
       lesson: lessonId,
     })
       .sort({ create_at: sort === 'recent' ? -1 : 1 })

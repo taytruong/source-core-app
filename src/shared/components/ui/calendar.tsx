@@ -13,8 +13,9 @@ import {
   type Locale,
 } from 'react-day-picker';
 
-import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/src/shared/components/ui/button';
+
+import { cn } from '../../utils';
 
 function Calendar({
   buttonVariant = 'ghost',

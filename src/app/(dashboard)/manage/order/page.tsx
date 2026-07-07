@@ -1,27 +1,10 @@
-import { fetchOrder } from '@/src/modules/order/actions';
-import OrderManagePage from '@/src/modules/order/pages/order-manage-page';
-import { OrderManagePageParams } from '@/src/modules/order/types/order.types';
-import { ITEM_PER_PAGE } from '@/src/shared/constants';
+import { OrderManagePage } from '@/src/modules/order/pages';
+import { QuerySearchParams } from '@/src/shared/types';
 
-const page = async ({ searchParams }: OrderManagePageParams) => {
-  const data = await fetchOrder({
-    page: searchParams.page || 1,
-    limit: ITEM_PER_PAGE,
-    search: searchParams.search || '',
-    status: searchParams.status,
-  });
+export interface OrderPageProps {}
 
-  if (!data) return null;
-  const { orders, total } = data;
-  const totalPages = Math.ceil(total / ITEM_PER_PAGE);
+function OrderPageRoots({ searchParams }: QuerySearchParams) {
+  return <OrderManagePage searchParams={searchParams} />;
+}
 
-  return (
-    <OrderManagePage
-      orders={orders}
-      total={total}
-      totalPages={totalPages}
-    />
-  );
-};
-
-export default page;
+export default OrderPageRoots;

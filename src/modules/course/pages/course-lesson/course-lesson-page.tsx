@@ -1,9 +1,19 @@
+import { CourseLessonPageRootProps } from '@/src/shared/types';
+
 import { CourseLessonContainer } from './components';
 
-export interface CourseLessonPageProps {}
+export interface CourseLessonPageProps extends CourseLessonPageRootProps {}
 
-function CourseLessonPage(_props: CourseLessonPageProps) {
-  return <CourseLessonContainer />;
+async function CourseLessonPage({
+  params,
+  searchParams,
+}: CourseLessonPageProps) {
+  return (
+    <CourseLessonContainer
+      params={params}
+      searchParams={searchParams}
+    />
+  );
 }
 
 export default CourseLessonPage;

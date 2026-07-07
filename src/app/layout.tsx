@@ -10,7 +10,7 @@ import { Toaster } from 'sonner';
 import { TooltipProvider } from '@/src/shared/components/ui/tooltip';
 
 import { UserProvider } from '../shared/contexts';
-import { quicksand } from '../utils';
+import { quicksand } from '../shared/utils';
 
 export const metadata: Metadata = {
   title: 'Course-app',

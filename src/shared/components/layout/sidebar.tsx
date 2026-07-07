@@ -1,19 +1,15 @@
 'use client';
-import { useAuth, UserButton } from '@clerk/nextjs';
-import Image from 'next/image';
-import Link from 'next/link';
 
-import { MenuItem } from '@/src/shared/components';
-import IconLogin from '@/src/shared/components/icons/icon-login';
+import Image from 'next/image';
+
+import { MenuItem } from '@/src/shared/components/common';
 import { menuItems } from '@/src/shared/constants';
 
 const Sidebar = () => {
-  const { userId } = useAuth();
-
   return (
-    <div className="fixed top-0 bottom-0 left-0 hidden w-70 flex-col border-r border-r-gray-200 bg-linear-to-r from-orange-200 to-white/40 p-5 shadow-sm lg:flex">
+    <div className="fixed top-0 bottom-0 left-0 hidden w-75 flex-col border-r border-r-gray-200 bg-linear-to-r from-orange-100 to-white/40 px-8 py-5 shadow-sm lg:flex">
       <a
-        className="text-primary mb-11 flex items-end justify-center text-3xl font-semibold"
+        className="flexCenter mb-11 text-4xl font-semibold"
         href="/"
       >
         <span className="mb-2">
@@ -22,12 +18,12 @@ const Sidebar = () => {
             className="object-cover"
             height={27}
             src="/logo.png"
-            width={27}
+            width={32}
           />
         </span>
-        cademy
+        cademy.
       </a>
-      <ul className="flex flex-col gap-1.5 font-medium">
+      <ul className="flex flex-col gap-3">
         {menuItems.map((item, index) => (
           <MenuItem
             key={index}
@@ -37,27 +33,6 @@ const Sidebar = () => {
           />
         ))}
       </ul>
-      <div className="mt-auto flex items-center justify-end">
-        {userId ? (
-          <UserButton
-            appearance={{
-              elements: {
-                avatarBox: {
-                  width: '40px',
-                  height: '40px',
-                },
-              },
-            }}
-          />
-        ) : (
-          <Link
-            className="bg-primary flex size-8 items-center justify-center rounded-full text-white"
-            href="sign-in"
-          >
-            <IconLogin />
-          </Link>
-        )}
-      </div>
     </div>
   );
 };

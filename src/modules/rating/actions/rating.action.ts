@@ -4,9 +4,13 @@ import { QueryFilter } from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
 import { RatingStatus } from '@/src/shared/constants';
-import { connectToDatabase } from '@/src/shared/lib/mongoose';
+import { connectToDatabase } from '@/src/shared/lib';
 import { CourseModel, RatingModel } from '@/src/shared/schemas';
-import { CreateRatingParams, FilterData, RatingItem } from '@/src/types';
+import { FilterQueryParams } from '@/src/shared/types';
+import {
+  CreateRatingParams,
+  RatingItemData,
+} from '@/src/shared/types/rating.type';
 
 export async function createRating(
   params: CreateRatingParams,
@@ -54,7 +58,7 @@ export async function updateRating(id: string): Promise<boolean | undefined> {
 
     return true;
   } catch (error) {
-    console.log('🚀 ~ deleteRating ~ error:', error);
+    console.log('🚀 ~ updateRating ~ error:', error);
   }
 }
 
@@ -70,9 +74,9 @@ export async function deleteRating(id: string): Promise<boolean | undefined> {
   }
 }
 
-export async function getRatings(
-  params: FilterData,
-): Promise<RatingItem | undefined> {
+export async function fetchRatings(
+  params: FilterQueryParams,
+): Promise<RatingItemData[] | undefined> {
   try {
     connectToDatabase();
     const { limit = 10, page = 1, search, status } = params;

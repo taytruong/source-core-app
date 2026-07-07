@@ -1,23 +1,22 @@
 'use server';
 
-import { CourseProps } from '@/src/modules/course/types';
+import { CourseItemData } from '@/src/modules/course/types';
 import { CourseStatus } from '@/src/shared/constants';
-import { connectToDatabase } from '@/src/shared/lib/mongoose';
+import { connectToDatabase } from '@/src/shared/lib';
 import {
   CourseModel,
   LectureModel,
   LessonModel,
   UserModel,
 } from '@/src/shared/schemas';
-import { UserModelProps } from '@/src/shared/types';
-import { TCreateUserParams } from '@/src/types';
+import { CreateUserParams, UserModelProps } from '@/src/shared/types';
 
 export async function createUser(
-  params: TCreateUserParams,
-): Promise<TCreateUserParams | undefined> {
+  params: CreateUserParams,
+): Promise<CreateUserParams | undefined> {
   try {
     connectToDatabase();
-    const newUser: TCreateUserParams = await UserModel.create(params);
+    const newUser: CreateUserParams = await UserModel.create(params);
 
     return newUser;
   } catch (error) {
@@ -34,7 +33,7 @@ export async function getUserInfo({
     connectToDatabase();
     const findUser = await UserModel.findOne({ clerkId: userId });
 
-    if (!findUser._id) return null;
+    if (!findUser) return null;
 
     return JSON.parse(JSON.stringify(findUser));
   } catch (error) {
@@ -44,7 +43,7 @@ export async function getUserInfo({
 
 export async function getUserCourses(
   userId: string,
-): Promise<CourseProps[] | undefined | null> {
+): Promise<CourseItemData[] | undefined | null> {
   try {
     connectToDatabase();
     const findUser = await UserModel.findOne({ clerkId: userId }).populate({

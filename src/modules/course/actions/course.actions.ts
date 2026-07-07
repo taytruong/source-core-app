@@ -4,7 +4,7 @@ import { QueryFilter } from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
 import { CourseStatus, RatingStatus } from '@/src/shared/constants';
-import { connectToDatabase } from '@/src/shared/lib/mongoose';
+import { connectToDatabase } from '@/src/shared/lib';
 import {
   CourseModel,
   LectureModel,
@@ -14,21 +14,16 @@ import {
 } from '@/src/shared/schemas';
 import {
   CourseLessonDuration,
-  CourseModelProps,
-  FilterQueryParams,
-} from '@/src/shared/types';
-import {
   CreateCourseParams,
-  GetAllCourseParams,
-  StudyCourseProps,
+  FilterQueryParams,
   UpdateCourseParams,
-} from '@/src/types';
+} from '@/src/shared/types';
 
-import { CourseProps } from '../types';
+import { CourseItemData } from '../types';
 
-export async function fetchCourseDashboard(
+export async function fetchCourse(
   params: FilterQueryParams,
-): Promise<CourseModelProps[] | undefined> {
+): Promise<CourseItemData[] | undefined> {
   try {
     connectToDatabase();
     const { limit = 10, page = 1, search } = params;
@@ -47,13 +42,13 @@ export async function fetchCourseDashboard(
 
     return JSON.parse(JSON.stringify(courses));
   } catch (error) {
-    console.log('🚀 ~ fetchCourseDashboard ~ error:', error);
+    console.log('🚀 ~ fetchCourse ~ error:', error);
   }
 }
 
 export async function fetchCourseOfUser(
   userId: string,
-): Promise<CourseProps[] | undefined | null> {
+): Promise<CourseItemData[] | undefined | null> {
   try {
     connectToDatabase();
     const findUser = await UserModel.findOne({ clerkId: userId }).populate({
@@ -87,7 +82,7 @@ export async function fetchCourseBySlug({
   slug,
 }: {
   slug: string;
-}): Promise<CourseProps | undefined> {
+}): Promise<CourseItemData | undefined> {
   try {
     connectToDatabase();
 
@@ -108,6 +103,11 @@ export async function fetchCourseBySlug({
           match: {
             _destroy: false,
           },
+          options: {
+            sort: {
+              order: 1,
+            },
+          },
         },
       })
       .populate({
@@ -118,34 +118,9 @@ export async function fetchCourseBySlug({
         },
       });
 
-    return JSON.parse(JSON.stringify(findCourse)) as CourseProps;
+    return JSON.parse(JSON.stringify(findCourse)) as CourseItemData;
   } catch (error) {
     console.log('🚀 ~ fetchCourseBySlug ~ error:', error);
-  }
-}
-
-export async function getAllCoursePublic(
-  params: GetAllCourseParams,
-): Promise<StudyCourseProps[] | undefined> {
-  try {
-    connectToDatabase();
-    const { limit = 10, page = 1, search } = params;
-    const skip = (page - 1) * limit;
-    const query: QueryFilter<typeof CourseModel> = {};
-
-    if (search) {
-      // hoặc = lấy ra title của Course
-      query.$or = [{ title: { $regex: search, $options: 'i' } }];
-    }
-    query.status = CourseStatus.APPROVED;
-    const courses = await CourseModel.find(query)
-      .skip(skip)
-      .limit(limit)
-      .sort({ create_at: -1 });
-
-    return JSON.parse(JSON.stringify(courses));
-  } catch (error) {
-    console.log('🚀 ~ getAllCourse ~ error:', error);
   }
 }
 
@@ -212,7 +187,7 @@ export async function getCourseLessonsInfo({
 }): Promise<CourseLessonDuration | undefined> {
   try {
     connectToDatabase();
-    const course: CourseProps = await CourseModel.findOne({ slug })
+    const course: CourseItemData = await CourseModel.findOne({ slug })
       .select('lectures ')
       .populate({
         path: 'lectures',

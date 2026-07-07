@@ -4,7 +4,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { allValue } from '../constants';
 
-export default function useQueryString() {
+export const useQueryString = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -52,4 +52,4 @@ export default function useQueryString() {
     currentPage,
     handleChangeQs,
   };
-}
+};

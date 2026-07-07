@@ -1,9 +1,9 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 
-import { connectToDatabase } from '@/src/shared/lib/mongoose';
+import { connectToDatabase } from '@/src/shared/lib';
 import { CourseModel, LectureModel } from '@/src/shared/schemas';
-import { CreateLectureParams, UpdateLectureParams } from '@/src/types';
+import { CreateLectureParams, UpdateLectureParams } from '@/src/shared/types';
 
 export async function createLecture(params: CreateLectureParams) {
   try {

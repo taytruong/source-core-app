@@ -1,11 +1,15 @@
-import { CourseModelProps, RatingModelProps } from '@/src/shared/types';
-import { LectureItem } from '@/src/shared/types/lecture.type';
+import z from 'zod';
 
-export interface CourseProps extends Omit<
+import { CourseModelProps, RatingModelProps } from '@/src/shared/types';
+import { LectureItemData } from '@/src/shared/types/lecture.type';
+
+import { CourseCommentFormSchema } from '../schemas';
+
+export interface CourseItemData extends Omit<
   CourseModelProps,
   'lectures' | 'rating'
 > {
-  lectures: LectureItem[];
+  lectures: LectureItemData[];
   rating: RatingModelProps[];
 }
 
@@ -13,3 +17,5 @@ export interface LastLessonData {
   course: string;
   lesson: string;
 }
+
+export type CourseCommentFormValues = z.infer<typeof CourseCommentFormSchema>;

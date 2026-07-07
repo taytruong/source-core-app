@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { IconClock } from '@/src/shared/components/icons';
-import { formatMinutesToHour } from '@/src/shared/utils';
+import { formatMinutesToHour } from '@/src/shared/helper';
 
 import { getCourseLessonsInfo } from '../../actions';
 

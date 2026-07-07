@@ -1,10 +1,10 @@
-import { CourseGrid } from '@/src/shared/components';
+import { CourseGrid } from '@/src/shared/components/common';
 
 import { CourseItem } from '../../../components/course-item';
-import { CourseModelProps } from '../../../models';
+import { CourseItemData } from '../../../types';
 
 export interface CourseDashboardContainerProps {
-  courseList: CourseModelProps[];
+  courseList: CourseItemData[];
 }
 
 function CourseDashboardContainer({

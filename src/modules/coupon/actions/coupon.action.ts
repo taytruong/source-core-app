@@ -3,15 +3,14 @@
 import { QueryFilter } from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
-import { connectToDatabase } from '@/src/shared/lib/mongoose';
+import { connectToDatabase } from '@/src/shared/lib';
 import { CouponModel } from '@/src/shared/schemas';
+import { FilterQueryParams } from '@/src/shared/types';
 import {
-  CouponItem,
-  CouponParams,
+  CouponItemData,
   CreateCouponParams,
-  FilterData,
   UpdateCouponParams,
-} from '@/src/types';
+} from '@/src/shared/types/coupon.type';
 
 export async function createCoupon(params: CreateCouponParams) {
   try {
@@ -48,13 +47,13 @@ export async function updateCoupon(params: UpdateCouponParams) {
 
     return JSON.parse(JSON.stringify(updatedCoupon));
   } catch (error) {
-    console.log('🚀 ~ createCoupon ~ error:', error);
+    console.log('🚀 ~ updateCoupon ~ error:', error);
   }
 }
 
-export async function getCoupons(params: FilterData): Promise<
+export async function getCoupons(params: FilterQueryParams): Promise<
   | {
-      coupons: CouponItem[] | undefined;
+      coupons: CouponItemData[] | undefined;
       total: number;
     }
   | undefined
@@ -84,13 +83,13 @@ export async function getCoupons(params: FilterData): Promise<
       total,
     };
   } catch (error) {
-    console.log('🚀 ~ createCoupon ~ error:', error);
+    console.log('🚀 ~ getCoupons ~ error:', error);
   }
 }
 
 export async function getCouponByCode(params: {
   code: string;
-}): Promise<CouponParams | undefined> {
+}): Promise<CouponItemData | undefined> {
   try {
     connectToDatabase();
     const findCoupon = await CouponModel.findOne({
@@ -103,13 +102,13 @@ export async function getCouponByCode(params: {
 
     return coupon;
   } catch (error) {
-    console.log('🚀 ~ createCoupon ~ error:', error);
+    console.log('🚀 ~ getCouponByCode ~ error:', error);
   }
 }
 export async function getValidateCode(params: {
   code: string;
   courseId: string;
-}): Promise<CouponParams | undefined> {
+}): Promise<CouponItemData | undefined> {
   try {
     connectToDatabase();
     const findCoupon = await CouponModel.findOne({
@@ -118,11 +117,13 @@ export async function getValidateCode(params: {
       path: 'courses',
       select: '_id title',
     });
-    const coupon = JSON.parse(JSON.stringify(findCoupon));
+    const coupon: CouponItemData = JSON.parse(JSON.stringify(findCoupon));
     const couponCourses = coupon?.courses.map((course) => course._id);
     let isActive = true;
 
-    if (!couponCourses.includes(params.courseId)) isActive = false;
+    if (!couponCourses.some((id) => id.equals(params.courseId))) {
+      isActive = false;
+    }
     if (!coupon?.active) isActive = false;
     if (coupon?.used >= coupon?.limit) isActive = false;
     if (coupon?.start_date && new Date(coupon?.start_date) > new Date())

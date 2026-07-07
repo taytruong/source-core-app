@@ -1,4 +1,4 @@
-import { CourseManageContainer } from '@/src/modules/course/pages/course-manage';
+import { CourseManagePage } from '@/src/modules/course/pages';
 import { CourseStatus } from '@/src/shared/constants';
 
 export interface CourseManagePageRootProps {
@@ -11,7 +11,7 @@ export interface CourseManagePageRootProps {
 const CourseManagePageRoot = async ({
   searchParams,
 }: CourseManagePageRootProps) => {
-  return <CourseManageContainer searchParams={searchParams} />;
+  return <CourseManagePage searchParams={searchParams} />;
 };
 
 export default CourseManagePageRoot;

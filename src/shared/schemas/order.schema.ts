@@ -1,15 +1,46 @@
-import { Document, Schema, Types } from 'mongoose';
-import { OrderStatus } from '../constants';
+import { model, models, Schema } from 'mongoose';
 
-export interface OrderModelProps extends Document {
-  _id: Types.ObjectId;
-  code: string;
-  course: Schema.Types.ObjectId;
-  user: Schema.Types.ObjectId;
-  status: OrderStatus;
-  create_at: Date;
-  total: number;
-  amount: number;
-  discount: number;
-  coupon?: Schema.Types.ObjectId;
-}
+import { OrderStatus } from '../constants';
+import { OrderModelProps } from '../types';
+
+const orderSchema = new Schema<OrderModelProps>({
+  code: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  total: {
+    type: Number,
+  },
+  amount: {
+    type: Number,
+  },
+  discount: {
+    type: Number,
+    default: 0,
+  },
+  create_at: {
+    type: Date,
+    default: Date.now,
+  },
+  course: {
+    type: Schema.Types.ObjectId,
+    ref: 'Course',
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  coupon: {
+    type: Schema.Types.ObjectId,
+    ref: 'Coupon',
+  },
+  status: {
+    type: String,
+    enum: Object.values(OrderStatus),
+    default: OrderStatus.PENDING,
+  },
+});
+
+export const OrderModel =
+  models.Order || model<OrderModelProps>('Order', orderSchema);

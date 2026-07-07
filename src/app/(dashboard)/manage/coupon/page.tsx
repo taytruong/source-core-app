@@ -1,35 +1,10 @@
-import { getCoupons } from '@/src/modules/coupon/actions/coupon.action';
-import { ITEM_PER_PAGE } from '@/src/shared/constants';
+import { ManageCouponPage } from '@/src/modules/coupon/pages';
+import { QuerySearchParams } from '@/src/shared/types';
 
-import CouponManage from './coupon-manage';
+export interface ManageCouponPageProps {}
 
-const page = async ({
-  searchParams,
-}: {
-  searchParams: {
-    page: number;
-    search: string;
-    active: boolean;
-  };
-}) => {
-  const data = await getCoupons({
-    page: searchParams.page || 1,
-    limit: ITEM_PER_PAGE,
-    search: searchParams.search || '',
-    active: searchParams.active,
-  });
+function ManageCouponPageRoot({ searchParams }: QuerySearchParams) {
+  return <ManageCouponPage searchParams={searchParams} />;
+}
 
-  if (!data) return null;
-  const { coupons, total } = data;
-  const totalPages = Math.ceil(total / ITEM_PER_PAGE);
-
-  return (
-    <CouponManage
-      coupons={coupons}
-      total={total}
-      totalPages={totalPages}
-    />
-  );
-};
-
-export default page;
+export default ManageCouponPageRoot;

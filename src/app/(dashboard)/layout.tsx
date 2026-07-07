@@ -1,13 +1,14 @@
 import React from 'react';
 
-import { MenuItem, Sidebar } from '@/src/shared/components';
+import { MenuItem, Sidebar } from '@/src/shared/components/common';
+import { Header } from '@/src/shared/components/layout';
 import { menuItems } from '@/src/shared/constants';
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="wrapper block h-screen pb-20 lg:grid lg:grid-cols-[300px__minmax(0,1fr)] lg:pb-0">
+    <div className="wrapper block min-h-screen pb-20 lg:grid lg:grid-cols-[300px__minmax(0,1fr)] lg:pb-0">
       <Sidebar />
-      <div className="fixed bottom-0 left-0 flex h-16 w-full justify-center gap-5 bg-white p-3 lg:hidden">
+      <ul className="fixed bottom-0 left-0 z-50 flex h-16 w-full justify-center gap-5 border-t border-t-gray-200 bg-linear-to-t from-orange-100 to-white/40 p-3 lg:hidden">
         {menuItems.map((item, index) => (
           <MenuItem
             key={index}
@@ -17,9 +18,12 @@ const layout = ({ children }: { children: React.ReactNode }) => {
             url={item.url}
           />
         ))}
-      </div>
+      </ul>
       <div className="hidden lg:block" />
-      <main className="p-5">{children}</main>
+      <main>
+        <Header />
+        <div className="p-5">{children}</div>
+      </main>
     </div>
   );
 };

@@ -1,10 +1,13 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 
-import { connectToDatabase } from '@/src/shared/lib/mongoose';
+import { connectToDatabase } from '@/src/shared/lib';
 import { CourseModel, LectureModel, LessonModel } from '@/src/shared/schemas';
-import { LessonModelProps } from '@/src/shared/types';
-import { CreateLessonParams, UpdateLessonParams } from '@/src/types';
+import {
+  CreateLessonParams,
+  LessonModelProps,
+  UpdateLessonParams,
+} from '@/src/shared/types';
 
 export async function createLesson(params: CreateLessonParams) {
   try {
@@ -102,5 +105,28 @@ export async function countLessonByCourseId({
     return count || 0;
   } catch (error) {
     console.log('🚀 ~ countLessonByCourseId ~ error:', error);
+  }
+}
+
+export async function updateLessonOrder({
+  lessonId,
+  order,
+  path,
+}: {
+  lessonId: string;
+  order: number;
+  path: string;
+}) {
+  try {
+    connectToDatabase();
+    const findLesson = await LessonModel.findById(lessonId);
+
+    if (!findLesson) return;
+    findLesson.order = order;
+    await findLesson.save();
+
+    revalidatePath(path || '/');
+  } catch (error) {
+    console.log('🚀 ~ updateLessonOrder ~ error:', error);
   }
 }

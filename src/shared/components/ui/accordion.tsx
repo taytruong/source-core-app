@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
-import { Accordion as AccordionPrimitive } from "radix-ui";
-import * as React from "react";
+import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
+import { Accordion as AccordionPrimitive } from 'radix-ui';
+import * as React from 'react';
 
-import { cn } from "@/lib/utils";
+import { cn } from '../../utils';
 
 function Accordion({
   className,
@@ -12,7 +12,7 @@ function Accordion({
 }: React.ComponentProps<typeof AccordionPrimitive.Root>) {
   return (
     <AccordionPrimitive.Root
-      className={cn("flex w-full flex-col mb-1", className)}
+      className={cn('mb-1 flex w-full flex-col', className)}
       data-slot="accordion"
       {...props}
     />
@@ -25,7 +25,7 @@ function AccordionItem({
 }: React.ComponentProps<typeof AccordionPrimitive.Item>) {
   return (
     <AccordionPrimitive.Item
-      className={cn("not-last:border-b", className)}
+      className={cn('not-last:border-b', className)}
       data-slot="accordion-item"
       {...props}
     />
@@ -42,7 +42,7 @@ function AccordionTrigger({
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          "group/accordion-trigger relative flex flex-1 items-center justify-between rounded-lg border border-slate-300 bg-white text-left text-base font-medium transition-all outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:after:border-ring disabled:pointer-events-none disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-muted-foreground p-3 mb-1",
+          'group/accordion-trigger focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:after:border-ring **:data-[slot=accordion-trigger-icon]:text-muted-foreground relative mb-1 flex flex-1 items-center justify-between rounded-lg border border-slate-300 bg-white p-3 text-left text-base font-medium transition-all outline-none focus-visible:ring-3 disabled:pointer-events-none disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4',
           className,
         )}
         {...props}
@@ -68,13 +68,13 @@ function AccordionContent({
 }: React.ComponentProps<typeof AccordionPrimitive.Content>) {
   return (
     <AccordionPrimitive.Content
-      className="overflow-hidden text-base data-open:animate-accordion-down data-closed:animate-accordion-up font-medium"
+      className="data-open:animate-accordion-down data-closed:animate-accordion-up overflow-hidden text-base font-medium"
       data-slot="accordion-content"
       {...props}
     >
       <div
         className={cn(
-          "p-2 border border-slate-300 bg-white rounded-lg",
+          'rounded-lg border border-slate-300 bg-white p-2',
           className,
         )}
       >
@@ -84,4 +84,4 @@ function AccordionContent({
   );
 }
 
-export { Accordion, AccordionContent,AccordionItem, AccordionTrigger };
+export { Accordion, AccordionContent, AccordionItem, AccordionTrigger };

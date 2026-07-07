@@ -8,11 +8,11 @@ export interface LessonModelProps extends Document {
   slug: string;
   _destroy: boolean;
   lecture: Schema.Types.ObjectId;
+  course: Schema.Types.ObjectId;
   type: LessonType;
   order: number;
   duration: number;
   video_url: string;
   create_at: Date;
-  course: Schema.Types.ObjectId;
   content: string;
 }

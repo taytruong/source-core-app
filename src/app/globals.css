@@ -1,7 +1,7 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@config "../../tailwind.config.ts";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@config '../../tailwind.config.ts';
 
 @layer base {
   /* body {
@@ -11,14 +11,14 @@
   /*get background wall.png*/
   body {
     position: relative;
-    background-image: url("/wall.png");
+    background-image: url('../assets/wall.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
   }
 
   body::before {
-    content: "";
+    content: '';
     position: fixed;
     inset: 0;
     background: rgba(255, 255, 255, 0.65);
@@ -26,8 +26,8 @@
     z-index: -1;
   }
 
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
@@ -55,10 +55,10 @@
     @apply flex items-center justify-center;
   }
   .focus-primary:focus {
-    @apply focus:ring-4 focus:ring-primary/10;
+    @apply focus:ring-primary/10 focus:ring-4;
   }
   .skeleton {
-    @apply bg-gray-200 animate-pulse;
+    @apply animate-pulse bg-gray-200;
   }
 }
 
@@ -121,7 +121,7 @@
     @apply pl-10;
   }
   a {
-    @apply underline text-primary font-medium;
+    @apply text-primary font-medium underline;
   }
   h1,
   h2,
@@ -140,7 +140,7 @@
 }
 
 .button-primary::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: auto;
@@ -163,14 +163,14 @@ html body .swal2-container {
     max-width: 450px;
   }
   .swal2-title {
-    @apply font-medium text-xl;
+    @apply text-xl font-medium;
   }
   .swal2-actions {
     .swal2-confirm {
       @apply bg-primary;
     }
     .swal2-cancel {
-      @apply bg-transparent text-slate-600 border border-slate-400;
+      @apply border border-slate-400 bg-transparent text-slate-600;
     }
     .swal2-confirm {
       @apply w-37.5;

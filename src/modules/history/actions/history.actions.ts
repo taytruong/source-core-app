@@ -3,10 +3,9 @@
 import { auth } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 
-import { connectToDatabase } from '@/src/shared/lib/mongoose';
+import { connectToDatabase } from '@/src/shared/lib';
 import { HistoryModel, UserModel } from '@/src/shared/schemas';
-import { HistoryModelProps } from '@/src/shared/types';
-import { CreateHistoryParams } from '@/src/types';
+import { CreateHistoryParams, HistoryModelProps } from '@/src/shared/types';
 
 export async function createHistory(params: CreateHistoryParams) {
   try {

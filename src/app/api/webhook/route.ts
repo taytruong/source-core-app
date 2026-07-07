@@ -2,7 +2,7 @@ import { WebhookEvent } from '@clerk/nextjs/server';
 import { NextResponse } from 'next/server';
 import { Webhook } from 'svix';
 
-import { createUser } from '@/src/lib/actions/user.actions';
+import { createUser } from '@/src/modules/user/actions';
 
 export async function POST(request: Request) {
   const svixId = request.headers.get('svix-id') ?? '';

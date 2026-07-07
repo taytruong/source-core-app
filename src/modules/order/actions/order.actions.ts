@@ -1,14 +1,32 @@
 'use server';
+
 import { QueryFilter } from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
 import { OrderStatus } from '@/src/shared/constants';
-import { connectToDatabase } from '@/src/shared/lib/mongoose';
-import { CouponModel, CourseModel, UserModel } from '@/src/shared/schemas';
-import { OrderModel } from '@/src/shared/types';
-import { CreateOrderParams } from '@/src/types';
+import { connectToDatabase } from '@/src/shared/lib';
+import {
+  CouponModel,
+  CourseModel,
+  OrderModel,
+  UserModel,
+} from '@/src/shared/schemas';
+import {
+  CreateOrderParams,
+  FilterQueryParams,
+  OrderItemData,
+  UpdateOrderParams,
+  UserItemData,
+} from '@/src/shared/types';
 
-export async function fetchOrder(params: any) {
+interface FetchOrdersResponse {
+  total: number;
+  orders: OrderItemData[];
+}
+
+export async function fetchOrder(
+  params: FilterQueryParams,
+): Promise<FetchOrdersResponse | undefined> {
   try {
     connectToDatabase();
     const { limit = 10, page = 1, search, status } = params;
@@ -54,7 +72,7 @@ export async function fetchOrder(params: any) {
 export async function createOrder(params: CreateOrderParams) {
   try {
     connectToDatabase();
-    // if (!params.coupon) delete params.coupon;
+    if (!params.coupon) delete params.coupon;
     const newOrder = await OrderModel.create(params);
 
     // used apply coupon
@@ -70,13 +88,7 @@ export async function createOrder(params: CreateOrderParams) {
   }
 }
 
-export async function updateOrder({
-  orderId,
-  status,
-}: {
-  orderId: string;
-  status: OrderStatus;
-}) {
+export async function updateOrder({ orderId, status }: UpdateOrderParams) {
   try {
     connectToDatabase();
     const findOrder = await OrderModel.findById(orderId)
@@ -94,7 +106,11 @@ export async function updateOrder({
     if (!findOrder) return;
     if (findOrder.status === OrderStatus.CANCEL) return;
 
-    const findUser = await UserModel.findById(findOrder.user._id);
+    const findUser: UserItemData | null = await UserModel.findById(
+      findOrder.user._id,
+    );
+
+    if (!findUser) return;
 
     await OrderModel.findByIdAndUpdate(orderId, {
       status,
@@ -113,8 +129,7 @@ export async function updateOrder({
       findOrder.status === OrderStatus.COMPLETE
     ) {
       findUser.courses = findUser.courses.filter(
-        (element: any) =>
-          element.toString() !== findOrder.course._id.toString(),
+        (element) => element.toString() !== findOrder.course._id.toString(),
       );
       await findUser.save();
     }
@@ -129,7 +144,11 @@ export async function updateOrder({
   }
 }
 
-export async function getOrderDetails({ code }: { code: string }) {
+export async function getOrderDetails({
+  code,
+}: {
+  code: string;
+}): Promise<OrderItemData | undefined> {
   try {
     connectToDatabase();
     const order = await OrderModel.findOne({ code }).populate({

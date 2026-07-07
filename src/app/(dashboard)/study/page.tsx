@@ -1,5 +1,5 @@
 import { StudyPage } from '@/src/modules/course/pages';
-import { Heading } from '@/src/shared/components';
+import { Heading } from '@/src/shared/components/common';
 
 const StudyPageRoot = async () => {
   return (

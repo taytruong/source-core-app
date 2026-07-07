@@ -2,13 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { IconEye, IconStar } from '@/src/shared/components/icons';
-import { formatViews } from '@/src/shared/utils';
+import { formatViews } from '@/src/shared/helper';
 
-import { CourseProps } from '../../types';
+import { CourseItemData } from '../../types';
 import CourseItemDuration from './course-item-duration';
 
 interface CourseItemProps {
-  data: CourseProps;
+  data: CourseItemData;
   cta?: string;
   url?: string;
 }
@@ -31,7 +31,7 @@ const CourseItem = ({
   ];
 
   return (
-    <div className="flex flex-col rounded-2xl border border-gray-200 bg-white p-3 shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100">
+    <div className="bg-item flex flex-col rounded-2xl border border-gray-200 p-3 shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100">
       <Link
         className="relative block h-48"
         href={courseUrl}

@@ -1,15 +1,13 @@
-import React from "react";
+import PageNotFound from '@/src/app/not-found';
+import { getOrderDetails } from '@/src/modules/order/actions';
 
-import PageNotFound from "@/src/app/not-found";
-import { getOrderDetails } from "@/src/lib/actions/order.action";
-
-const OrderDetails = async ({
-  params,
-}: {
+interface OrderDetailsPageRootProps {
   params: {
     code: string;
   };
-}) => {
+}
+
+const OrderDetailsPageRoots = async ({ params }: OrderDetailsPageRootProps) => {
   const orderDetails = await getOrderDetails({
     code: params.code,
   });
@@ -19,17 +17,17 @@ const OrderDetails = async ({
   return (
     <div className="flex flex-col gap-5">
       <p>
-        Cám ơn bạn đã mua khóa học{" "}
-        <strong className="text-primary">{orderDetails.course.title}</strong>{" "}
-        với số tiền là{" "}
+        Cám ơn bạn đã mua khóa học{' '}
+        <strong className="text-primary">{orderDetails.course.title}</strong>{' '}
+        với số tiền là{' '}
         <strong className="text-primary">{orderDetails.total}</strong>
       </p>
       <p>
-        Bạn vui lòng thanh toán theo thông tin tài khoản dưới đây với nội dung{" "}
+        Bạn vui lòng thanh toán theo thông tin tài khoản dưới đây với nội dung{' '}
         <strong className="text-primary">{orderDetails.code}</strong>
       </p>
     </div>
   );
 };
 
-export default OrderDetails;
+export default OrderDetailsPageRoots;

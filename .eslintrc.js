@@ -83,7 +83,7 @@ module.exports = {
     'import/newline-after-import': 'error',
     'import/no-duplicates': 'error',
     // 'import/prefer-default-export': 'error',
-    'import/no-cycle': 'warn',
+    // 'import/no-cycle': 'warn',
     'import/no-unresolved': 'error',
     'import/order': 'off',
     'import/named': 'off',
@@ -130,7 +130,7 @@ module.exports = {
     'unicorn/no-null': 'off',
     'unicorn/prefer-structured-clone': 'off',
     'unicorn/consistent-function-scoping': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
     'unicorn/no-array-callback-reference': 'off',
   },
 };
