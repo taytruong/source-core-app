@@ -4,40 +4,47 @@ import Link from 'next/link';
 
 import IconLogin from '@/src/shared/components/icons/icon-login';
 
-import { Input } from '../ui/input';
+import { useUserContext } from '../../contexts';
+import { Heading } from '../common';
 
-export interface HeaderProps {}
+export interface HeaderProps {
+  title?: React.ReactNode;
+}
 
-function Header(_props: HeaderProps) {
+function Header({ title }: HeaderProps) {
   const { userId } = useAuth();
+  const { userInfo } = useUserContext();
 
   return (
-    <div className="flex h-20 flex-col justify-center px-5 py-2">
-      <div className="flex items-center justify-between gap-5">
-        <Input
-          className="w-100"
-          placeholder="Tìm kiếm khóa học ..."
-        />
-        <div className="mt-auto flex items-center justify-end">
-          {userId ? (
-            <UserButton
-              appearance={{
-                elements: {
-                  avatarBox: {
-                    width: '40px',
-                    height: '40px',
+    <div className="mb-10 flex h-20 flex-col justify-center">
+      <div className="flex items-center justify-between">
+        <Heading className="lg:text-3xl">{title}</Heading>
+        <div className="flexCenter mt-auto gap-3">
+          <h2 className="text-xl font-bold">
+            {userInfo?.name ? <span>{userInfo.name} ! 👋</span> : null}
+          </h2>
+          <div className="m t-1">
+            {userId ? (
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: {
+                      width: '40px',
+                      height: '40px',
+                    },
                   },
-                },
-              }}
-            />
-          ) : (
-            <Link
-              className="bg-primary flex size-8 items-center justify-center rounded-full text-white"
-              href="sign-in"
-            >
-              <IconLogin />
-            </Link>
-          )}
+                }}
+              />
+            ) : (
+              <Link
+                className="flexCenter text-logo gap-2 p-2"
+                href="sign-in"
+              >
+                <span className="text-xl font-bold">👉 Sign in !</span>
+                <IconLogin className="bg-logo flexCenter size-8 rounded-full text-white" />
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,5 +1,3 @@
-import { Types } from 'mongoose';
-
 import { SortQueryParams } from './common';
 import { CourseModelProps, LessonModelProps } from './models';
 
@@ -18,6 +16,7 @@ export interface CourseLessonPageRootProps {
     course: string;
   };
   searchParams: {
+    id: string;
     slug: string;
     sort: SortQueryParams;
   };
@@ -33,7 +32,7 @@ export type GetAllCourseParams = {
 export type CreateCourseParams = {
   title: string;
   slug: string;
-  author: Types.ObjectId;
+  author: string;
 };
 
 export type UpdateCourseLecture = {

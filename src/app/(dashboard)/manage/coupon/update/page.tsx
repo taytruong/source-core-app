@@ -1,5 +1,5 @@
 import { UpdateCouponPage } from '@/src/modules/coupon/pages';
-import { Heading } from '@/src/shared/components/common';
+import { Header } from '@/src/shared/components/layout';
 
 export interface UpdateCouponPageRootProps {
   searchParams: {
@@ -10,7 +10,7 @@ export interface UpdateCouponPageRootProps {
 function UpdateCouponPageRoot({ searchParams }: UpdateCouponPageRootProps) {
   return (
     <>
-      <Heading>Cập nhật mã giảm giá</Heading>
+      <Header title="Cập nhật mã giảm giá" />
       <UpdateCouponPage code={searchParams.code} />
     </>
   );

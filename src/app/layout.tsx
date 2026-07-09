@@ -5,11 +5,13 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { Toaster } from 'sonner';
 
 import { TooltipProvider } from '@/src/shared/components/ui/tooltip';
 
 import { UserProvider } from '../shared/contexts';
+import { ReactQueryContext } from '../shared/contexts/react-query-context';
 import { quicksand } from '../shared/utils';
 
 export const metadata: Metadata = {
@@ -35,7 +37,11 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${quicksand.className}`}>
           <TooltipProvider>
-            <UserProvider>{children}</UserProvider>
+            <ReactQueryContext>
+              <UserProvider>
+                <NuqsAdapter>{children}</NuqsAdapter>
+              </UserProvider>
+            </ReactQueryContext>
             <SpeedInsights />
             <Analytics />
           </TooltipProvider>

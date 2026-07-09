@@ -3,7 +3,6 @@
 import {
   BadgeStatus,
   BouncedLink,
-  Heading,
   Pagination,
   TableAction,
   TableActionItem,
@@ -51,8 +50,7 @@ function ManageCouponContainer({
         url="/manage/coupon/new"
       />
 
-      <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
-        <Heading>Quản lý mã giảm giá (coupon)</Heading>
+      <div className="mb-10 flex flex-col justify-start gap-5 lg:flex-row lg:items-center">
         <div className="flex gap-3">
           <div className="w-full lg:w-75">
             <Input

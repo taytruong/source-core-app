@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import * as React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useImmer } from 'use-immer';
@@ -34,7 +33,7 @@ import {
 } from '@/src/shared/constants';
 import { UploadButton } from '@/src/shared/utils';
 
-import { updateCourse } from '../../../actions';
+import { useMutationUpdateCourse } from '../../../libs/react-query';
 import { CourseItemData } from '../../../types';
 
 const formSchema = z.object({
@@ -71,7 +70,7 @@ interface UpdateCourseContainerProps {
 
 const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
   const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const muatationUpdateCourse = useMutationUpdateCourse();
   const [courseInfo, setCourseInfo] = useImmer({
     requirements: course.info.requirements,
     benefits: course.info.benefits,
@@ -99,39 +98,32 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsSubmitting(true);
-    try {
-      const respone = await updateCourse({
-        slug: course.slug,
-        updateData: {
-          title: values.title,
-          slug: values.slug,
-          price: values.price,
-          sale_price: values.sale_price,
-          intro_url: values.intro_url,
-          desc: values.desc,
-          views: values.views,
-          info: {
-            requirements: courseInfo.requirements,
-            benefits: courseInfo.benefits,
-            qa: courseInfo.qa,
-          },
-          status: values.status,
-          level: values.level,
-          image: values.image,
+    const respone = await muatationUpdateCourse.mutateAsync({
+      slug: course.slug,
+      updateData: {
+        title: values.title,
+        slug: values.slug,
+        price: values.price,
+        sale_price: values.sale_price,
+        intro_url: values.intro_url,
+        desc: values.desc,
+        views: values.views,
+        info: {
+          requirements: courseInfo.requirements,
+          benefits: courseInfo.benefits,
+          qa: courseInfo.qa,
         },
-      });
+        status: values.status,
+        level: values.level,
+        image: values.image,
+      },
+    });
 
-      if (values.slug != course.slug) {
-        router.replace(`/manage/course/update?slug=${values.slug}`);
-      }
-      if (respone?.success) {
-        toast.success(respone.message);
-      }
-    } catch (error) {
-      console.log('🚀 ~ onSubmit ~ error:', error);
-    } finally {
-      setIsSubmitting(false);
+    if (values.slug != course.slug) {
+      router.replace(`/manage/course/update?slug=${values.slug}`);
+    }
+    if (respone?.success) {
+      toast.success(respone.message);
     }
   }
 
@@ -513,8 +505,8 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
       </div>
       <Button
         className="w-37.5"
-        disabled={isSubmitting}
-        isLoading={isSubmitting}
+        disabled={muatationUpdateCourse.isPending}
+        isLoading={muatationUpdateCourse.isPending}
         type="submit"
         variant={'primary'}
       >

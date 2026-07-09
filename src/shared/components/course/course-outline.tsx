@@ -6,19 +6,19 @@ import {
 } from '@/src/shared/components/ui/accordion';
 import { HistoryItem, LectureItemData } from '@/src/shared/types';
 
-import CourseLessonItem from './course-lesson-item';
+import CourseOutlineItem from './course-outline-item';
 
 interface CourseOutlineProps {
   lectures: LectureItemData[];
   course: string;
-  slug: string;
+  lessonId: string;
   histories?: HistoryItem[];
 }
 const CourseOutline = ({
   course = '',
   histories = [],
   lectures = [],
-  slug = '',
+  lessonId = '',
 }: CourseOutlineProps) => {
   return (
     <div className="flex flex-col gap-5">
@@ -38,12 +38,12 @@ const CourseOutline = ({
               <div className="mt-2 flex flex-col gap-3">
                 {lecture.lessons.map((item) => {
                   return (
-                    <CourseLessonItem
+                    <CourseOutlineItem
                       key={item._id.toString()}
                       course={course}
                       histories={histories}
                       lesson={item}
-                      slug={slug}
+                      lessonId={lessonId}
                     />
                   );
                 })}

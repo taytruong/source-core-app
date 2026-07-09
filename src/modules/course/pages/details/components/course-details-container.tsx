@@ -91,7 +91,7 @@ async function CourseDetailsContainer({
         <CourseOutline
           course=""
           lectures={courseDetails.lectures}
-          slug=""
+          lessonId=""
         />
       ),
     },

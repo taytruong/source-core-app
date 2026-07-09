@@ -1,35 +1,40 @@
 'use client';
 
-import Image from 'next/image';
-
-import logo from '@/src/assets/logo.png';
 import { MenuItem } from '@/src/shared/components/common';
 import { menuItems } from '@/src/shared/constants';
 
 const Sidebar = () => {
   return (
-    <div className="fixed top-0 bottom-0 left-0 hidden w-75 flex-col border-r border-r-gray-200 bg-linear-to-r from-orange-100 to-white/40 px-8 py-5 shadow-sm lg:flex">
+    <div className="fixed top-0 bottom-0 left-0 hidden w-75 flex-col border-r border-r-gray-200 bg-linear-to-r from-orange-100 to-white/40 px-7 py-5 shadow-sm lg:flex">
       <a
-        className="flexCenter mb-11 text-4xl font-semibold"
+        className="flexCenter mb-11 gap-2 text-4xl font-semibold"
         href="/"
       >
         <span className="mb-2">
-          <Image
-            alt="logo"
-            className="object-cover"
-            height={27}
-            src={logo}
-            width={32}
-          />
+          <svg
+            fill="none"
+            height="50"
+            viewBox="0 0 54 52"
+            width="54"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M7.62939e-06 19.3757C7.62939e-06 24.9308 4.11243 29.5107 9.41455 30.1473C9.9268 30.2088 10.3378 30.6334 10.3378 31.1572V43.9211C10.3378 44.4568 10.7655 44.8911 11.2931 44.8911H15.1441C15.6717 44.8911 16.0994 45.3254 16.0994 45.8612V50.2247C16.0994 51.0717 17.0935 51.5118 17.7047 50.9355L23.8402 45.1503C24.0169 44.9837 24.2491 44.8911 24.4903 44.8911H43.8416C44.3692 44.8911 44.797 44.4568 44.797 43.9211V30.908C44.797 30.4322 45.1385 30.0312 45.594 29.9194C50.2776 28.7693 53.7565 24.485 53.7565 19.3757C53.7565 13.3849 48.9738 8.52849 43.0741 8.52849C42.4401 8.52849 41.819 8.58458 41.2153 8.69214C40.7599 8.77327 40.2981 8.54943 40.0843 8.13324C37.6006 3.29972 32.6188 0 26.878 0C21.1373 0 16.1555 3.29969 13.6718 8.13317C13.4579 8.54934 12.9961 8.77318 12.5408 8.69207C11.9373 8.58455 11.3163 8.52849 10.6824 8.52849C4.78266 8.52849 7.62939e-06 13.3849 7.62939e-06 19.3757ZM28.1588 31.9979C28.1588 31.2911 27.5556 30.718 26.8115 30.718L16.7069 30.718C15.9629 30.718 15.3597 31.2911 15.3597 31.9979C15.3597 32.7048 15.9629 33.2779 16.7069 33.2779L26.8115 33.2779C27.5556 33.2779 28.1588 32.7048 28.1588 31.9979ZM37.1034 35.8377C37.8182 35.8377 38.3977 36.4107 38.3977 37.1176C38.3977 37.8245 37.8182 38.3975 37.1034 38.3975H16.6536C15.9388 38.3975 15.3593 37.8245 15.3593 37.1176C15.3593 36.4107 15.9388 35.8377 16.6536 35.8377H37.1034Z"
+              fill="#D35152"
+              fill-rule="evenodd"
+            />
+          </svg>
         </span>
-        cademy.
+        Ucademy.
       </a>
-      <ul className="flex flex-col gap-3">
+      <ul className="flex flex-col gap-2">
         {menuItems.map((item, index) => (
           <MenuItem
             key={index}
             icon={item.icon}
             title={item.title}
+            title2={item.title2}
             url={item.url}
           />
         ))}

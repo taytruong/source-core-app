@@ -14,6 +14,7 @@ export { default as IconDoubleArrowRight } from './icon-double-arrow-right';
 export { default as IconEdit } from './icon-edit';
 export { default as IconExplore } from './icon-explore';
 export { default as IconEye } from './icon-eye';
+export { default as IconHome } from './icon-home';
 export { default as IconNext } from './icon-next';
 export { default as IconOrder } from './icon-order';
 export { default as IconPlay } from './icon-play';

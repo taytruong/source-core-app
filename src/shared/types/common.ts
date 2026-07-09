@@ -18,6 +18,12 @@ export type RatingIcon = 'awesome' | 'good' | 'meh' | 'bad' | 'terrible';
 export interface MenuItemProps {
   url: string;
   title: string;
+  title2?: string;
   icon?: React.ReactNode;
   onlyIcon?: boolean;
+}
+
+export interface StorageLesson {
+  course: string;
+  lesson: string;
 }

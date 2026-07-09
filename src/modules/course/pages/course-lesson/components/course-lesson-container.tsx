@@ -3,9 +3,9 @@ import { Suspense } from 'react';
 import { getHistory } from '@/src/modules/history/actions';
 import { countLessonByCourseId } from '@/src/modules/lesson/actions';
 import { CourseOutline, Loading } from '@/src/shared/components/common';
+import { CourseLessonPageRootProps } from '@/src/shared/types';
 
 import { fetchCourseBySlug } from '../../../actions';
-import { CourseLessonPageProps } from '../course-lesson-page';
 import CourseLessonComment from './course-lesson-comment';
 import CourseLessonOutline from './course-lesson-outline';
 import CourseLessonPlayer from './course-lesson-player';
@@ -13,14 +13,14 @@ import LoadingPlayer from './course-lesson-player/loading-player';
 import LessonWrapper from './lesson-wrapper';
 import LoadingOutline from './loading-outline';
 
-export interface CourseLessonContainerProps extends CourseLessonPageProps {}
+export interface CourseLessonContainerProps extends CourseLessonPageRootProps {}
 
 async function CourseLessonContainer({
   params,
   searchParams,
 }: CourseLessonContainerProps) {
   const courseSlug = params.course;
-  const lessonSlug = searchParams.slug;
+  const lessonId = searchParams.id;
   const foundCourse = await fetchCourseBySlug({ slug: courseSlug });
 
   if (!foundCourse) return null;
@@ -40,13 +40,13 @@ async function CourseLessonContainer({
           <CourseLessonPlayer
             courseId={courseId}
             courseSlug={courseSlug}
-            lessonSlug={lessonSlug}
+            lessonId={lessonId}
           />
         </Suspense>
         <Suspense fallback={<Loading />}>
           <CourseLessonComment
             courseId={courseId}
-            lessonSlug={lessonSlug}
+            lessonSlug={searchParams.slug}
             sort={searchParams.sort}
           />
         </Suspense>
@@ -57,7 +57,7 @@ async function CourseLessonContainer({
             course={courseSlug}
             histories={histories ? JSON.parse(JSON.stringify(histories)) : []}
             lectures={lectures}
-            slug={lessonSlug}
+            lessonId={lessonId}
           />
         </CourseLessonOutline>
       </Suspense>

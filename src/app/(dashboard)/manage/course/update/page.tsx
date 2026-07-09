@@ -1,5 +1,5 @@
 import { UpdateCoursePage } from '@/src/modules/course/pages';
-import { Heading } from '@/src/shared/components/common';
+import Header from '@/src/shared/components/layout/header';
 
 export interface UpdateCoursePageRootProps {
   searchParams: {
@@ -10,7 +10,7 @@ export interface UpdateCoursePageRootProps {
 function UpdateCoursePageRoot({ searchParams }: UpdateCoursePageRootProps) {
   return (
     <>
-      <Heading>Cập nhật khóa học</Heading>
+      <Header title="Cập nhật khóa học" />
       <UpdateCoursePage slug={searchParams.slug} />
     </>
   );

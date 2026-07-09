@@ -1,10 +1,10 @@
 import { StudyPage } from '@/src/modules/course/pages';
-import { Heading } from '@/src/shared/components/common';
+import { Header } from '@/src/shared/components/layout';
 
 const StudyPageRoot = async () => {
   return (
     <>
-      <Heading>Khu vực học tập</Heading>
+      <Header title="Khu vực luyện tập" />
       <StudyPage />
     </>
   );
