@@ -9,22 +9,22 @@ import { HistoryItem, LessonItemData } from '@/src/shared/types';
 
 import { cn } from '../../utils';
 
-interface CourseLessonItemProps {
+interface CourseOutlineItemProps {
   lesson: LessonItemData;
   histories?: HistoryItem[];
   course: string;
-  slug: string;
+  lessonId: string;
 }
-const CourseLessonItem = ({
+const CourseOutlineItem = ({
   course = '',
   histories = [],
   lesson,
-  slug,
-}: CourseLessonItemProps) => {
+  lessonId,
+}: CourseOutlineItemProps) => {
   if (!lesson) return null;
-  const isActive = lesson.slug === slug;
+  const isActive = lesson._id.toString() === lessonId;
   const lessonItem = JSON.parse(JSON.stringify(lesson));
-  const url = course ? `/${course}/lesson?slug=${lesson.slug}` : '';
+  const url = course ? `/${course}/lesson?id=${lesson._id.toString()}` : '';
   const isChecked = histories.some(
     (element) => element.lesson.toString() === lesson._id.toString(),
   );
@@ -77,4 +77,4 @@ const CourseLessonItem = ({
   );
 };
 
-export default CourseLessonItem;
+export default CourseOutlineItem;

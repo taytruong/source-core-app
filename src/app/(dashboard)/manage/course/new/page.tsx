@@ -1,12 +1,12 @@
 import { CreateCoursePage } from '@/src/modules/course/pages';
-import { Heading } from '@/src/shared/components/common';
+import { Header } from '@/src/shared/components/layout';
 
 export interface CreateCoursePageRootProps {}
 
 function CreateCoursePageRoot(_props: CreateCoursePageRootProps) {
   return (
     <>
-      <Heading>Tạo khóa học mới</Heading>
+      <Header title="Tạo mới khóa học" />
       <CreateCoursePage />
     </>
   );

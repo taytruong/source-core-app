@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 import {
   BadgeStatus,
   BouncedLink,
-  Heading,
   HoverTooltip,
   TableAction,
   TableActionItem,
@@ -102,8 +101,7 @@ const CourseManageContainer = ({
         url="/manage/course/new"
       />
 
-      <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
-        <Heading>Quản lý khóa học</Heading>
+      <div className="mb-10 flex flex-col justify-start gap-5 lg:flex-row lg:items-center">
         <div className="flex gap-3">
           <div className="w-full lg:w-75">
             <Input

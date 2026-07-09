@@ -4,6 +4,7 @@ import { QueryFilter } from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
 import { CourseStatus, RatingStatus } from '@/src/shared/constants';
+import { parseData } from '@/src/shared/helper';
 import { connectToDatabase } from '@/src/shared/lib';
 import {
   CourseModel,
@@ -26,7 +27,7 @@ export async function fetchCourse(
 ): Promise<CourseItemData[] | undefined> {
   try {
     connectToDatabase();
-    const { limit = 10, page = 1, search } = params;
+    const { limit = 10, page = 1, search, status } = params;
     const skip = (page - 1) * limit;
     const query: QueryFilter<typeof CourseModel> = {};
 
@@ -34,13 +35,17 @@ export async function fetchCourse(
       // hoặc = lấy ra title của Course
       query.$or = [{ title: { $regex: search, $options: 'i' } }];
     }
-    query.status = CourseStatus.APPROVED;
+
+    if (status) {
+      query.status = status;
+    }
+
     const courses = await CourseModel.find(query)
       .skip(skip)
       .limit(limit)
       .sort({ create_at: -1 });
 
-    return JSON.parse(JSON.stringify(courses));
+    return parseData(courses);
   } catch (error) {
     console.log('🚀 ~ fetchCourse ~ error:', error);
   }
@@ -70,7 +75,41 @@ export async function fetchCourseOfUser(
     });
 
     if (!findUser) return null;
-    const courses = JSON.parse(JSON.stringify(findUser.courses));
+    const courses = parseData(findUser.courses);
+
+    return courses;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function fetchContinueCoursesUser({
+  clerkId,
+}: {
+  clerkId: string;
+}): Promise<CourseItemData[] | undefined | null> {
+  try {
+    connectToDatabase();
+    const findUser = await UserModel.findOne({ clerkId: clerkId }).populate({
+      path: 'courses',
+      model: CourseModel,
+      match: {
+        status: CourseStatus.APPROVED,
+      },
+      populate: {
+        path: 'lectures',
+        model: LectureModel,
+        select: 'lessons',
+        populate: {
+          path: 'lessons',
+          model: LessonModel,
+          select: '_id slug',
+        },
+      },
+    });
+
+    if (!findUser) return null;
+    const courses = parseData(findUser.courses);
 
     return courses;
   } catch (error) {
@@ -118,7 +157,7 @@ export async function fetchCourseBySlug({
         },
       });
 
-    return JSON.parse(JSON.stringify(findCourse)) as CourseItemData;
+    return parseData(findCourse) as CourseItemData;
   } catch (error) {
     console.log('🚀 ~ fetchCourseBySlug ~ error:', error);
   }
@@ -139,7 +178,7 @@ export async function createCourse(params: CreateCourseParams) {
 
     return {
       success: true,
-      data: JSON.parse(JSON.stringify(course)),
+      data: parseData(course),
     };
   } catch (error) {
     console.log('🚀 ~ createCourse ~ error:', error);

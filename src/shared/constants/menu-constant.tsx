@@ -1,6 +1,7 @@
 import {
   IconComment,
   IconExplore,
+  IconHome,
   IconOrder,
   IconPlay,
   IconStar,
@@ -13,17 +14,25 @@ import { MenuItemProps } from '../types';
 export const menuItems: MenuItemProps[] = [
   {
     url: '/',
+    title: 'Dashboard',
+    title2: 'Tổng quan',
+    icon: <IconHome className="size-5" />,
+  },
+  {
+    url: '/explore',
     title: 'Khám phá',
     icon: <IconExplore className="size-5" />,
   },
   {
     url: '/study',
     title: 'Khu vực học tập',
+    title2: 'Luyện tập',
     icon: <IconStudy className="size-5" />,
   },
   {
     url: '/manage/course',
     title: 'Quản lý khóa học',
+    title2: 'Quản lý',
     icon: <IconPlay className="size-5" />,
   },
   {

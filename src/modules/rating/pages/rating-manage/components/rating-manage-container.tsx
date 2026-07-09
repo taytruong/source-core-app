@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 import { deleteRating, updateRating } from '@/src/modules/rating/actions';
 import {
   BadgeStatus,
-  Heading,
   TableAction,
   TableActionItem,
 } from '@/src/shared/components/common';
@@ -41,7 +40,7 @@ interface RatingManageContainerProps {
   ratings?: RatingItemData[];
 }
 
-const RatingManage = ({ ratings }: RatingManageContainerProps) => {
+const RatingManageContainer = ({ ratings }: RatingManageContainerProps) => {
   const { handleSearchData, handleSelectStatus } = useQueryString();
 
   const handleUpdateRating = async (id: string) => {
@@ -72,8 +71,7 @@ const RatingManage = ({ ratings }: RatingManageContainerProps) => {
 
   return (
     <div>
-      <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
-        <Heading className="">Quản lý đánh giá</Heading>
+      <div className="mb-10 flex flex-col justify-start gap-5 lg:flex-row lg:items-center">
         <div className="flex gap-3">
           <div className="w-full lg:w-75">
             <Input
@@ -192,4 +190,4 @@ const RatingManage = ({ ratings }: RatingManageContainerProps) => {
   );
 };
 
-export default RatingManage;
+export default RatingManageContainer;

@@ -1,10 +1,9 @@
-import { fetchCourse } from '../../actions';
 import { CourseDashboardContainer } from './components';
 
-async function CourseDashboardPage() {
-  const courseList = (await fetchCourse({})) || [];
+function CourseDashboardPage() {
+  // const courseList = (await fetchCourse({})) || [];
 
-  return <CourseDashboardContainer courseList={courseList} />;
+  return <CourseDashboardContainer />;
 }
 
 export default CourseDashboardPage;

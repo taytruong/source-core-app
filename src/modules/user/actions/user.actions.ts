@@ -2,6 +2,7 @@
 
 import { CourseItemData } from '@/src/modules/course/types';
 import { CourseStatus } from '@/src/shared/constants';
+import { parseData } from '@/src/shared/helper';
 import { connectToDatabase } from '@/src/shared/lib';
 import {
   CourseModel,
@@ -35,7 +36,7 @@ export async function getUserInfo({
 
     if (!findUser) return null;
 
-    return JSON.parse(JSON.stringify(findUser));
+    return parseData(findUser);
   } catch (error) {
     console.log(error);
   }
@@ -65,7 +66,7 @@ export async function getUserCourses(
     });
 
     if (!findUser) return null;
-    const courses = JSON.parse(JSON.stringify(findUser.courses));
+    const courses = parseData(findUser.courses);
 
     return courses;
   } catch (error) {

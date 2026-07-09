@@ -1,5 +1,4 @@
 export { default as CourseOutline } from '../course';
-export { default as Sidebar } from '../layout/sidebar';
 export { default as BadgeStatus } from './badge-status';
 export { default as BouncedLink } from './bounced-link';
 export { default as CourseGrid } from './course-grid';

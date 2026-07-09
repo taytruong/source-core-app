@@ -1,27 +1,14 @@
-import { CourseGrid } from '@/src/shared/components/common';
+import CourseContinue from './course-continue';
+import CourseListSuggestion from './course-list-suggestion';
 
-import { CourseItem } from '../../../components/course-item';
-import { CourseItemData } from '../../../types';
+export interface CourseDashboardContainerProps {}
 
-export interface CourseDashboardContainerProps {
-  courseList: CourseItemData[];
-}
-
-function CourseDashboardContainer({
-  courseList,
-}: CourseDashboardContainerProps) {
-  if (!courseList || courseList.length === 0) return null;
-
+function CourseDashboardContainer({}: CourseDashboardContainerProps) {
   return (
-    <CourseGrid>
-      {courseList?.length > 0 &&
-        courseList?.map((item) => (
-          <CourseItem
-            key={item.slug}
-            data={item}
-          />
-        ))}
-    </CourseGrid>
+    <div className="flex flex-col gap-8">
+      <CourseContinue />
+      <CourseListSuggestion />
+    </div>
   );
 }
 

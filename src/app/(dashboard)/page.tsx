@@ -1,10 +1,10 @@
 import { CourseDashboardPage } from '@/src/modules/course/pages';
-import { Heading } from '@/src/shared/components/common';
+import { Header } from '@/src/shared/components/layout';
 
 function HomePageRoot() {
   return (
     <>
-      <Heading>Khám phá</Heading>
+      <Header title="Khám phá" />
       <CourseDashboardPage />
     </>
   );

@@ -23,7 +23,7 @@ module.exports = {
     'no-useless-return': 'warn',
     'prefer-const': 'warn',
     'react/self-closing-comp': 'error',
-    'react/no-multi-comp': 'warn',
+    'react/no-multi-comp': 'off',
     'react/prop-types': 'off',
     'array-bracket-newline': ['error', 'consistent'],
     'array-element-newline': ['error', 'consistent'],

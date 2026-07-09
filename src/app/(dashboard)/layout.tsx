@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { MenuItem, Sidebar } from '@/src/shared/components/common';
-import { Header } from '@/src/shared/components/layout';
+import { MenuItem } from '@/src/shared/components/common';
+import { Sidebar } from '@/src/shared/components/layout';
 import { menuItems } from '@/src/shared/constants';
 
 const layout = ({ children }: { children: React.ReactNode }) => {
@@ -21,8 +21,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
       </ul>
       <div className="hidden lg:block" />
       <main>
-        <Header />
-        <div className="p-5">{children}</div>
+        <div className="px-14 py-5">{children}</div>
       </main>
     </div>
   );

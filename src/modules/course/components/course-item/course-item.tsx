@@ -67,7 +67,7 @@ const CourseItem = ({
           </div>
 
           <Link
-            className="bg-primary button-primary mt-10 flex h-12 w-full items-center justify-center rounded-lg text-white"
+            className="bg-primary button-primary mt-10 flex h-12 w-full items-center justify-center rounded-lg font-bold text-white"
             href={courseUrl}
           >
             {cta}

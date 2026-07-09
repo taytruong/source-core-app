@@ -1,4 +1,5 @@
 import { CourseManagePage } from '@/src/modules/course/pages';
+import { Header } from '@/src/shared/components/layout';
 import { CourseStatus } from '@/src/shared/constants';
 
 export interface CourseManagePageRootProps {
@@ -11,7 +12,12 @@ export interface CourseManagePageRootProps {
 const CourseManagePageRoot = async ({
   searchParams,
 }: CourseManagePageRootProps) => {
-  return <CourseManagePage searchParams={searchParams} />;
+  return (
+    <>
+      <Header title="Quản lý khóa học" />
+      <CourseManagePage searchParams={searchParams} />
+    </>
+  );
 };
 
 export default CourseManagePageRoot;

@@ -6,7 +6,6 @@ import Swal from 'sweetalert2';
 import {
   BadgeStatus,
   EmptySpace,
-  Heading,
   HoverTooltip,
   Pagination,
 } from '@/src/shared/components/common';
@@ -84,8 +83,7 @@ const OrderManageContainer = ({
 
   return (
     <>
-      <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
-        <Heading>Quản lý đơn hàng</Heading>
+      <div className="mb-10 flex flex-col justify-start gap-5 lg:flex-row lg:items-center">
         <div className="flex gap-3">
           <div className="w-full lg:w-75 xl:w-95">
             <Input

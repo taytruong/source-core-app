@@ -38,15 +38,22 @@ const VideoPlayer = ({
 
   return (
     <>
-      <div className="relative mb-5 aspect-video">
-        <iframe
-          allowFullScreen
-          allow="autoplay; encrypted-media; picture-in-picture"
-          className="h-full w-full rounded-xl object-fill"
-          referrerPolicy="strict-origin-when-cross-origin"
-          src={`https://www.youtube.com/embed/${urlVideoId}?rel=0`}
-        />
-      </div>
+      {!!urlVideoId && (
+        <div className="relative mb-5 aspect-video">
+          <iframe
+            allowFullScreen
+            allow="autoplay; encrypted-media; picture-in-picture"
+            className="h-full w-full rounded-xl object-fill"
+            referrerPolicy="strict-origin-when-cross-origin"
+            src={`https://www.youtube.com/embed/${urlVideoId}?rel=0`}
+          />
+        </div>
+      )}
+      {!urlVideoId && (
+        <div className="flexCenter mb-5 aspect-video rounded-xl bg-gray-200">
+          No video
+        </div>
+      )}
       <div className="mb-5 flex items-center justify-between">
         <LessonNavigation
           nextLesson={nextLesson}

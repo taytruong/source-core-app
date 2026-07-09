@@ -21,7 +21,7 @@ const LinkActive = ({ children, url }: LinkActiveProps) => {
         'flex items-center gap-4 rounded-xl px-5 py-4 text-base text-black transition-all',
         {
           'svg-animate bg-black/70 font-bold text-white shadow-sm': isActive,
-          'border-transparent font-medium hover:bg-[#ebd0a5]/20 hover:transition-all':
+          'border-transparent font-medium hover:scale-[1.02] hover:bg-[#ebd0a5]/20 hover:transition-all':
             !isActive,
         },
       )}

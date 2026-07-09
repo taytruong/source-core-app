@@ -1,14 +1,50 @@
 import React from 'react';
 
+import { CourseItemSkeleton } from '@/src/modules/course/components/course-item';
+
 interface CourseGirdProps {
   children: React.ReactNode;
+  isLoading?: boolean;
+  type?: 'continue';
 }
 
-const CourseGrid = ({ children }: CourseGirdProps) => {
+const CourseGrid = ({ children, isLoading, type }: CourseGirdProps) => {
+  if (isLoading) {
+    return (
+      <>
+        {type === 'continue' ? (
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(470px,1fr))] gap-4">
+            {Array.from({ length: 2 })
+              .fill(0)
+              .map((_, index) => (
+                <CourseItemSkeleton key={index} />
+              ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+            {Array.from({ length: 3 })
+              .fill(0)
+              .map((_, index) => (
+                <CourseItemSkeleton key={index} />
+              ))}
+          </div>
+        )}
+      </>
+    );
+  }
+
   return (
-    <div className="3xl:grid-cols-6 course-slider mt-8 grid gap-4 lg:grid-cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4">
-      {children}
-    </div>
+    <>
+      {type === 'continue' ? (
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(470px,1fr))] gap-4">
+          {children}
+        </div>
+      ) : (
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+          {children}
+        </div>
+      )}
+    </>
   );
 };
 

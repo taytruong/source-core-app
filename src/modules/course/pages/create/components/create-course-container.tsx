@@ -1,7 +1,6 @@
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import * as React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import slugify from 'slugify';
 import { toast } from 'sonner';
@@ -16,57 +15,45 @@ import {
 import { Input } from '@/src/shared/components/ui/input';
 import { useUserContext } from '@/src/shared/contexts';
 
-import { createCourse } from '../../../actions';
-
-const formSchema = z.object({
-  title: z.string().min(10, 'Tên khóa học ít nhất có 10 ký tự'),
-  slug: z.string().optional(),
-});
+import { useMutationCreateCourse } from '../../../libs/react-query';
+import { CourseCreateSchema } from '../../../schemas';
 
 function CreateCourseContainer() {
   const { userInfo } = useUserContext();
+  const mutationCreateCourse = useMutationCreateCourse();
 
   const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof CourseCreateSchema>>({
+    resolver: zodResolver(CourseCreateSchema),
     defaultValues: {
       title: '',
       slug: '',
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof CourseCreateSchema>) {
     if (!userInfo) return;
-    setIsSubmitting(true);
-    try {
-      const data = {
-        title: values.title,
-        slug:
-          values.slug ||
-          slugify(values.title, {
-            lower: true,
-            locale: 'vi',
-          }),
-        author: userInfo?._id,
-      };
-      const respone = await createCourse(data);
+    const data = {
+      title: values.title,
+      slug:
+        values.slug ||
+        slugify(values.title, {
+          lower: true,
+          locale: 'vi',
+        }),
+      author: userInfo?._id.toString(),
+    };
+    const respone = await mutationCreateCourse.mutateAsync(data);
 
-      if (!respone?.success) {
-        toast.error(respone?.message);
+    if (!respone?.success) {
+      toast.error('Tạo khóa học thất bại, vui lòng thử lại sau');
 
-        return;
-      }
-      toast.success('Tạo khóa học thành công');
-      if (respone?.data) {
-        router.push(`/manage/course/update?slug=${respone.data.slug}`);
-      }
-    } catch (error) {
-      console.log('🚀 ~ onSubmit ~ error:', error);
-    } finally {
-      setIsSubmitting(false);
+      return;
     }
-    console.log(values);
+    toast.success('Tạo khóa học thành công');
+    if (respone?.data) {
+      router.push(`/manage/course/update?slug=${respone.data.slug}`);
+    }
   }
 
   return (
@@ -112,8 +99,8 @@ function CreateCourseContainer() {
       </div>
       <Button
         className="w-30"
-        disabled={isSubmitting}
-        isLoading={isSubmitting}
+        disabled={mutationCreateCourse.isPending}
+        isLoading={mutationCreateCourse.isPending}
         type="submit"
         variant={'primary'}
       >
