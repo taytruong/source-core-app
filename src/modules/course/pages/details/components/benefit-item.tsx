@@ -1,4 +1,4 @@
-import { IconChecked } from '@/src/shared/components/icons';
+import { IconCheck } from '@/src/shared/components/icons';
 
 export interface BenefitItemProps {
   title: string;
@@ -7,8 +7,8 @@ export interface BenefitItemProps {
 function BenefitItem({ title }: BenefitItemProps) {
   return (
     <div className="mb-3 flex items-center gap-2">
-      <span className="flex size-7 shrink-0 items-center justify-center rounded text-green-500">
-        <IconChecked />
+      <span className="text-primary flex size-7 shrink-0 items-center justify-center rounded">
+        <IconCheck />
       </span>
       <span>{title}</span>
     </div>

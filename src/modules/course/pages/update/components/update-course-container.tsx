@@ -137,12 +137,12 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
           name="title"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Tên khóa học *</FieldLabel>
+              <FieldLabel>Course Name *</FieldLabel>
               <Input
                 {...field}
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
-                placeholder="Tên khóa học"
+                placeholder="Course Name"
               />
               {!!fieldState.invalid && (
                 <FieldError errors={[fieldState.error]} />
@@ -156,12 +156,12 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
           name="slug"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Đường dẫn khóa học</FieldLabel>
+              <FieldLabel>Slug</FieldLabel>
               <Input
                 {...field}
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
-                placeholder="khoa-hoc-lap-trinh"
+                placeholder="course-name"
               />
               {!!fieldState.invalid && (
                 <FieldError errors={[fieldState.error]} />
@@ -175,7 +175,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
           name="price"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Giá khuyến mãi</FieldLabel>
+              <FieldLabel>Sale Price</FieldLabel>
               <Input
                 {...field}
                 placeholder="599.000"
@@ -194,7 +194,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
           name="sale_price"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Giá gốc</FieldLabel>
+              <FieldLabel>Original Price</FieldLabel>
               <Input
                 {...field}
                 placeholder="999.000"
@@ -213,13 +213,13 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
           name="desc"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Mô tả chi tiết khóa học</FieldLabel>
+              <FieldLabel>Course Description</FieldLabel>
               <Textarea
                 {...field}
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
                 className="h-63"
-                placeholder="Nhập mô tả ..."
+                placeholder="Enter course description ..."
               />
               {!!fieldState.invalid && (
                 <FieldError errors={[fieldState.error]} />
@@ -233,7 +233,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
           name="image"
           render={({ fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Ảnh bìa</FieldLabel>
+              <FieldLabel>Course Image</FieldLabel>
               <>
                 <div className="relative flex h-63 items-center justify-center rounded border border-gray-200 bg-white">
                   {imageWatch ? (
@@ -271,7 +271,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
           name="intro_url"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Đường dẫn khóa học</FieldLabel>
+              <FieldLabel>Intro URL</FieldLabel>
               <Input
                 {...field}
                 aria-invalid={fieldState.invalid}
@@ -290,7 +290,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
           name="views"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Số lượt xem</FieldLabel>
+              <FieldLabel>Number of Views</FieldLabel>
               <Input
                 {...field}
                 placeholder="1000"
@@ -308,13 +308,13 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
           name="status"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Trạng thái</FieldLabel>
+              <FieldLabel>Status</FieldLabel>
               <Select
                 defaultValue={field.value}
                 onValueChange={field.onChange}
               >
                 <SelectTrigger size="lg">
-                  <SelectValue placeholder="Trạng thái" />
+                  <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -342,13 +342,13 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
           name="level"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Trình độ</FieldLabel>
+              <FieldLabel>Level</FieldLabel>
               <Select
                 defaultValue={field.value}
                 onValueChange={field.onChange}
               >
                 <SelectTrigger size="lg">
-                  <SelectValue placeholder="Trình độ" />
+                  <SelectValue placeholder="Level" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -376,7 +376,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
           render={({ fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel className="flex items-center justify-between gap-5">
-                <span>Yêu cầu</span>
+                <span>Requirements</span>
                 <button
                   className="text-primary"
                   type="button"
@@ -392,7 +392,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
               {courseInfo.requirements.map((r, index) => (
                 <Input
                   key={index}
-                  placeholder={`Yêu cầu số ${index + 1}`}
+                  placeholder={`Requirement ${index + 1}`}
                   value={r}
                   onChange={(event) => {
                     setCourseInfo((draft) => {
@@ -413,7 +413,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
           render={({ fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel className="flex items-center justify-between gap-5">
-                <span>Lợi ích</span>
+                <span>Benefits</span>
                 <button
                   className="text-primary"
                   type="button"
@@ -429,7 +429,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
               {courseInfo.benefits.map((r, index) => (
                 <Input
                   key={index}
-                  placeholder={`Lợi ích số ${index + 1}`}
+                  placeholder={`Benefit ${index + 1}`}
                   value={r}
                   onChange={(event) => {
                     setCourseInfo((draft) => {
@@ -453,7 +453,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
               data-invalid={fieldState.invalid}
             >
               <FieldLabel className="flex items-center justify-between gap-5">
-                <span>Hỏi đáp</span>
+                <span>Questions & Answers</span>
                 <button
                   className="text-primary"
                   type="button"
@@ -476,7 +476,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
                 >
                   <Input
                     key={index}
-                    placeholder={`Câu hỏi số ${index + 1}`}
+                    placeholder={`Question ${index + 1}`}
                     value={item.question}
                     onChange={(event) => {
                       setCourseInfo((draft) => {
@@ -486,7 +486,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
                   />
                   <Input
                     key={index}
-                    placeholder={`Câu trả lời của câu hỏi số ${index + 1}`}
+                    placeholder={`Answer to Question ${index + 1}`}
                     value={item.answer}
                     onChange={(event) => {
                       setCourseInfo((draft) => {
@@ -510,7 +510,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
         type="submit"
         variant={'primary'}
       >
-        Cập nhật khóa học
+        Update Course
       </Button>
     </form>
   );

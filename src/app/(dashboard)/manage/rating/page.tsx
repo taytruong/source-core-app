@@ -5,7 +5,7 @@ import { QuerySearchParams } from '@/src/shared/types';
 function RatingPageRoot({ searchParams }: QuerySearchParams) {
   return (
     <>
-      <Header title="Quản lý đánh giá" />
+      <Header title="Manage Ratings." />
       <RatingManagePage searchParams={searchParams} />
     </>
   );

@@ -14,7 +14,7 @@ const CourseManagePageRoot = async ({
 }: CourseManagePageRootProps) => {
   return (
     <>
-      <Header title="Quản lý khóa học" />
+      <Header title="Manage Courses." />
       <CourseManagePage searchParams={searchParams} />
     </>
   );

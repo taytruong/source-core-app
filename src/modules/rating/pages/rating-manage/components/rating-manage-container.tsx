@@ -54,11 +54,11 @@ const RatingManageContainer = ({ ratings }: RatingManageContainerProps) => {
   const handleDeleteRating = async (id: string) => {
     try {
       Swal.fire({
-        title: 'Bạn có muốn xóa đánh giá không?',
+        title: 'Are you sure you want to delete this rating?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Xác nhận',
-        cancelButtonText: 'Thoát',
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
       }).then(async (result) => {
         if (result.isConfirmed) {
           await deleteRating(id);
@@ -75,7 +75,7 @@ const RatingManageContainer = ({ ratings }: RatingManageContainerProps) => {
         <div className="flex gap-3">
           <div className="w-full lg:w-75">
             <Input
-              placeholder="Tìm kiếm đánh giá..."
+              placeholder="Search ratings..."
               onChange={handleSearchData}
             />
           </div>
@@ -87,11 +87,11 @@ const RatingManageContainer = ({ ratings }: RatingManageContainerProps) => {
               className="w-full max-w-48"
               size="lg"
             >
-              <SelectValue placeholder="Chọn trạng thái" />
+              <SelectValue placeholder="Search ratings..." />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value={allValue}>Tất cả</SelectItem>
+                <SelectItem value={allValue}>All</SelectItem>
                 {ratingStatus.map((status) => (
                   <SelectItem
                     key={status.value}
@@ -109,12 +109,12 @@ const RatingManageContainer = ({ ratings }: RatingManageContainerProps) => {
       <Table className="table-responsive">
         <TableHeader>
           <TableRow>
-            <TableHead>STT</TableHead>
-            <TableHead>Tiêu đề</TableHead>
-            <TableHead>Khóa học</TableHead>
-            <TableHead>Thành viên</TableHead>
-            <TableHead>Trạng thái</TableHead>
-            <TableHead>Hành động</TableHead>
+            <TableHead>No.</TableHead>
+            <TableHead>Title</TableHead>
+            <TableHead>Course</TableHead>
+            <TableHead>User</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -169,13 +169,13 @@ const RatingManageContainer = ({ ratings }: RatingManageContainerProps) => {
                     <TableAction>
                       {rating.status !== RatingStatus.ACTIVE && (
                         <TableActionItem
-                          label="Cập nhật trạng thái"
+                          label="Update Status"
                           type="approve"
                           onClick={() => handleUpdateRating(rating._id)}
                         />
                       )}
                       <TableActionItem
-                        label="Xóa trạng thái"
+                        label="Delete Rating"
                         type="delete"
                         onClick={() => handleDeleteRating(rating._id)}
                       />

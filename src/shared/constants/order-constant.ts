@@ -8,19 +8,19 @@ export const orderStatus: {
   className?: string;
 }[] = [
   {
-    title: 'Đã duyệt',
+    title: 'Completed',
     value: OrderStatus.COMPLETE,
     className: 'text-green-500',
     variant: 'success',
   },
   {
-    title: 'Chờ duyệt',
+    title: 'Pending',
     value: OrderStatus.PENDING,
     className: 'text-orange-500',
     variant: 'warning',
   },
   {
-    title: 'Đã hủy',
+    title: 'Cancelled',
     value: OrderStatus.CANCEL,
     className: 'text-red-500',
     variant: 'danger',

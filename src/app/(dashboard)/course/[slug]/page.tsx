@@ -1,4 +1,5 @@
 import { CourseDetailsPage } from '@/src/modules/course/pages';
+import { Header } from '@/src/shared/components/layout';
 
 export interface CourseDetailPageRootProps {
   params: {
@@ -6,7 +7,12 @@ export interface CourseDetailPageRootProps {
   };
 }
 function CourseDetailPageRoot({ params }: CourseDetailPageRootProps) {
-  return <CourseDetailsPage slug={params.slug} />;
+  return (
+    <>
+      <Header title="Course Details." />
+      <CourseDetailsPage slug={params.slug} />
+    </>
+  );
 }
 
 export default CourseDetailPageRoot;

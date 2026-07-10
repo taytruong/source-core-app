@@ -74,7 +74,7 @@ const CreateCouponContainer = () => {
         (couponValue > 100 || couponValue < 0)
       ) {
         form.setError('value', {
-          message: 'Giá trị không hợp lệ',
+          message: 'Value is invalid',
         });
 
         return;
@@ -93,7 +93,7 @@ const CreateCouponContainer = () => {
         return;
       }
       if (newCoupon.code) {
-        toast.success('Tạo mã giảm giá thành công');
+        toast.success('Create coupon successfully');
         router.push('/manage/coupon');
       }
     } catch (error) {
@@ -136,9 +136,9 @@ const CreateCouponContainer = () => {
           name="title"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Tiêu đề</FieldLabel>
+              <FieldLabel>Title</FieldLabel>
               <Input
-                placeholder="Tiêu đề"
+                placeholder="Title"
                 {...field}
               />
               {!!fieldState.invalid && (
@@ -155,7 +155,7 @@ const CreateCouponContainer = () => {
               <FieldLabel>Code</FieldLabel>
               <Input
                 className="font-semibold uppercase"
-                placeholder="Mã giảm giá"
+                placeholder="Coupon Code"
                 {...field}
                 onChange={(event) =>
                   field.onChange(event.target.value.toUpperCase())
@@ -172,7 +172,7 @@ const CreateCouponContainer = () => {
           name="start_date"
           render={({ fieldState }) => (
             <Field>
-              <FieldLabel>Ngày bắt đầu</FieldLabel>
+              <FieldLabel>Start Date</FieldLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -183,7 +183,7 @@ const CreateCouponContainer = () => {
                     {startDate ? (
                       format(startDate, 'dd/MM/yyyy')
                     ) : (
-                      <span>Chọn ngày bắt đầu</span>
+                      <span>Select start date</span>
                     )}
                   </Button>
                 </PopoverTrigger>
@@ -209,7 +209,7 @@ const CreateCouponContainer = () => {
           name="end_date"
           render={({ fieldState }) => (
             <Field>
-              <FieldLabel>Ngày kết thúc</FieldLabel>
+              <FieldLabel>End Date</FieldLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -220,7 +220,7 @@ const CreateCouponContainer = () => {
                     {endDate ? (
                       format(endDate, 'dd/MM/yyyy')
                     ) : (
-                      <span>Chọn ngày kết thúc</span>
+                      <span>Select end date</span>
                     )}
                   </Button>
                 </PopoverTrigger>
@@ -246,7 +246,7 @@ const CreateCouponContainer = () => {
           name="type"
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel>Loại coupon</FieldLabel>
+              <FieldLabel>Coupon Type</FieldLabel>
               <RadioGroup
                 className="flex h-12 gap-5"
                 defaultValue={CouponType.PERCENT}
@@ -281,7 +281,7 @@ const CreateCouponContainer = () => {
           name="value"
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel>Giá trị</FieldLabel>
+              <FieldLabel>Value</FieldLabel>
               <>
                 {couponTypeWatch === CouponType.PERCENT ? (
                   <Input
@@ -308,7 +308,7 @@ const CreateCouponContainer = () => {
           name="active"
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel>Trạng thái</FieldLabel>
+              <FieldLabel>Status</FieldLabel>
               <div className="flex h-12 flex-col justify-center">
                 <Switch
                   checked={field.value}
@@ -327,7 +327,7 @@ const CreateCouponContainer = () => {
           name="limit"
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel>Số lượng tối đa</FieldLabel>
+              <FieldLabel>Maximum Quantity</FieldLabel>
               <Input
                 placeholder="100"
                 type="number"
@@ -345,9 +345,9 @@ const CreateCouponContainer = () => {
           name="courses"
           render={({ fieldState }) => (
             <Field>
-              <FieldLabel>Khóa học</FieldLabel>
+              <FieldLabel>Courses</FieldLabel>
               <Input
-                placeholder="Tìm kiếm khóa học ..."
+                placeholder="Search courses ..."
                 onChange={handleSearchCourse}
               />
               {!!findCourse && findCourse.length > 0 && (
@@ -402,7 +402,7 @@ const CreateCouponContainer = () => {
         className="ml-auto flex w-37.5"
         variant="primary"
       >
-        Tạo mã
+        Create Coupon
       </Button>
     </form>
   );

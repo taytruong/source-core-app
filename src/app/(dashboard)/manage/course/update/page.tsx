@@ -10,7 +10,7 @@ export interface UpdateCoursePageRootProps {
 function UpdateCoursePageRoot({ searchParams }: UpdateCoursePageRootProps) {
   return (
     <>
-      <Header title="Cập nhật khóa học" />
+      <Header title="Update Course." />
       <UpdateCoursePage slug={searchParams.slug} />
     </>
   );

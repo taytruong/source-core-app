@@ -22,7 +22,7 @@ function CourseContinue(_props: CourseContinueProps) {
 
   return (
     <div className="flex flex-col gap-5">
-      <Heading className="lg:text-xl">Tiếp tục học</Heading>
+      <Heading className="lg:text-xl">Continue Learning</Heading>
       <CourseGrid
         isLoading={isLoading}
         type="continue"
@@ -39,7 +39,7 @@ function CourseContinue(_props: CourseContinueProps) {
             return (
               <CourseItemContinue
                 key={item.slug}
-                cta="Tiếp tục học"
+                cta="Continue"
                 data={item}
                 url={url}
               />

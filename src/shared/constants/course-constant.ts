@@ -8,19 +8,19 @@ export const courseStatus: {
   variant?: BadgeStatusVariant;
 }[] = [
   {
-    title: 'Đã duyệt',
+    title: 'Approved',
     value: CourseStatus.APPROVED,
     className: 'text-green-500',
     variant: 'success',
   },
   {
-    title: 'Chờ duyệt',
+    title: 'Pending',
     value: CourseStatus.PENDING,
     className: 'text-orange-500',
     variant: 'warning',
   },
   {
-    title: 'Từ chối',
+    title: 'Rejected',
     value: CourseStatus.REJECTED,
     className: 'text-red-500',
     variant: 'danger',
@@ -32,21 +32,21 @@ export const courseLevel: {
   value: CourseLevel;
 }[] = [
   {
-    title: 'Dễ',
+    title: 'Beginner',
     value: CourseLevel.BEGINNER,
   },
   {
-    title: 'Trung bình',
+    title: 'Intermediate',
     value: CourseLevel.INTERMEDIATE,
   },
   {
-    title: 'Khó',
+    title: 'Advanced',
     value: CourseLevel.ADVANCED,
   },
 ];
 
 export const courseLevelTitle: Record<CourseLevel, string> = {
-  [CourseLevel.ADVANCED]: 'Khó',
-  [CourseLevel.INTERMEDIATE]: 'Trung bình',
-  [CourseLevel.BEGINNER]: 'Dễ',
+  [CourseLevel.ADVANCED]: 'Advanced',
+  [CourseLevel.INTERMEDIATE]: 'Intermediate',
+  [CourseLevel.BEGINNER]: 'Beginner',
 };

@@ -4,7 +4,7 @@ import { Header } from '@/src/shared/components/layout';
 const StudyPageRoot = async () => {
   return (
     <>
-      <Header title="Khu vực luyện tập" />
+      <Header title="Study Area." />
       <StudyPage />
     </>
   );

@@ -7,7 +7,7 @@ export interface OrderPageProps {}
 function OrderPageRoots({ searchParams }: QuerySearchParams) {
   return (
     <>
-      <Header title="Quản lý đơn hàng" />
+      <Header title="Manage Orders." />
       <OrderManagePage searchParams={searchParams} />;
     </>
   );

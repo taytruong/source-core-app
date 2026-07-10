@@ -46,11 +46,11 @@ function CreateCourseContainer() {
     const respone = await mutationCreateCourse.mutateAsync(data);
 
     if (!respone?.success) {
-      toast.error('Tạo khóa học thất bại, vui lòng thử lại sau');
+      toast.error('Create course failed, please try again later');
 
       return;
     }
-    toast.success('Tạo khóa học thành công');
+    toast.success('Create course successfully');
     if (respone?.data) {
       router.push(`/manage/course/update?slug=${respone.data.slug}`);
     }
@@ -64,12 +64,12 @@ function CreateCourseContainer() {
           name="title"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Tên khóa học *</FieldLabel>
+              <FieldLabel>Course Name *</FieldLabel>
               <Input
                 {...field}
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
-                placeholder="Tên khóa học"
+                placeholder="Course Name"
               />
               {!!fieldState.invalid && (
                 <FieldError errors={[fieldState.error]} />
@@ -83,12 +83,12 @@ function CreateCourseContainer() {
           name="slug"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Đường dẫn khóa học</FieldLabel>
+              <FieldLabel>Slug</FieldLabel>
               <Input
                 {...field}
                 aria-invalid={fieldState.invalid}
                 autoComplete="off"
-                placeholder="khoa-hoc-lap-trinh"
+                placeholder="course-name"
               />
               {!!fieldState.invalid && (
                 <FieldError errors={[fieldState.error]} />
@@ -104,7 +104,7 @@ function CreateCourseContainer() {
         type="submit"
         variant={'primary'}
       >
-        Tạo khóa học
+        Create Course
       </Button>
     </form>
   );

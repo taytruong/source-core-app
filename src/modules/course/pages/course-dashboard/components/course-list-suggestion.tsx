@@ -17,7 +17,7 @@ function CourseListSuggestion(_props: CourseListSuggestionProps) {
 
   return (
     <div className="flex flex-col gap-5">
-      <Heading className="lg:text-xl">Dành cho bạn</Heading>
+      <Heading className="lg:text-xl">For you</Heading>
       <CourseGrid isLoading={isLoading}>
         {courseList?.length > 0 &&
           courseList?.map((item) => (

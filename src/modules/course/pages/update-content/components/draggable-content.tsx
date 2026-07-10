@@ -77,7 +77,7 @@ function DraggableContent({
       });
 
       if (respone?.success) {
-        toast.success('Cập nhật tập này thành công!');
+        toast.success('Update lesson successfully!');
         setLessonIdEdit('');
         setLessonEdit('');
       }
@@ -93,13 +93,11 @@ function DraggableContent({
     event.stopPropagation();
     try {
       Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: 'Are you sure you want to delete this lesson?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
       }).then(async (result) => {
         if (result.isConfirmed) {
           await updateLesson({
@@ -173,14 +171,14 @@ function DraggableContent({
                               <div className="w-full">
                                 <Input
                                   defaultValue={lesson.title}
-                                  placeholder="Tên tập"
+                                  placeholder="Lesson Name"
                                   onChange={(event) =>
                                     setLessonEdit(event.target.value)
                                   }
                                 />
                               </div>
                               <div className="flex gap-2">
-                                <HoverTooltip label="Cập nhật">
+                                <HoverTooltip label="Update">
                                   <UpdateContentAction
                                     variant="success"
                                     onClick={(event) =>
@@ -193,7 +191,7 @@ function DraggableContent({
                                     <IconCheck />
                                   </UpdateContentAction>
                                 </HoverTooltip>
-                                <HoverTooltip label="Hủy cập nhật">
+                                <HoverTooltip label="Cancel Update">
                                   <UpdateContentAction
                                     variant="danger"
                                     onClick={(event) => {
@@ -210,7 +208,7 @@ function DraggableContent({
                             <>
                               <div>{lesson.title}</div>
                               <div className="flex gap-2">
-                                <HoverTooltip label="Chỉnh sửa">
+                                <HoverTooltip label="Edit">
                                   <UpdateContentAction
                                     variant="info"
                                     onClick={(event) => {
@@ -223,7 +221,7 @@ function DraggableContent({
                                   </UpdateContentAction>
                                 </HoverTooltip>
 
-                                <HoverTooltip label="Xóa">
+                                <HoverTooltip label="Delete">
                                   <UpdateContentAction
                                     variant="danger"
                                     onClick={(event) =>
@@ -236,7 +234,7 @@ function DraggableContent({
                                     <IconDelete />
                                   </UpdateContentAction>
                                 </HoverTooltip>
-                                <HoverTooltip label="Di chuyển bài học">
+                                <HoverTooltip label="Move Lesson">
                                   <div className="flexCenter">
                                     <DraggableHandle />
                                   </div>
@@ -247,7 +245,10 @@ function DraggableContent({
                         </div>
                       </AccordionTrigger>
                       <AccordionContent>
-                        <UpdateContentLessonItem lesson={lesson} />
+                        <UpdateContentLessonItem
+                          courseSlug={courseSlug}
+                          lesson={lesson}
+                        />
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>

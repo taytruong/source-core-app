@@ -2,7 +2,12 @@
 import Link from 'next/link';
 import { useState } from 'react';
 
-import { IconPlay, IconStudy, IconUsers } from '@/src/shared/components/icons';
+import {
+  IconClock,
+  IconPlay,
+  IconStudy,
+  IconUsers,
+} from '@/src/shared/components/icons';
 import { useUserContext } from '@/src/shared/contexts';
 
 import { CourseItemData } from '../../../types';
@@ -28,7 +33,7 @@ const CourseWidget = ({ data, duration }: CourseWidgetProps) => {
         className="bg-primary flexCenter h-15 w-full rounded-lg text-2xl font-semibold text-white shadow-sm"
         href="/study"
       >
-        Khu vực học tập
+        Study Area
       </Link>
     );
 
@@ -46,23 +51,23 @@ const CourseWidget = ({ data, duration }: CourseWidgetProps) => {
             {Math.floor((price / data.sale_price) * 100)}%
           </span>
         </div>
-        <h3 className="mb-3 text-sm font-medium">Khóa học gồm có:</h3>
-        <ul className="mb-5 flex flex-col gap-2 text-sm text-slate-500">
-          <li className="flex items-center gap-2">
-            <IconPlay className="size-4" />
-            <span>{duration} học</span>
+        <h3 className="mb-3 text-sm font-medium">Course includes:</h3>
+        <ul className="mb-5 flex flex-col gap-4 text-sm text-slate-500">
+          <li className="flex items-center gap-3">
+            <IconClock className="size-4" />
+            <span>{duration} of learning</span>
           </li>
-          <li className="flex items-center gap-2">
+          <li className="flex items-center gap-3">
             <IconPlay className="size-4" />
-            <span>Video Full HD</span>
+            <span>Full HD Video</span>
           </li>
-          <li className="flex items-center gap-2">
+          <li className="flex items-center gap-3">
             <IconUsers className="size-4" />
-            <span>Có nhóm hỗ trợ</span>
+            <span>Support available</span>
           </li>
-          <li className="flex items-center gap-2">
+          <li className="flex items-center gap-3">
             <IconStudy className="size-4" />
-            <span>Tài liệu kèm theo</span>
+            <span>Additional resources</span>
           </li>
         </ul>
         <ButtonEnroll

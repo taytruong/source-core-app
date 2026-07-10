@@ -17,13 +17,14 @@ const OrderDetailsPageRoots = async ({ params }: OrderDetailsPageRootProps) => {
   return (
     <div className="flex flex-col gap-5">
       <p>
-        Cám ơn bạn đã mua khóa học{' '}
+        Thanks for purchasing the course{' '}
         <strong className="text-primary">{orderDetails.course.title}</strong>{' '}
-        với số tiền là{' '}
+        with a total amount of{' '}
         <strong className="text-primary">{orderDetails.total}</strong>
       </p>
       <p>
-        Bạn vui lòng thanh toán theo thông tin tài khoản dưới đây với nội dung{' '}
+        Please complete the payment using the account information below with the
+        reference code{' '}
         <strong className="text-primary">{orderDetails.code}</strong>
       </p>
     </div>

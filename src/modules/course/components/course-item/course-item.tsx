@@ -14,7 +14,7 @@ interface CourseItemProps {
 }
 
 const CourseItem = ({
-  cta = 'Xem chi tiết',
+  cta = 'Detail view',
   data,
   url = '',
 }: CourseItemProps) => {

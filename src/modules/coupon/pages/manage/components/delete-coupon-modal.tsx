@@ -12,11 +12,11 @@ const DeleteCouponModal = ({ code }: DeleteCouponModalProps) => {
   const handleDeleteCoupon = async (code: string) => {
     try {
       Swal.fire({
-        title: 'Bạn có muốn xóa mã (coupon) này không?',
+        title: 'Are you sure you want to delete this coupon?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Xác nhận',
-        cancelButtonText: 'Thoát',
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
       }).then(async (result) => {
         if (result.isConfirmed) {
           await deleteCoupon(code);
@@ -29,7 +29,7 @@ const DeleteCouponModal = ({ code }: DeleteCouponModalProps) => {
 
   return (
     <TableActionItem
-      label="Xóa khóa học"
+      label="Delete Coupon"
       type="delete"
       onClick={() => handleDeleteCoupon(code)}
     />

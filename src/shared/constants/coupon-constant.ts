@@ -5,23 +5,23 @@ export const couponTypes: {
   value: CouponType;
 }[] = [
   {
-    title: 'Phần trăm',
+    title: 'Percent',
     value: CouponType.PERCENT,
   },
   {
-    title: 'Giá trị',
+    title: 'Value',
     value: CouponType.AMOUNT,
   },
 ];
 
 export const couponStatus = [
   {
-    title: 'Đang kích hoạt',
+    title: 'Active',
     value: 1,
     className: 'text-green-500',
   },
   {
-    title: 'Chưa kích hoạt',
+    title: 'Inactive',
     value: 0,
     className: 'text-orange-500',
   },

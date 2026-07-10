@@ -6,7 +6,7 @@ export interface CreateCoursePageRootProps {}
 function CreateCoursePageRoot(_props: CreateCoursePageRootProps) {
   return (
     <>
-      <Header title="Tạo mới khóa học" />
+      <Header title="Create New Course." />
       <CreateCoursePage />
     </>
   );

@@ -25,7 +25,7 @@ function StudyPageContainer({ courses }: StudyPageContainerProps) {
         return (
           <CourseItem
             key={item.slug}
-            cta="Tiếp tục học"
+            cta="Continue"
             data={item}
             url={url}
           />

@@ -34,13 +34,13 @@ export const ratingStatus: {
   variant?: BadgeStatusVariant;
 }[] = [
   {
-    title: 'Đã duyệt',
+    title: 'Active',
     value: RatingStatus.ACTIVE,
     className: 'text-green-500',
     variant: 'success',
   },
   {
-    title: 'Chờ duyệt',
+    title: 'Inactive',
     value: RatingStatus.UNACTIVE,
     className: 'text-orange-500',
     variant: 'warning',

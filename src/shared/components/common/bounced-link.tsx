@@ -8,7 +8,7 @@ const BouncedLink = ({ label, url }: { url: string; label: string }) => {
   return (
     <HoverTooltip
       IsColorArrow
-      className="fixed right-5 bottom-5"
+      className="fixed right-5 bottom-10"
       label={label}
       labelClassName="bg-primary"
     >

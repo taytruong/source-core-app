@@ -7,7 +7,7 @@ export interface ManageCouponPageProps {}
 function ManageCouponPageRoot({ searchParams }: QuerySearchParams) {
   return (
     <>
-      <Header title="Quản lý mã giảm giá" />
+      <Header title="Manage Coupons." />
       <ManageCouponPage searchParams={searchParams} />
     </>
   );

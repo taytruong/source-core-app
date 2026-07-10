@@ -44,20 +44,20 @@ async function CourseDetailsContainer({
     content: React.ReactNode;
   }[] = [
     {
-      title: 'Bài học',
+      title: 'Courses',
       content: getLessonInfo.lessons,
     },
     {
-      title: 'Lượt xem',
+      title: 'Views',
       content: courseDetails.views.toLocaleString(),
     },
 
     {
-      title: 'Trình độ',
+      title: 'Level',
       content: courseLevelTitle[courseDetails.level],
     },
     {
-      title: 'Thời lượng xem',
+      title: 'Duration',
       content: formatMinutesToHour(getLessonInfo.duration),
     },
   ];
@@ -67,11 +67,17 @@ async function CourseDetailsContainer({
     content: React.ReactNode;
   }[] = [
     {
-      title: 'Mô tả',
-      content: <div className="leading-normal">{courseDetails.desc}</div>,
+      title: 'Description',
+      content: courseDetails.desc ? (
+        <div className="leading-normal">{courseDetails.desc}</div>
+      ) : (
+        <div className="rounded-lg bg-white p-5 font-medium shadow-md">
+          Updating ...
+        </div>
+      ),
     },
     {
-      title: 'Thông tin',
+      title: 'Information',
       content: (
         <div className="mb-10 grid grid-cols-4 gap-5">
           {courseDetailsMeta.map((item) => (
@@ -86,7 +92,7 @@ async function CourseDetailsContainer({
       ),
     },
     {
-      title: 'Nội dung khóa học',
+      title: 'Course Content',
       content: (
         <CourseOutline
           course=""
@@ -96,7 +102,7 @@ async function CourseDetailsContainer({
       ),
     },
     {
-      title: 'Yêu cầu',
+      title: 'Requirements',
       content: requirements.map((item) => (
         <RequirementItem
           key={item}
@@ -105,7 +111,7 @@ async function CourseDetailsContainer({
       )),
     },
     {
-      title: 'Lợi ích',
+      title: 'Benefits',
       content: benefits.map((item) => (
         <BenefitItem
           key={item}
@@ -114,7 +120,7 @@ async function CourseDetailsContainer({
       )),
     },
     {
-      title: 'Hỏi đáp ?',
+      title: 'Questions & Answers ?',
       content: (
         <div className="flex flex-col gap-4">
           {questionAnswer.map((item: CourseQA) => (
@@ -160,7 +166,7 @@ async function CourseDetailsContainer({
             />
           ))}
         </div>
-        <h1 className="mb-5 text-3xl font-semibold uppercase">
+        <h1 className="mb-5 mb-10 text-3xl font-semibold uppercase">
           {courseDetails?.title}
         </h1>
         {courseDetailsInfo.map((item) => (

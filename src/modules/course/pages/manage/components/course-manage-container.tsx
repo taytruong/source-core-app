@@ -45,11 +45,11 @@ const CourseManageContainer = ({
 
   const handleDeleteCourseItem = (slug: string) => {
     Swal.fire({
-      title: 'Bạn có chắc chắn xóa không?',
+      title: 'Are you sure you want to delete this course?',
       icon: 'error',
       showCancelButton: true,
-      confirmButtonText: 'Xóa khóa học',
-      cancelButtonText: 'Hủy',
+      confirmButtonText: 'Delete Course',
+      cancelButtonText: 'Cancel',
     }).then(async (result) => {
       if (result.isConfirmed) {
         await updateCourse({
@@ -60,7 +60,7 @@ const CourseManageContainer = ({
           },
           path: '/manage/course',
         });
-        toast.success('Xóa khóa học thành công!');
+        toast.success('Course deleted successfully!');
       }
     });
   };
@@ -68,11 +68,11 @@ const CourseManageContainer = ({
   const handleChangeStatus = async (slug: string, status: CourseStatus) => {
     try {
       Swal.fire({
-        title: 'Bạn có muốn đổi trạng thái không?',
+        title: 'Are you sure you want to change the status?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Cập nhật',
-        cancelButtonText: 'Hủy',
+        confirmButtonText: 'Update Status',
+        cancelButtonText: 'Cancel',
       }).then(async (result) => {
         if (result.isConfirmed) {
           await updateCourse({
@@ -86,7 +86,7 @@ const CourseManageContainer = ({
             },
             path: '/manage/course',
           });
-          toast.success('Cập nhật trạng thái thành công!');
+          toast.success('Status updated successfully!');
         }
       });
     } catch (error) {
@@ -97,7 +97,7 @@ const CourseManageContainer = ({
   return (
     <>
       <BouncedLink
-        label="Tạo khóa học mới"
+        label="Create New Course"
         url="/manage/course/new"
       />
 
@@ -105,7 +105,7 @@ const CourseManageContainer = ({
         <div className="flex gap-3">
           <div className="w-full lg:w-75">
             <Input
-              placeholder="Tìm kiếm khóa học ..."
+              placeholder="Search courses ..."
               onChange={handleSearchData}
             />
           </div>
@@ -117,11 +117,11 @@ const CourseManageContainer = ({
               className="w-full max-w-48"
               size="lg"
             >
-              <SelectValue placeholder="Chọn trạng thái" />
+              <SelectValue placeholder="Select Status" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value={allValue}>Tất cả</SelectItem>
+                <SelectItem value={allValue}>All</SelectItem>
                 {courseStatus.map((status) => (
                   <SelectItem
                     key={status.value}
@@ -139,11 +139,11 @@ const CourseManageContainer = ({
       <Table className="table-responsive">
         <TableHeader>
           <TableRow>
-            <TableHead>STT</TableHead>
-            <TableHead>Thông tin</TableHead>
-            <TableHead>Giá</TableHead>
-            <TableHead>Trạng thái</TableHead>
-            <TableHead>Cài đặt</TableHead>
+            <TableHead>No.</TableHead>
+            <TableHead>Information Course</TableHead>
+            <TableHead>Price</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Settings</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -184,7 +184,7 @@ const CourseManageContainer = ({
                     </span>
                   </TableCell>
                   <TableCell>
-                    <HoverTooltip label="Có thể chuyển sang 'Đã duyệt' / 'Chờ duyệt'">
+                    <HoverTooltip label="Can be changed to 'Approved' / 'Pending'">
                       <button>
                         <BadgeStatus
                           title={courseStatusTitleItem?.title}
@@ -199,23 +199,23 @@ const CourseManageContainer = ({
                   <TableCell>
                     <TableAction>
                       <TableActionItem
-                        label="Cập nhật nội dụng cho người xem"
+                        label="Update Content for Students"
                         type="doc"
                         url={`/manage/course/update-content?slug=${courses.slug}`}
                       />
                       <TableActionItem
                         newTab
-                        label="Xem khóa học"
+                        label="View Course"
                         type="view"
                         url={`/course/${courses.slug}`}
                       />
                       <TableActionItem
-                        label="Cập nhật thông tin khóa học"
+                        label="Update Course Information"
                         type="edit"
                         url={`/manage/course/update?slug=${courses.slug}`}
                       />
                       <TableActionItem
-                        label="Xóa khóa học"
+                        label="Delete Course"
                         type="delete"
                         onClick={() => handleDeleteCourseItem(courses.slug)}
                       />

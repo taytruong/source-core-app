@@ -29,10 +29,14 @@ const formSchema = z.object({
 });
 
 interface UpdateContentLessonItemProps {
+  courseSlug: string;
   lesson: LessonItemData;
 }
 
-const UpdateContentLessonItem = ({ lesson }: UpdateContentLessonItemProps) => {
+const UpdateContentLessonItem = ({
+  courseSlug,
+  lesson,
+}: UpdateContentLessonItemProps) => {
   const editorRef = useRef<unknown>(null);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,7 +56,7 @@ const UpdateContentLessonItem = ({ lesson }: UpdateContentLessonItemProps) => {
       });
 
       if (respone?.success) {
-        toast.success('Cập nhật tập này thành công!');
+        toast.success('Update lesson successfully!');
       }
     } catch (error) {
       console.log('🚀 ~ onSubmit ~ error:', error);
@@ -74,11 +78,11 @@ const UpdateContentLessonItem = ({ lesson }: UpdateContentLessonItemProps) => {
             name="slug"
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>Đường dẫn</FieldLabel>
+                <FieldLabel>Slug</FieldLabel>
                 <Input
                   {...field}
                   aria-invalid={fieldState.invalid}
-                  placeholder="bai-1-tong-quan"
+                  placeholder="lesson-1-overview"
                 />
                 {!!fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />
@@ -91,7 +95,7 @@ const UpdateContentLessonItem = ({ lesson }: UpdateContentLessonItemProps) => {
             name="duration"
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>Thời lượng</FieldLabel>
+                <FieldLabel>Duration</FieldLabel>
                 <Input
                   {...field}
                   aria-invalid={fieldState.invalid}
@@ -132,7 +136,7 @@ const UpdateContentLessonItem = ({ lesson }: UpdateContentLessonItemProps) => {
                   className="col-start-1 col-end-3"
                   data-invalid={fieldState.invalid}
                 >
-                  <FieldLabel>Nội dung</FieldLabel>
+                  <FieldLabel>Content</FieldLabel>
                   <Editor
                     licenseKey="gpl"
                     tinymceScriptSrc="/tinymce/tinymce.min.js"
@@ -157,13 +161,13 @@ const UpdateContentLessonItem = ({ lesson }: UpdateContentLessonItemProps) => {
             className="w-full"
             type="submit"
           >
-            Cập nhật
+            Update
           </Button>
           <Link
             className="flexCenter rounded-md border border-slate-600 text-sm text-slate-600"
-            href="/"
+            href={`/course/${courseSlug}`}
           >
-            Xem trước
+            Preview
           </Link>
         </div>
       </form>

@@ -5,7 +5,7 @@ export interface SectionInfoItemProps {
 
 function SectionInfoItem({ children, title }: SectionInfoItemProps) {
   return (
-    <div className="rounded-lg bg-white p-5">
+    <div className="rounded-lg bg-white p-5 shadow-md">
       <h4 className="text-sm font-normal text-slate-400">{title}</h4>
       <h3 className="font-bold">{children}</h3>
     </div>

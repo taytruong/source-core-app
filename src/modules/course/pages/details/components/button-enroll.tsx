@@ -45,7 +45,7 @@ const ButtonEnroll = ({ amount, coupon, courseId }: ButtonEnroll) => {
       variant="primary"
       onClick={handleEnrollCourse}
     >
-      Mua khóa học
+      Buy Now
     </Button>
   );
 };

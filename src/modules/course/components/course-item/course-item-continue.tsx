@@ -10,7 +10,7 @@ interface CourseItemContinueProps {
 }
 
 const CourseItemContinue = ({
-  cta = 'Xem chi tiết',
+  cta = 'Detail view',
   data,
   url = '',
 }: CourseItemContinueProps) => {

@@ -46,7 +46,7 @@ function ManageCouponContainer({
   return (
     <>
       <BouncedLink
-        label="Tạo mã giảm giá"
+        label="Create Coupon"
         url="/manage/coupon/new"
       />
 
@@ -54,7 +54,7 @@ function ManageCouponContainer({
         <div className="flex gap-3">
           <div className="w-full lg:w-75">
             <Input
-              placeholder="Tìm kiếm mã giảm giá ..."
+              placeholder="Search coupon code ..."
               onChange={handleSearchData}
             />
           </div>
@@ -66,11 +66,11 @@ function ManageCouponContainer({
               className="w-full max-w-48"
               size="lg"
             >
-              <SelectValue placeholder="Chọn trạng thái" />
+              <SelectValue placeholder="Select Status" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value={allValue}>Tất cả</SelectItem>
+                <SelectItem value={allValue}>All</SelectItem>
                 {couponStatus.map((status) => (
                   <SelectItem
                     key={status.value}
@@ -88,13 +88,13 @@ function ManageCouponContainer({
       <Table className="table-responsive">
         <TableHeader>
           <TableRow>
-            <TableHead>STT</TableHead>
-            <TableHead>Mã (code)</TableHead>
-            <TableHead>Tiêu đề</TableHead>
-            <TableHead>Giảm giá</TableHead>
-            <TableHead>Sử dụng</TableHead>
-            <TableHead>Trạng thái</TableHead>
-            <TableHead>Hành động</TableHead>
+            <TableHead>No.</TableHead>
+            <TableHead>Coupon Code</TableHead>
+            <TableHead>Title</TableHead>
+            <TableHead>Discount</TableHead>
+            <TableHead>Usage</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -122,12 +122,12 @@ function ManageCouponContainer({
                 <TableCell>
                   {coupon.active ? (
                     <BadgeStatus
-                      title="Đang họat động"
+                      title="Active"
                       variant="success"
                     />
                   ) : (
                     <BadgeStatus
-                      title="Chưa kích hoạt"
+                      title="Inactive"
                       variant="warning"
                     />
                   )}
@@ -135,7 +135,7 @@ function ManageCouponContainer({
                 <TableCell>
                   <TableAction>
                     <TableActionItem
-                      label="Cập nhật thông tin khóa học"
+                      label="Update Coupon Information"
                       type="edit"
                       url={`/manage/coupon/update?code=${coupon.code}`}
                     />

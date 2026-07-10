@@ -42,14 +42,14 @@ const UpdateContentCourseContainer = ({
   const handleAddNewLecture = async () => {
     try {
       const response = await createLecture({
-        title: 'Chương mới',
+        title: 'New Lecture',
         course: course._id.toString(),
         order: lectures.length + 1,
         path: `/manage/course/update-content?slug=${course.slug}`,
       });
 
       if (response?.success) {
-        toast.success('Thêm chương mới thành công!');
+        toast.success('Add new lecture successfully!');
       }
     } catch (error) {
       console.log('🚀 ~ handleAddNewLecture ~ error:', error);
@@ -63,13 +63,11 @@ const UpdateContentCourseContainer = ({
     event.stopPropagation();
     try {
       Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: 'Are you sure you want to delete this lecture?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!',
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
       }).then(async (result) => {
         if (result.isConfirmed) {
           await updateLecture({
@@ -101,7 +99,7 @@ const UpdateContentCourseContainer = ({
       });
 
       if (respone?.success) {
-        toast.success('Cập nhật chương thành công!');
+        toast.success('Update lecture successfully!');
         setLectureIdEdit('');
         setLectureEdit('');
       }
@@ -120,17 +118,17 @@ const UpdateContentCourseContainer = ({
         path: `/manage/course/update-content?slug=${course.slug}`,
         lecture: lectureId,
         course: courseId,
-        title: 'Tiêu đề mới',
-        slug: `tieu-de-moi-${Date.now().toString().slice(-3)}`,
+        title: 'New Title',
+        slug: `new-title-${Date.now().toString().slice(-3)}`,
         order: (foundLecture?.lessons?.length || 0) + 1,
       });
 
       if (respone?.success) {
-        toast.success('Thêm tập mới thành công!');
+        toast.success('Add new lesson successfully!');
 
         return;
       }
-      toast.error('Thêm tập mới thất bại!');
+      toast.error('Add new lesson failed!');
     } catch (error) {
       console.log('🚀 ~ handleAddNewLesson ~ error:', error);
     }
@@ -153,14 +151,14 @@ const UpdateContentCourseContainer = ({
                         <div className="w-full">
                           <Input
                             defaultValue={lecture.title}
-                            placeholder="Tên chương"
+                            placeholder="Lecture Name"
                             onChange={(event) =>
                               setLectureEdit(event.target.value)
                             }
                           />
                         </div>
                         <div className="flex gap-2">
-                          <HoverTooltip label="Cập nhật">
+                          <HoverTooltip label="Update">
                             <UpdateContentAction
                               variant="success"
                               onClick={(event) =>
@@ -173,7 +171,7 @@ const UpdateContentCourseContainer = ({
                               <IconCheck />
                             </UpdateContentAction>
                           </HoverTooltip>
-                          <HoverTooltip label="Hủy cập nhật">
+                          <HoverTooltip label="Cancel Update">
                             <UpdateContentAction
                               variant="danger"
                               onClick={(event) => {
@@ -190,7 +188,7 @@ const UpdateContentCourseContainer = ({
                       <>
                         <div>{lecture.title}</div>
                         <div className="flex gap-2">
-                          <HoverTooltip label="Chỉnh sửa">
+                          <HoverTooltip label="Edit">
                             <UpdateContentAction
                               variant="info"
                               onClick={(event) => {
@@ -203,7 +201,7 @@ const UpdateContentCourseContainer = ({
                             </UpdateContentAction>
                           </HoverTooltip>
 
-                          <HoverTooltip label="Xóa">
+                          <HoverTooltip label="Delete">
                             <UpdateContentAction
                               variant="danger"
                               onClick={(event) =>
@@ -241,7 +239,7 @@ const UpdateContentCourseContainer = ({
                 )
               }
             >
-              Thêm tập mới
+              Add new lesson
             </Button>
           </div>
         ))}
@@ -250,7 +248,7 @@ const UpdateContentCourseContainer = ({
         className="mt-5"
         onClick={handleAddNewLecture}
       >
-        Thêm chương mới
+        Add new lecture
       </Button>
     </div>
   );

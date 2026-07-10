@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 import { MenuItem } from '@/src/shared/components/common';
@@ -20,9 +21,24 @@ const layout = ({ children }: { children: React.ReactNode }) => {
         ))}
       </ul>
       <div className="hidden lg:block" />
-      <main>
-        <div className="px-14 py-5">{children}</div>
-      </main>
+      <div className="flex min-h-screen flex-col">
+        <main className="flex-1">
+          <div className="px-14 py-5">{children}</div>
+        </main>
+
+        <footer className="p-4">
+          <p className="text-right font-medium">
+            Phát triển bởi{' '}
+            <Link
+              className="text-logo"
+              href="https://www.linkedin.com/in/t%C3%A2y-tr%C6%B0%C6%A1ng-1203322a0/"
+              target="_blank"
+            >
+              <strong>TayTruong</strong>
+            </Link>
+          </p>
+        </footer>
+      </div>
     </div>
   );
 };

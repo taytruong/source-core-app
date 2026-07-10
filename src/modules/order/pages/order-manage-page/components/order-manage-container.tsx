@@ -61,11 +61,11 @@ const OrderManageContainer = ({
   }) => {
     if (status === OrderStatus.CANCEL) {
       Swal.fire({
-        title: 'Bạn có muốn hủy đơn hàng không?',
+        title: 'Are you sure you want to cancel this order?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Xác nhận',
-        cancelButtonText: 'Thoát',
+        confirmButtonText: 'Accept',
+        cancelButtonText: 'Cancel',
       }).then(async (result) => {
         if (result.isConfirmed) {
           await updateOrder({ orderId, status });
@@ -76,7 +76,7 @@ const OrderManageContainer = ({
       const response = await updateOrder({ orderId, status });
 
       if (response?.success) {
-        toast.success('Cập nhật đơn hàng thành công');
+        toast.success('Order approved successfully');
       }
     }
   };
@@ -87,7 +87,7 @@ const OrderManageContainer = ({
         <div className="flex gap-3">
           <div className="w-full lg:w-75 xl:w-95">
             <Input
-              placeholder="Tìm kiếm đơn hàng ..."
+              placeholder="Search orders ..."
               onChange={handleSearchData}
             />
           </div>
@@ -99,11 +99,11 @@ const OrderManageContainer = ({
               className="w-full max-w-48"
               size="lg"
             >
-              <SelectValue placeholder="Chọn trạng thái" />
+              <SelectValue placeholder="Search orders ..." />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value={allValue}>Tất cả</SelectItem>
+                <SelectItem value={allValue}>All</SelectItem>
                 {courseStatus.map((status) => (
                   <SelectItem
                     key={status.value}
@@ -121,18 +121,18 @@ const OrderManageContainer = ({
       <Table className="table-responsive">
         <TableHeader>
           <TableRow>
-            <TableHead>STT</TableHead>
-            <TableHead>Mã đơn hàng</TableHead>
-            <TableHead>Khoá học</TableHead>
-            <TableHead>Thành viên</TableHead>
-            <TableHead>Số tiền</TableHead>
-            <TableHead>Mã giảm giá</TableHead>
-            <TableHead>Trạng thái</TableHead>
-            <TableHead>Hành động</TableHead>
+            <TableHead>No.</TableHead>
+            <TableHead>Order Code</TableHead>
+            <TableHead>Course</TableHead>
+            <TableHead>User</TableHead>
+            <TableHead>Amount</TableHead>
+            <TableHead>Discount Code</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {orders.length === 0 && <EmptySpace text="Không có đơn hàng" />}
+          {orders.length === 0 && <EmptySpace text="No orders found" />}
           {orders.length > 0 &&
             orders.map((order, index) => {
               const orderStatusItem = orderStatus.find(
@@ -171,7 +171,7 @@ const OrderManageContainer = ({
                     {order.status !== OrderStatus.CANCEL && (
                       <div className="flex gap-3">
                         {order.status === OrderStatus.PENDING && (
-                          <HoverTooltip label="Duyệt đơn hàng">
+                          <HoverTooltip label="Approve Order">
                             <span>
                               <OrderAction
                                 onClick={() =>
@@ -187,7 +187,7 @@ const OrderManageContainer = ({
                           </HoverTooltip>
                         )}
 
-                        <HoverTooltip label="Hủy đơn hàng">
+                        <HoverTooltip label="Cancel Order">
                           <span>
                             <OrderAction
                               onClick={() =>

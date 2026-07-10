@@ -4,7 +4,7 @@ import { Header } from '@/src/shared/components/layout';
 function HomePageRoot() {
   return (
     <>
-      <Header title="Khám phá" />
+      <Header title="Overview." />
       <CourseDashboardPage />
     </>
   );

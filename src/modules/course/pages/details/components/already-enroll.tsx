@@ -8,7 +8,7 @@ const AlreadyEnroll = () => {
         className="text-primary font-semibold"
         href="/study"
       >
-        Khu vực học tập
+        Study Area
       </Link>
     </div>
   );

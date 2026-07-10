@@ -46,7 +46,7 @@ const CouponForm = ({
       let finalPrice = originalPrice;
 
       if (!response) {
-        toast.error('Mã giảm giá không hợp lệ');
+        toast.error('Coupon is invalid or expired');
         setCouponCode('');
         setCouponId('');
 
@@ -59,7 +59,7 @@ const CouponForm = ({
         finalPrice = originalPrice - response?.value;
       }
       setPrice(finalPrice);
-      toast.success('Áp mã (coupon) thành công ^-^');
+      toast.success('Coupon applied successfully ^-^');
       setCouponCode('');
       // inputRef.current?.value && (inputRef.current.value = "");
       setIsAppiled(true);
@@ -81,7 +81,7 @@ const CouponForm = ({
       <Input
         className="pr-20 font-medium uppercase"
         defaultValue={couponCode}
-        placeholder="Nhập mã giảm giá"
+        placeholder="Enter coupon code"
         onChange={handleChangeCoupon}
         // ref={inputRef}
       />
@@ -89,7 +89,7 @@ const CouponForm = ({
         className="absolute top-1/2 right-5 -translate-y-1/2 text-sm font-medium"
         onClick={handleApplyCoupon}
       >
-        Áp dụng
+        Apply
       </button>
     </div>
   );
