@@ -6,8 +6,8 @@ export interface BenefitItemProps {
 
 function BenefitItem({ title }: BenefitItemProps) {
   return (
-    <div className="mb-3 flex items-center gap-2">
-      <span className="text-primary flex size-7 shrink-0 items-center justify-center rounded">
+    <div className="mb-3 flex items-center gap-2 rounded-lg bg-white p-5 shadow-md">
+      <span className="text-primary flex size-5 shrink-0 items-center justify-center rounded">
         <IconCheck />
       </span>
       <span>{title}</span>

@@ -1,6 +1,7 @@
 export { default as IconAdd } from './icon-add';
 export { default as IconArrowLeft } from './icon-arrow-left';
 export { default as IconArrowRight } from './icon-arrow-right';
+export { default as IconArrowRightCycle } from './icon-arrow-right-cycle';
 export { default as IconCancel } from './icon-cancel';
 export { default as IconCheck } from './icon-check';
 export { default as IconChecked } from './icon-checked';

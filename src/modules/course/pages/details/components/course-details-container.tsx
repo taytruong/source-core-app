@@ -4,13 +4,12 @@ import PageNotFound from '@/src/app/not-found';
 import { CourseOutline } from '@/src/shared/components/common';
 import { courseLevelTitle, CourseStatus } from '@/src/shared/constants';
 import { formatMinutesToHour } from '@/src/shared/helper';
-import { CourseLessonDuration, CourseQA } from '@/src/shared/types';
+import { CourseLessonDuration } from '@/src/shared/types';
 
 import { getCourseLessonsInfo } from '../../../actions';
 import { CourseItemData } from '../../../types';
 import BenefitItem from './benefit-item';
 import CourseWidget from './course-widget';
-import QaItem from './qa-item';
 import RatingItem from './rating-item';
 import RequirementItem from './requirement-item';
 import SectionBoxItem from './section-box-item';
@@ -37,7 +36,7 @@ async function CourseDetailsContainer({
 
   const requirements = courseDetails.info.requirements || [];
   const benefits = courseDetails.info.benefits || [];
-  const questionAnswer = courseDetails.info.qa || [];
+  // const questionAnswer = courseDetails.info.qa || [];
 
   const courseDetailsMeta: {
     title: string;
@@ -69,7 +68,9 @@ async function CourseDetailsContainer({
     {
       title: 'Description',
       content: courseDetails.desc ? (
-        <div className="leading-normal">{courseDetails.desc}</div>
+        <div className="rounded-lg bg-white p-5 leading-normal font-medium shadow-md">
+          {courseDetails.desc}
+        </div>
       ) : (
         <div className="rounded-lg bg-white p-5 font-medium shadow-md">
           Updating ...
@@ -101,43 +102,43 @@ async function CourseDetailsContainer({
         />
       ),
     },
-    {
-      title: 'Requirements',
-      content: requirements.map((item) => (
-        <RequirementItem
-          key={item}
-          title={item}
-        />
-      )),
-    },
-    {
-      title: 'Benefits',
-      content: benefits.map((item) => (
-        <BenefitItem
-          key={item}
-          title={item}
-        />
-      )),
-    },
-    {
-      title: 'Questions & Answers ?',
-      content: (
-        <div className="flex flex-col gap-4">
-          {questionAnswer.map((item: CourseQA) => (
-            <QaItem
-              key={item.question}
-              item={item}
-            />
-          ))}
-        </div>
-      ),
-    },
+    // {
+    //   title: 'Requirements',
+    //   content: requirements.map((item) => (
+    //     <RequirementItem
+    //       key={item}
+    //       title={item}
+    //     />
+    //   )),
+    // },
+    // {
+    //   title: 'Benefits',
+    //   content: benefits.map((item) => (
+    //     <BenefitItem
+    //       key={item}
+    //       title={item}
+    //     />
+    //   )),
+    // },
+    // {
+    //   title: 'Questions & Answers ?',
+    //   content: (
+    //     <div className="flex flex-col gap-4">
+    //       {questionAnswer.map((item: CourseQA) => (
+    //         <QaItem
+    //           key={item.question}
+    //           item={item}
+    //         />
+    //       ))}
+    //     </div>
+    //   ),
+    // },
   ];
 
   return (
     <div className="grid min-h-screen items-start gap-10 lg:grid-cols-[2fr_1fr]">
       <div>
-        <div className="relative mb-5 aspect-video shadow-sm">
+        <div className="relative mb-10 aspect-video shadow-sm">
           {courseDetails.intro_url ? (
             <>
               <iframe
@@ -158,17 +159,34 @@ async function CourseDetailsContainer({
             />
           )}
         </div>
-        <div className="mb-5 flex flex-wrap gap-2">
-          {ratings.map((rating, index) => (
-            <RatingItem
-              key={index}
-              rating={rating}
-            />
-          ))}
-        </div>
-        <h1 className="mb-5 mb-10 text-3xl font-semibold uppercase">
+
+        <h1 className="mb-10 text-3xl font-semibold uppercase">
           {courseDetails?.title}
         </h1>
+
+        <div className="grid grid-cols-2 gap-5 lg:flex-row">
+          <div>
+            <SectionBoxItem title="Requirements">
+              {requirements.map((item) => (
+                <RequirementItem
+                  key={item}
+                  title={item}
+                />
+              ))}
+            </SectionBoxItem>
+          </div>
+          <div>
+            <SectionBoxItem title="Benefits">
+              {benefits.map((item) => (
+                <BenefitItem
+                  key={item}
+                  title={item}
+                />
+              ))}
+            </SectionBoxItem>
+          </div>
+        </div>
+
         {courseDetailsInfo.map((item) => (
           <SectionBoxItem
             key={item.title}
@@ -177,6 +195,17 @@ async function CourseDetailsContainer({
             <div className="leading-normal">{item.content}</div>
           </SectionBoxItem>
         ))}
+
+        <SectionBoxItem title="Feedback">
+          <div className="mb-5 flex flex-wrap gap-2">
+            {ratings.map((rating: string, index: number) => (
+              <RatingItem
+                key={index}
+                rating={rating}
+              />
+            ))}
+          </div>
+        </SectionBoxItem>
       </div>
       <CourseWidget
         data={courseDetails}

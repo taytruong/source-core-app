@@ -4,7 +4,7 @@ export interface RatingItemProps {
 
 function RatingItem({ rating }: RatingItemProps) {
   return (
-    <div className="from-primary rounded-full bg-linear-to-tr to-yellow-400 p-2 px-4 text-sm font-medium text-white">
+    <div className="from-primary rounded-lg bg-linear-to-tr to-yellow-400 p-2 px-4 text-sm font-medium text-white">
       {rating}
     </div>
   );
