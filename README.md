@@ -12,6 +12,22 @@ Please find other information guides in the `readme` folder.
 
 ## Getting Started
 
+## Tech Stack
+
+- Next.js 14 App Router
+- React 18
+- TypeScript
+- Tailwind CSS 3
+- Clerk authentication
+- TanStack-style state patterns with Zustand and Immer
+- React Hook Form + Zod for typed form validation
+- Mongoose for MongoDB data modeling
+- UploadThing for file uploads
+- TinyMCE for rich text editing
+- Radix UI, shadcn-style components, and Lucide icons
+- TanStack Query for server-state workflows
+- Vercel Analytics and Speed Insights
+
 ### Initial Setup
 
 Run the following command on your local environment:
@@ -140,3 +156,43 @@ When creating a new module, follow these rules:
 - Use `ESLint` for code linting.
 - Use `Husky` for pre-commit hooks.
 - Use `Lint-staged` for linting staged files.
+
+### Core
+
+- Next.js 14 App Router
+- React 18
+- TypeScript
+- Tailwind CSS v4
+
+### UI and UX
+
+- shadcn/ui
+- Radix UI
+- Lucide React icons
+- `next-themes` for theme handling
+- `sonner` and `sweetalert2` for feedback states
+
+### State, Data, and Forms
+
+- TanStack React Query
+- Zustand
+- React Hook Form
+- Zod
+- `nuqs` for URL query state
+
+### Backend and Integrations
+
+- Clerk authentication
+- Mongoose for MongoDB modeling
+- UploadThing for file uploads
+- TinyMCE for rich text editing
+- Vercel Analytics and Speed Insights
+
+### Utilities and Developer Experience
+
+- `date-fns`
+- `lodash`
+- `clsx` and `tailwind-merge`
+- `dnd-kit` for drag and drop interactions
+- ESLint, Prettier, and TypeScript for code quality
+- `sass` for styles where needed
