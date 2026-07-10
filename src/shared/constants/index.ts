@@ -1,4 +1,4 @@
-export * from './const';
+export * from './app-constant';
 export * from './coupon-constant';
 export * from './course-constant';
 export * from './enum';
