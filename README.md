@@ -17,15 +17,14 @@ Please find other information guides in the `readme` folder.
 - Next.js 14 App Router
 - React 18
 - TypeScript
-- Tailwind CSS 3
+- Tailwind CSS v4
 - Clerk authentication
-- TanStack-style state patterns with Zustand and Immer
+- TanStack Query for server-state workflows
 - React Hook Form + Zod for typed form validation
 - Mongoose for MongoDB data modeling
 - UploadThing for file uploads
 - TinyMCE for rich text editing
 - Radix UI, shadcn-style components, and Lucide icons
-- TanStack Query for server-state workflows
 - Vercel Analytics and Speed Insights
 
 ### Initial Setup
