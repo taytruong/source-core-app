@@ -1,6 +1,10 @@
 'use server';
 
+import dns from 'node:dns';
+
 import mongoose from 'mongoose';
+
+dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 // singelton connection :  check đã connect chưa ? nếu có MONGODB_URL is already connected
 let isConnected: boolean = false;

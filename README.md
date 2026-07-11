@@ -174,7 +174,6 @@ When creating a new module, follow these rules:
 ### State, Data, and Forms
 
 - TanStack React Query
-- Zustand
 - React Hook Form
 - Zod
 - `nuqs` for URL query state
