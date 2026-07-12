@@ -140,6 +140,7 @@ const UpdateContentCourseContainer = ({
         {lectures.map((lecture) => (
           <div key={lecture._id.toString()}>
             <Accordion
+              className="mb-4"
               collapsible={!lectureIdEdit}
               type="single"
             >
@@ -150,6 +151,7 @@ const UpdateContentCourseContainer = ({
                       <>
                         <div className="w-full">
                           <Input
+                            className="border border-slate-200"
                             defaultValue={lecture.title}
                             placeholder="Lecture Name"
                             onChange={(event) =>
@@ -159,28 +161,32 @@ const UpdateContentCourseContainer = ({
                         </div>
                         <div className="flex gap-2">
                           <HoverTooltip label="Update">
-                            <UpdateContentAction
-                              variant="success"
-                              onClick={(event) =>
-                                handleUpdateLecture(
-                                  event,
-                                  lecture._id.toString(),
-                                )
-                              }
-                            >
-                              <IconCheck />
-                            </UpdateContentAction>
+                            <span>
+                              <UpdateContentAction
+                                variant="success"
+                                onClick={(event) =>
+                                  handleUpdateLecture(
+                                    event,
+                                    lecture._id.toString(),
+                                  )
+                                }
+                              >
+                                <IconCheck />
+                              </UpdateContentAction>
+                            </span>
                           </HoverTooltip>
                           <HoverTooltip label="Cancel Update">
-                            <UpdateContentAction
-                              variant="danger"
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                setLectureIdEdit('');
-                              }}
-                            >
-                              <IconCancel />
-                            </UpdateContentAction>
+                            <span>
+                              <UpdateContentAction
+                                variant="danger"
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  setLectureIdEdit('');
+                                }}
+                              >
+                                <IconCancel />
+                              </UpdateContentAction>
+                            </span>
                           </HoverTooltip>
                         </div>
                       </>
@@ -189,30 +195,34 @@ const UpdateContentCourseContainer = ({
                         <div>{lecture.title}</div>
                         <div className="flex gap-2">
                           <HoverTooltip label="Edit">
-                            <UpdateContentAction
-                              variant="info"
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                setLectureIdEdit(lecture._id.toString());
-                                setLectureEdit(lecture.title);
-                              }}
-                            >
-                              <IconEdit />
-                            </UpdateContentAction>
+                            <span>
+                              <UpdateContentAction
+                                variant="default"
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  setLectureIdEdit(lecture._id.toString());
+                                  setLectureEdit(lecture.title);
+                                }}
+                              >
+                                <IconEdit />
+                              </UpdateContentAction>
+                            </span>
                           </HoverTooltip>
 
                           <HoverTooltip label="Delete">
-                            <UpdateContentAction
-                              variant="danger"
-                              onClick={(event) =>
-                                handleDeleteLecture(
-                                  event,
-                                  lecture._id.toString(),
-                                )
-                              }
-                            >
-                              <IconDelete />
-                            </UpdateContentAction>
+                            <span>
+                              <UpdateContentAction
+                                variant="danger"
+                                onClick={(event) =>
+                                  handleDeleteLecture(
+                                    event,
+                                    lecture._id.toString(),
+                                  )
+                                }
+                              >
+                                <IconDelete />
+                              </UpdateContentAction>
+                            </span>
                           </HoverTooltip>
                         </div>
                       </>

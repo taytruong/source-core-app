@@ -170,6 +170,7 @@ function DraggableContent({
                             <>
                               <div className="w-full">
                                 <Input
+                                  className="border border-slate-200"
                                   defaultValue={lesson.title}
                                   placeholder="Lesson Name"
                                   onChange={(event) =>
@@ -179,28 +180,32 @@ function DraggableContent({
                               </div>
                               <div className="flex gap-2">
                                 <HoverTooltip label="Update">
-                                  <UpdateContentAction
-                                    variant="success"
-                                    onClick={(event) =>
-                                      handleUpdateLesson(
-                                        event,
-                                        lesson._id.toString(),
-                                      )
-                                    }
-                                  >
-                                    <IconCheck />
-                                  </UpdateContentAction>
+                                  <span>
+                                    <UpdateContentAction
+                                      variant="success"
+                                      onClick={(event) =>
+                                        handleUpdateLesson(
+                                          event,
+                                          lesson._id.toString(),
+                                        )
+                                      }
+                                    >
+                                      <IconCheck />
+                                    </UpdateContentAction>
+                                  </span>
                                 </HoverTooltip>
                                 <HoverTooltip label="Cancel Update">
-                                  <UpdateContentAction
-                                    variant="danger"
-                                    onClick={(event) => {
-                                      event.stopPropagation();
-                                      setLessonIdEdit('');
-                                    }}
-                                  >
-                                    <IconCancel />
-                                  </UpdateContentAction>
+                                  <span>
+                                    <UpdateContentAction
+                                      variant="danger"
+                                      onClick={(event) => {
+                                        event.stopPropagation();
+                                        setLessonIdEdit('');
+                                      }}
+                                    >
+                                      <IconCancel />
+                                    </UpdateContentAction>
+                                  </span>
                                 </HoverTooltip>
                               </div>
                             </>
@@ -209,30 +214,34 @@ function DraggableContent({
                               <div>{lesson.title}</div>
                               <div className="flex gap-2">
                                 <HoverTooltip label="Edit">
-                                  <UpdateContentAction
-                                    variant="info"
-                                    onClick={(event) => {
-                                      event.stopPropagation();
-                                      setLessonIdEdit(lesson._id.toString());
-                                      setLessonEdit(lesson.title);
-                                    }}
-                                  >
-                                    <IconEdit />
-                                  </UpdateContentAction>
+                                  <span>
+                                    <UpdateContentAction
+                                      variant="default"
+                                      onClick={(event) => {
+                                        event.stopPropagation();
+                                        setLessonIdEdit(lesson._id.toString());
+                                        setLessonEdit(lesson.title);
+                                      }}
+                                    >
+                                      <IconEdit />
+                                    </UpdateContentAction>
+                                  </span>
                                 </HoverTooltip>
 
                                 <HoverTooltip label="Delete">
-                                  <UpdateContentAction
-                                    variant="danger"
-                                    onClick={(event) =>
-                                      handleDeleteLesson(
-                                        event,
-                                        lesson._id.toString(),
-                                      )
-                                    }
-                                  >
-                                    <IconDelete />
-                                  </UpdateContentAction>
+                                  <span>
+                                    <UpdateContentAction
+                                      variant="danger"
+                                      onClick={(event) =>
+                                        handleDeleteLesson(
+                                          event,
+                                          lesson._id.toString(),
+                                        )
+                                      }
+                                    >
+                                      <IconDelete />
+                                    </UpdateContentAction>
+                                  </span>
                                 </HoverTooltip>
                                 <HoverTooltip label="Move Lesson">
                                   <div className="flexCenter">
@@ -244,7 +253,7 @@ function DraggableContent({
                           )}
                         </div>
                       </AccordionTrigger>
-                      <AccordionContent>
+                      <AccordionContent className="mt-2 p-5">
                         <UpdateContentLessonItem
                           courseSlug={courseSlug}
                           lesson={lesson}

@@ -99,6 +99,7 @@ async function CourseDetailsContainer({
           course=""
           lectures={courseDetails.lectures}
           lessonId=""
+          type="detail"
         />
       ),
     },

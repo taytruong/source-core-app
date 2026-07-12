@@ -21,6 +21,7 @@ async function CourseLessonContainer({
 }: CourseLessonContainerProps) {
   const courseSlug = params.course;
   const lessonId = searchParams.id;
+
   const foundCourse = await fetchCourseBySlug({ slug: courseSlug });
 
   if (!foundCourse) return null;
@@ -45,8 +46,7 @@ async function CourseLessonContainer({
         </Suspense>
         <Suspense fallback={<Loading />}>
           <CourseLessonComment
-            courseId={courseId}
-            lessonSlug={searchParams.slug}
+            lessonId={lessonId}
             sort={searchParams.sort}
           />
         </Suspense>

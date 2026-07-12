@@ -3,23 +3,27 @@
 import Link from 'next/link';
 
 import { createHistory } from '@/src/modules/history/actions';
-import { IconPlay } from '@/src/shared/components/icons';
 import { Checkbox } from '@/src/shared/components/ui/checkbox';
 import { HistoryItem, LessonItemData } from '@/src/shared/types';
 
 import { cn } from '../../utils';
+import { IconPlay } from '../icons';
 
 interface CourseOutlineItemProps {
   lesson: LessonItemData;
   histories?: HistoryItem[];
   course: string;
   lessonId: string;
+  type?: string;
+  isLastLine?: unknown;
 }
 const CourseOutlineItem = ({
   course = '',
   histories = [],
+  isLastLine,
   lesson,
   lessonId,
+  type,
 }: CourseOutlineItemProps) => {
   if (!lesson) return null;
   const isActive = lesson._id.toString() === lessonId;
@@ -45,21 +49,27 @@ const CourseOutlineItem = ({
   return (
     <div
       className={cn(
-        'flex items-center gap-2 rounded-lg border border-slate-300 bg-white p-4 text-base font-medium',
-        isActive
-          ? 'decoration-primary underline decoration-2 underline-offset-4'
-          : '',
+        `flex items-center gap-4 ${type === 'detail' ? 'border-b border-dashed' : ''} p-4 text-sm font-medium last:border-b-0`,
+        isActive ? 'font-bold' : '',
       )}
     >
       {!!url && (
-        <Checkbox
-          className="shirk-0 size-3.5 text-slate-400"
-          defaultChecked={isChecked}
-          onCheckedChange={(checked) => handleCompleteLesson(checked)}
-        />
+        <div className="relative flex shrink-0 items-center justify-center">
+          {!isLastLine && (
+            <span
+              aria-hidden
+              className="absolute top-7 left-1/2 h-5 w-px -translate-x-1/2 rounded-full bg-slate-300"
+            />
+          )}
+          <Checkbox
+            className="shirk-0 data-checked:bg-logo data-checked:border-logo size-4 cursor-pointer rounded-full text-slate-400"
+            defaultChecked={isChecked}
+            onCheckedChange={(checked) => handleCompleteLesson(checked)}
+          />
+        </div>
       )}
 
-      <IconPlay className="size-5 shrink-0" />
+      {type === 'detail' && <IconPlay className="size-5 shrink-0" />}
       {url ? (
         <Link
           className={cn('line-clamp-1', isActive && 'pointer-events-none')}

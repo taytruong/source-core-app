@@ -53,11 +53,11 @@ const CommentForm = ({
 
     startTransition(() => {
       if (!hasComment) {
-        toast.error('Đã comment thất bại');
+        toast.error('Comment to failedr');
 
         return;
       }
-      toast.success('Đã comment thành công');
+      toast.success('Comment submitted successfully');
       commentForm.setValue('content', '');
       closeReply?.();
     });
@@ -76,7 +76,7 @@ const CommentForm = ({
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
               <Textarea
-                placeholder="Comment vào đây nhen ..."
+                placeholder="Write a comment..."
                 className={cn('min-h-37.5', {
                   'bg-gray-50': isReply,
                 })}
@@ -97,7 +97,7 @@ const CommentForm = ({
             'w-24': isReply,
           })}
         >
-          {isReply ? 'Trả lời' : 'Đăng bình luận'}
+          {isReply ? 'Reply' : 'Submit Comment'}
         </Button>
       </form>
     </>

@@ -62,9 +62,10 @@ const VideoPlayer = ({
         <div className="flex gap-5">
           <RatingButton courseId={courseId} />
           <Button
+            className="button-primary"
             onClick={() => setShouldExpandedPlayer(!shouldExpandedPlayer)}
           >
-            {shouldExpandedPlayer ? 'Mặc định' : 'Chế độ rạp chiếu'}
+            {shouldExpandedPlayer ? 'Default' : 'Theater Mode'}
           </Button>
         </div>
       </div>

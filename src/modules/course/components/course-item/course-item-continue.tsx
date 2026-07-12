@@ -7,9 +7,11 @@ interface CourseItemContinueProps {
   data: CourseItemData;
   cta?: string;
   url?: string;
+  completePercent?: number;
 }
 
 const CourseItemContinue = ({
+  completePercent = 0,
   cta = 'Detail view',
   data,
   url = '',
@@ -42,8 +44,8 @@ const CourseItemContinue = ({
           width={300}
         />
       </Link>
-      <div className="flex flex-1 flex-col gap-3 p-5">
-        <h3 className="text-base font-medium">{data?.title}</h3>
+      <div className="flex flex-1 flex-col gap-10 p-3">
+        <h3 className="text-xl font-medium">{data?.title}</h3>
         {/* <div className="mb-0 grid grid-cols-2 text-xs text-gray-500 xl:mb-5 xl:flex xl:items-center xl:gap-3">
             {courseInfo.map((item, index) => (
               <div
@@ -61,12 +63,27 @@ const CourseItemContinue = ({
             </span>
           </div> */}
 
-        <Link
-          className="bg-primary button-primary ml-auto flex h-10 w-max items-center justify-center rounded-lg px-5 font-bold text-white"
-          href={courseUrl}
-        >
-          {cta}
-        </Link>
+        <div className="flex items-end gap-6">
+          <div className="flex w-full flex-col gap-2">
+            <span className="text-base font-medium">
+              Progess: <strong>{completePercent}%</strong>
+            </span>
+            <div className="relative h-2 overflow-hidden rounded-full bg-slate-200">
+              <div
+                className="from-primary h-full w-0 rounded-full bg-linear-to-r to-yellow-400 transition-all duration-500"
+                style={{
+                  width: `${completePercent}%`,
+                }}
+              />
+            </div>
+          </div>
+          <Link
+            className="bg-primary button-primary ml-auto flex h-10 w-max items-center justify-center rounded-lg px-5 font-bold text-white"
+            href={courseUrl}
+          >
+            {cta}
+          </Link>
+        </div>
       </div>
     </div>
   );

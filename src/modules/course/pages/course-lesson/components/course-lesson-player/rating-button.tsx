@@ -36,13 +36,15 @@ const RatingButton = ({ courseId }: RatingButtonProps) => {
       const isAlreadyRated = await getRatingByUserId(userId);
 
       if (isAlreadyRated) {
-        toast.warning('Bạn đã đánh giá khóa học này rồi');
+        toast.warning(
+          'You have already rated this course ! , You see your rating in the course detail page',
+        );
         setIsLoading(false);
 
         return;
       }
       if (!ratingContent || ratingValue === -1) {
-        toast.warning('Vui lòng chọn đánh giá và nhập nội dung đánh giá');
+        toast.warning('Please select a rating and enter your review');
 
         return;
       }
@@ -54,7 +56,7 @@ const RatingButton = ({ courseId }: RatingButtonProps) => {
       });
 
       if (hasResult) {
-        toast.success('Đánh giá thành công');
+        toast.success('Rating submitted successfully');
         setRatingContent('');
         setRatingValue(-1);
       }
@@ -68,14 +70,17 @@ const RatingButton = ({ courseId }: RatingButtonProps) => {
 
   return (
     <Dialog>
-      <DialogTrigger className="bg-primary flex items-center gap-3 rounded-lg px-5 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50">
-        <IconStar />
-        <span>Đánh giá khóa học</span>
+      <DialogTrigger
+        className="bg-primary button-primary flex items-center gap-3 rounded-lg px-5 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
+        disabled={isDisable}
+      >
+        <IconStar className="size-5" />
+        <span>Rate Course</span>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="font mb-5 text-xl font-medium tracking-tight">
-            Đánh giá
+            Rate Course
           </DialogTitle>
           <DialogDescription>
             <div className="mb-5 flex justify-between gap-5">
@@ -106,18 +111,18 @@ const RatingButton = ({ courseId }: RatingButtonProps) => {
             </div>
             <Textarea
               className="h-50 resize-none"
-              placeholder="Đánh giá của bạn"
+              placeholder="Rating content"
               value={ratingContent}
               onChange={(event) => setRatingContent(event.target.value)}
             />
             <Button
-              className="mt-5 w-full"
+              className="button-primary mt-5 w-full"
               disabled={isDisable}
               isLoading={isLoading}
               variant="primary"
               onClick={handleRatingCourse}
             >
-              Gửi đánh giá
+              Submit Rating
             </Button>
           </DialogDescription>
         </DialogHeader>

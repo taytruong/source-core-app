@@ -13,11 +13,14 @@ const CourseGrid = ({ children, isLoading, type }: CourseGirdProps) => {
     return (
       <>
         {type === 'continue' ? (
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(470px,1fr))] gap-4">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(490px,1fr))] gap-4">
             {Array.from({ length: 2 })
               .fill(0)
               .map((_, index) => (
-                <CourseItemSkeleton key={index} />
+                <CourseItemSkeleton
+                  key={index}
+                  type="continue"
+                />
               ))}
           </div>
         ) : (
@@ -36,7 +39,7 @@ const CourseGrid = ({ children, isLoading, type }: CourseGirdProps) => {
   return (
     <>
       {type === 'continue' ? (
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(470px,1fr))] gap-4">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(490px,1fr))] gap-4">
           {children}
         </div>
       ) : (

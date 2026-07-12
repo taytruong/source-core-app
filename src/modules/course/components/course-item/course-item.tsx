@@ -33,7 +33,7 @@ const CourseItem = ({
   return (
     <div className="bg-item flex flex-col rounded-2xl border border-gray-200 p-3 shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100">
       <Link
-        className="relative block h-48"
+        className="relative block h-52"
         href={courseUrl}
       >
         <Image
@@ -46,7 +46,7 @@ const CourseItem = ({
           width={300}
         />
       </Link>
-      <div className="flex flex-1 flex-col pt-4">
+      <div className="mt-2 flex flex-1 flex-col pt-4">
         <h3 className="mb-3 text-lg font-medium">{data?.title}</h3>
         <div className="mt-auto">
           <div className="mb-0 grid grid-cols-2 text-xs text-gray-500 xl:mb-5 xl:flex xl:items-center xl:gap-3">
@@ -67,7 +67,7 @@ const CourseItem = ({
           </div>
 
           <Link
-            className="bg-primary button-primary mt-10 flex h-12 w-full items-center justify-center rounded-lg font-bold text-white"
+            className="bg-primary button-primary flex h-12 w-full items-center justify-center rounded-lg font-bold text-white"
             href={courseUrl}
           >
             {cta}

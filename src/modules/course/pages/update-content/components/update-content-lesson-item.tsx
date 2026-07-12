@@ -20,13 +20,7 @@ import {
 import { Input } from '@/src/shared/components/ui/input';
 import { editorOptions } from '@/src/shared/constants';
 import { LessonItemData } from '@/src/shared/types';
-
-const formSchema = z.object({
-  slug: z.string().optional(),
-  duration: z.number().optional(),
-  video_url: z.string().optional(),
-  content: z.string().optional(),
-});
+import { UpdateContentLessonFormSchema } from '../../../schemas';
 
 interface UpdateContentLessonItemProps {
   courseSlug: string;
@@ -38,8 +32,8 @@ const UpdateContentLessonItem = ({
   lesson,
 }: UpdateContentLessonItemProps) => {
   const editorRef = useRef<unknown>(null);
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof UpdateContentLessonFormSchema>>({
+    resolver: zodResolver(UpdateContentLessonFormSchema),
     defaultValues: {
       slug: lesson.slug,
       duration: lesson.duration,
@@ -48,7 +42,9 @@ const UpdateContentLessonItem = ({
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(
+    values: z.infer<typeof UpdateContentLessonFormSchema>,
+  ) {
     try {
       const respone = await updateLesson({
         lessonId: lesson._id.toString(),
@@ -82,6 +78,7 @@ const UpdateContentLessonItem = ({
                 <Input
                   {...field}
                   aria-invalid={fieldState.invalid}
+                  className="border border-slate-200"
                   placeholder="lesson-1-overview"
                 />
                 {!!fieldState.invalid && (
@@ -99,6 +96,7 @@ const UpdateContentLessonItem = ({
                 <Input
                   {...field}
                   aria-invalid={fieldState.invalid}
+                  className="border border-slate-200"
                   onChange={(event) =>
                     field.onChange(Number(event.target.value))
                   }
@@ -118,6 +116,7 @@ const UpdateContentLessonItem = ({
                 <Input
                   {...field}
                   aria-invalid={fieldState.invalid}
+                  className="border border-slate-200"
                   placeholder="https://youtube.com/XYZ"
                 />
                 {!!fieldState.invalid && (

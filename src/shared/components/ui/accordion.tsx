@@ -42,7 +42,7 @@ function AccordionTrigger({
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          'group/accordion-trigger focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:after:border-ring **:data-[slot=accordion-trigger-icon]:text-muted-foreground relative mb-1 flex flex-1 items-center justify-between rounded-lg border border-slate-300 bg-white p-3 text-left text-base font-medium transition-all outline-none focus-visible:ring-3 disabled:pointer-events-none disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4',
+          'group/accordion-trigger focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:after:border-ring **:data-[slot=accordion-trigger-icon]:text-muted-foreground relative mb-1 flex flex-1 items-center justify-between rounded-lg bg-white p-3 text-left text-base font-medium shadow-sm transition-all outline-none focus-visible:ring-3 disabled:pointer-events-none disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4',
           className,
         )}
         {...props}
@@ -72,12 +72,7 @@ function AccordionContent({
       data-slot="accordion-content"
       {...props}
     >
-      <div
-        className={cn(
-          'rounded-lg border border-slate-300 bg-white p-2',
-          className,
-        )}
-      >
+      <div className={cn('rounded-lg bg-white p-2 shadow-sm', className)}>
         {children}
       </div>
     </AccordionPrimitive.Content>

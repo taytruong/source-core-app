@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Trash2 } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Controller, useForm } from 'react-hook-form';
@@ -235,14 +236,30 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Course Image</FieldLabel>
               <>
-                <div className="relative flex h-63 items-center justify-center rounded border border-gray-200 bg-white">
+                <div className="group relative flex h-63 items-center justify-center rounded-lg bg-white shadow-sm">
                   {imageWatch ? (
-                    <Image
-                      fill
-                      alt=""
-                      className="h-full w-full rounded-md object-cover"
-                      src={imageWatch}
-                    />
+                    <>
+                      <Image
+                        fill
+                        alt=""
+                        className="h-full w-full rounded-lg object-cover"
+                        src={imageWatch}
+                      />
+
+                      <div className="absolute inset-0 rounded-lg bg-black/30 opacity-0 transition-opacity duration-200 group-hover:opacity-60" />
+
+                      <div className="absolute inset-0 mr-2 mb-2 flex items-end justify-end gap-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                        <button
+                          className="bg-logo rounded-full p-3 text-white transition hover:scale-110"
+                          type="button"
+                          onClick={() => {
+                            form.setValue('image', '');
+                          }}
+                        >
+                          <Trash2 className="size-5" />
+                        </button>
+                      </div>
+                    </>
                   ) : (
                     <UploadButton
                       className="ut-button:flex ut-button:h-11 ut-button:w-full ut-button:items-center ut-button:justify-center ut-button:rounded-xl ut-button:px-5 ut-button:text-sm ut-button:font-medium ut-button:whitespace-nowrap ut-button:text-white ut-allowed-content:mt-2 ut-allowed-content:text-xs ut-allowed-content:text-gray-500"
@@ -444,7 +461,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
             </Field>
           )}
         />
-        <Controller
+        {/* <Controller
           control={form.control}
           name="info.qa"
           render={({ fieldState }) => (
@@ -501,7 +518,7 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
               )}
             </Field>
           )}
-        />
+        /> */}
       </div>
       <Button
         className="w-37.5"

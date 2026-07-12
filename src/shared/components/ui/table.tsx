@@ -7,7 +7,7 @@ import { cn } from '../../utils';
 function Table({ className, ...props }: React.ComponentProps<'table'>) {
   return (
     <div
-      className="relative w-full overflow-x-auto rounded-lg border border-slate-300 bg-white"
+      className="relative w-full overflow-x-auto rounded-lg bg-white shadow-sm"
       data-slot="table-container"
     >
       <table
@@ -57,7 +57,7 @@ function TableRow({ className, ...props }: React.ComponentProps<'tr'>) {
     <tr
       data-slot="table-row"
       className={cn(
-        'hover:bg-muted/50 has-aria-expanded:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors',
+        'hover:bg-muted/50 has-aria-expanded:bg-muted/50 data-[state=selected]:bg-muted border-b border-b-slate-300 transition-colors',
         className,
       )}
       {...props}
@@ -70,7 +70,7 @@ function TableHead({ className, ...props }: React.ComponentProps<'th'>) {
     <th
       data-slot="table-head"
       className={cn(
-        'h-12 px-4 text-left align-middle font-medium whitespace-nowrap text-slate-500 [&:has([role=checkbox])]:pr-0',
+        'h-12 px-4 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0',
         className,
       )}
       {...props}

@@ -1,5 +1,4 @@
 import { getCommentsByLesson } from '@/src/modules/comment/actions';
-import { getLessonBySlug } from '@/src/modules/lesson/actions';
 import { SortQueryParams } from '@/src/shared/types';
 
 import CommentField from './comment-field';
@@ -7,26 +6,25 @@ import CommentForm from './comment-form';
 import CommentSorting from './comment-sorting';
 
 export interface CourseLessonCommentProps {
-  courseId: string;
-  lessonSlug: string;
+  lessonId: string;
   sort: SortQueryParams;
 }
 
 async function CourseLessonComment({
-  courseId,
-  lessonSlug,
+  lessonId,
   sort,
 }: CourseLessonCommentProps) {
-  const lesson = await getLessonBySlug({
-    slug: lessonSlug,
-    course: courseId,
-  });
-  const lessonId = lesson?._id.toString() || '';
+  // const lesson = await getLessonBySlug({
+  //   slug: lessonSlug,
+  //   course: courseId,
+  // });
+  const lesson = lessonId || '';
 
-  if (!lessonId) return null;
+  if (!lesson) return null;
 
-  const comments = await getCommentsByLesson(lessonId, sort);
-  const commentLessonId = lessonId;
+  const comments = await getCommentsByLesson(lesson, sort);
+
+  const commentLessonId = lesson;
 
   // lấy n~ Post comment ko lấy Reply comment nên trừ parentId vì Reply comment chứa parentId
   const rootComments = comments?.filter((item) => !item.parentId);
