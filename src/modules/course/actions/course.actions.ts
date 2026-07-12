@@ -171,7 +171,7 @@ export async function createCourse(params: CreateCourseParams) {
     if (existCourse) {
       return {
         success: false,
-        message: 'Đường dẫn khóa học đã tồn tại!',
+        message: 'Course with this slug already exists',
       };
     }
     const course = await CourseModel.create(params);
@@ -203,7 +203,7 @@ export async function updateCourse(params: UpdateCourseParams) {
 
     return {
       success: true,
-      message: 'Cập nhật khóa học thành công!',
+      message: 'Update course successfully',
     };
   } catch (error) {
     console.log('🚀 ~ updateCourse ~ error:', error);

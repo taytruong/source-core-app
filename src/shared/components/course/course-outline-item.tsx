@@ -62,7 +62,7 @@ const CourseOutlineItem = ({
             />
           )}
           <Checkbox
-            className="shirk-0 data-checked:bg-logo data-checked:border-logo size-4 cursor-pointer rounded-full text-slate-400"
+            className="shirk-0 size-4 cursor-pointer rounded-full text-slate-400"
             defaultChecked={isChecked}
             onCheckedChange={(checked) => handleCompleteLesson(checked)}
           />

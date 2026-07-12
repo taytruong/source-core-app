@@ -5,11 +5,7 @@ import { useUserContext } from '@/src/shared/contexts';
 import { handleGetStorageLesson } from '@/src/shared/helper';
 
 import { CourseItemContinue } from '../../../components/course-item';
-import {
-  useQueryCountLessonByCourse,
-  useQueryFetchCoursesUserContinue,
-  useQueryFetchHistory,
-} from '../../../libs/react-query';
+import { useQueryFetchCoursesUserContinue } from '../../../libs/react-query';
 
 export interface CourseContinueProps {}
 
@@ -21,18 +17,6 @@ function CourseContinue(_props: CourseContinueProps) {
   });
 
   const courseList = data || [];
-
-  const { data: histories } = useQueryFetchHistory({
-    courseId: courseList.map((course) => course._id).toString(),
-  });
-
-  const { data: lessonCount } = useQueryCountLessonByCourse({
-    courseId: courseList.map((course) => course._id).toString(),
-  });
-
-  const completePercent = Math.floor(
-    ((histories?.length || 0) / (lessonCount || 1)) * 100,
-  );
 
   if (!isLoading && courseList.length === 0) return null;
 
@@ -55,7 +39,6 @@ function CourseContinue(_props: CourseContinueProps) {
             return (
               <CourseItemContinue
                 key={item.slug}
-                completePercent={completePercent}
                 cta="Continue"
                 data={item}
                 url={url}

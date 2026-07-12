@@ -1,21 +1,34 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
+import {
+  useQueryCountLessonByCourse,
+  useQueryFetchHistory,
+} from '../../libs/react-query';
 import { CourseItemData } from '../../types';
 
 interface CourseItemContinueProps {
   data: CourseItemData;
   cta?: string;
   url?: string;
-  completePercent?: number;
 }
 
 const CourseItemContinue = ({
-  completePercent = 0,
   cta = 'Detail view',
   data,
   url = '',
 }: CourseItemContinueProps) => {
+  const courseId = data._id.toString();
+
+  const { data: histories } = useQueryFetchHistory({ courseId });
+  const { data: lessonCount } = useQueryCountLessonByCourse({ courseId });
+
+  const completePercent = Math.floor(
+    ((histories?.length || 0) / (lessonCount || 1)) * 100,
+  );
+
   const courseUrl = url || `/course/${data.slug}`;
   // const courseInfo = [
   //   {

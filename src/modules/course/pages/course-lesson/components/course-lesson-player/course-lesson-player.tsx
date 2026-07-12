@@ -54,11 +54,13 @@ async function CourseLessonPlayer({
       />
 
       <Heading className="mb-5 font-semibold">{lessonDetails.title}</Heading>
-      <div className="entry-content rounded-lg border border-slate-100 bg-white p-5">
-        <div
-          dangerouslySetInnerHTML={{ __html: lessonDetails.content || '' }}
-        />
-      </div>
+      {
+        <div className="entry-content rounded-lg p-5">
+          <div
+            dangerouslySetInnerHTML={{ __html: lessonDetails.content || '' }}
+          />
+        </div>
+      }
     </div>
   );
 }

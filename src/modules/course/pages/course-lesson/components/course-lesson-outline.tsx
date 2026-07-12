@@ -8,10 +8,10 @@ function CourseLessonOutline({
   completePercent,
 }: CourseLessonOutlineProps) {
   return (
-    <div className="sticky top-5 right-0 max-h-[calc(100svh-100px)] overflow-y-auto">
+    <div className="sticky top-5 right-0 max-h-[calc(100svh-56px)] scrollbar-none overflow-y-auto">
       <div className="relative mb-5 h-3 w-full overflow-hidden rounded-full border border-slate-200 bg-white">
         <div
-          className="to-logo h-full w-0 rounded-full bg-linear-to-r from-red-300 transition-all duration-500"
+          className="from-primary h-full w-0 rounded-full bg-linear-to-r to-yellow-400 transition-all duration-500"
           style={{
             width: `${completePercent}%`,
           }}
