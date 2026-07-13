@@ -43,7 +43,7 @@ async function CourseDetailsContainer({
     content: React.ReactNode;
   }[] = [
     {
-      title: 'Courses',
+      title: 'Lesson',
       content: getLessonInfo.lessons,
     },
     {

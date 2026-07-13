@@ -81,7 +81,7 @@ const CourseOutlineItem = ({
         <h4 className="line-clamp-1">{lessonItem.title}</h4>
       )}
       <span className="ml-auto shrink-0 text-xs font-medium">
-        {lessonItem.duration} phút
+        {lessonItem.duration} min
       </span>
     </div>
   );

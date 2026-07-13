@@ -85,16 +85,22 @@ export async function fetchCourseOfUser(
 
 export async function fetchContinueCoursesUser({
   clerkId,
+  params,
 }: {
   clerkId: string;
+  params: FilterQueryParams;
 }): Promise<CourseItemData[] | undefined | null> {
   try {
     connectToDatabase();
+    const { limit = 5 } = params;
     const findUser = await UserModel.findOne({ clerkId: clerkId }).populate({
       path: 'courses',
       model: CourseModel,
       match: {
         status: CourseStatus.APPROVED,
+      },
+      options: {
+        limit: limit,
       },
       populate: {
         path: 'lectures',

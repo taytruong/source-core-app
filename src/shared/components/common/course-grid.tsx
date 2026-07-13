@@ -25,7 +25,7 @@ const CourseGrid = ({ children, isLoading, type }: CourseGirdProps) => {
           </div>
         ) : (
           <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
-            {Array.from({ length: 3 })
+            {Array.from({ length: 4 })
               .fill(0)
               .map((_, index) => (
                 <CourseItemSkeleton key={index} />
@@ -43,7 +43,7 @@ const CourseGrid = ({ children, isLoading, type }: CourseGirdProps) => {
           {children}
         </div>
       ) : (
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4">
+        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-5">
           {children}
         </div>
       )}

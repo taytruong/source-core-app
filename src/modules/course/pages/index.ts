@@ -2,6 +2,7 @@ export * from './course-dashboard';
 export * from './course-lesson';
 export * from './create';
 export * from './details';
+export * from './explore';
 export * from './manage';
 export * from './study';
 export * from './update';

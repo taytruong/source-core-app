@@ -10,7 +10,7 @@ interface QueryFetchCoursesProps extends FilterQueryParams {}
 export const useQueryFetchCourses = (props: QueryFetchCoursesProps) => {
   return useQuery({
     enabled: true,
-    queryKey: [QUERY_KEYS.FECTH_COURSES],
+    queryKey: [QUERY_KEYS.FECTH_COURSES, props],
     queryFn: async () => {
       const response = await fetchCourse(props);
 

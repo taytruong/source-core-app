@@ -3,6 +3,7 @@
 import { auth } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 
+import { parseData } from '@/src/shared/helper';
 import { connectToDatabase } from '@/src/shared/lib';
 import { HistoryModel, UserModel } from '@/src/shared/schemas';
 import { CreateHistoryParams, HistoryModelProps } from '@/src/shared/types';
@@ -49,7 +50,7 @@ export async function getHistory(params: {
       user: findUser._id,
     });
 
-    return histories;
+    return parseData(histories);
   } catch (error) {
     console.log('🚀 ~ getHistory ~ error:', error);
   }

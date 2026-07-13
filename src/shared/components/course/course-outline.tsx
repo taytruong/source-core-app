@@ -37,7 +37,9 @@ const CourseOutline = ({
               </div>
             </AccordionTrigger>
             <AccordionContent className="border-none bg-transparent!">
-              <div className="mt-2 flex flex-col rounded-xl bg-white p-2 shadow-sm">
+              <div
+                className={`mt-2 flex flex-col rounded-xl ${type === 'detail' ? 'bg-white' : 'bg-item'} p-2 shadow-sm`}
+              >
                 {lecture.lessons.map((item, index) => {
                   return (
                     <CourseOutlineItem

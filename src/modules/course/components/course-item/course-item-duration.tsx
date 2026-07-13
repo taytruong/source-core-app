@@ -25,7 +25,7 @@ function CourseItemDuration({ slug }: CourseItemDurationProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <IconClock className="size-5" />
+      <IconClock className="size-4" />
       <span>{formatMinutesToHour(duration)}</span>
     </div>
   );

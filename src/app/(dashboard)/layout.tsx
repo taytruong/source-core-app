@@ -28,7 +28,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
 
         <footer className="p-4">
           <p className="text-right text-sm font-medium">
-            Phát triển bởi{' '}
+            Developed by{' '}
             <Link
               className="text-logo"
               href="https://www.linkedin.com/in/t%C3%A2y-tr%C6%B0%C6%A1ng-1203322a0/"

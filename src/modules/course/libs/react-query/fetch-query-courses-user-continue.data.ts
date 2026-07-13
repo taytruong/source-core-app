@@ -8,16 +8,23 @@ import { fetchContinueCoursesUser } from '../../actions';
 
 interface QueryFetchCoursesUserContinueProps {
   clerkId: string;
+  params: {
+    limit?: number;
+  };
 }
 
 export const useQueryFetchCoursesUserContinue = ({
   clerkId,
+  params,
 }: QueryFetchCoursesUserContinueProps) => {
   return useQuery({
     enabled: !!clerkId,
-    queryKey: [QUERY_KEYS.FETCH_COURSES_USER, clerkId],
+    queryKey: [QUERY_KEYS.FETCH_COURSES_USER, clerkId, params],
     queryFn: async () => {
-      const response = await fetchContinueCoursesUser({ clerkId });
+      const response = await fetchContinueCoursesUser({
+        clerkId,
+        params,
+      });
 
       return response || [];
     },

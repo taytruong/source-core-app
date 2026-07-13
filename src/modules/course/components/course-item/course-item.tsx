@@ -22,11 +22,11 @@ const CourseItem = ({
   const courseInfo = [
     {
       title: formatViews(data?.views),
-      icon: <IconEye className="size-5" />,
+      icon: <IconEye className="size-4" />,
     },
     {
       title: 5,
-      icon: <IconStar className="size-5" />,
+      icon: <IconStar className="size-4" />,
     },
   ];
 
@@ -45,11 +45,14 @@ const CourseItem = ({
           src={data.image}
           width={300}
         />
+        <span className="absolute right-2 bottom-2 rounded-md bg-white px-2 py-1 text-sm font-bold text-black shadow-sm">
+          {data?.price?.toLocaleString('en-EN')}
+        </span>
       </Link>
       <div className="mt-2 flex flex-1 flex-col pt-4">
         <h3 className="mb-3 text-lg font-medium">{data?.title}</h3>
         <div className="mt-auto">
-          <div className="mb-0 grid grid-cols-2 text-xs text-gray-500 xl:mb-5 xl:flex xl:items-center xl:gap-3">
+          <div className="mb-5 flex items-center gap-3 text-xs text-gray-500">
             {courseInfo.map((item, index) => (
               <div
                 key={index}
@@ -60,10 +63,6 @@ const CourseItem = ({
               </div>
             ))}
             <CourseItemDuration slug={data.slug} />
-
-            <span className="text-primary ml-auto text-base font-bold">
-              {data?.price?.toLocaleString('en-EN')}
-            </span>
           </div>
 
           <Link

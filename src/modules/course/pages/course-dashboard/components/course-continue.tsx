@@ -1,5 +1,8 @@
 'use client';
 
+import { ArrowRightIcon } from 'lucide-react';
+import Link from 'next/link';
+
 import { CourseGrid, Heading } from '@/src/shared/components/common';
 import { useUserContext } from '@/src/shared/contexts';
 import { handleGetStorageLesson } from '@/src/shared/helper';
@@ -14,6 +17,9 @@ function CourseContinue(_props: CourseContinueProps) {
 
   const { data, isLoading } = useQueryFetchCoursesUserContinue({
     clerkId: userInfo?.clerkId || '',
+    params: {
+      limit: 2,
+    },
   });
 
   const courseList = data || [];
@@ -22,7 +28,13 @@ function CourseContinue(_props: CourseContinueProps) {
 
   return (
     <div className="flex flex-col gap-5">
-      <Heading className="lg:text-xl">Continue Learning</Heading>
+      <div className="flex items-center justify-between">
+        <Heading className="lg:text-xl">Continue Learning</Heading>
+        <div className="text-primary flex items-center gap-1 text-base font-bold">
+          <Link href="/study">See All</Link>
+          <ArrowRightIcon className="size-3" />
+        </div>
+      </div>
       <CourseGrid
         isLoading={isLoading}
         type="continue"

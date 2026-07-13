@@ -38,10 +38,10 @@ import { useMutationUpdateCourse } from '../../../libs/react-query';
 import { CourseItemData } from '../../../types';
 
 const formSchema = z.object({
-  title: z.string().min(10, 'Tên khóa học ít nhất có 10 ký tự'),
+  title: z.string().min(10, 'Name must be at least 10 characters long'),
   slug: z.string().optional(),
-  price: z.number().int().positive().optional(),
-  sale_price: z.number().int().positive().optional(),
+  price: z.number().positive().optional(),
+  sale_price: z.number().positive().optional(),
   intro_url: z.string().optional(),
   desc: z.string().optional(),
   image: z.string().optional(),
@@ -179,9 +179,13 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
               <FieldLabel>Sale Price</FieldLabel>
               <Input
                 {...field}
-                placeholder="599.000"
+                min="0"
+                placeholder="39.99"
+                step="0.01"
                 type="number"
-                onChange={(event) => field.onChange(Number(event.target.value))}
+                onChange={(event) =>
+                  field.onChange(Number.parseFloat(event.target.value))
+                }
               />
               {!!fieldState.invalid && (
                 <FieldError errors={[fieldState.error]} />
@@ -198,9 +202,13 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
               <FieldLabel>Original Price</FieldLabel>
               <Input
                 {...field}
-                placeholder="999.000"
+                min="0"
+                placeholder="79.99"
+                step="0.01"
                 type="number"
-                onChange={(event) => field.onChange(Number(event.target.value))}
+                onChange={(event) =>
+                  field.onChange(Number.parseFloat(event.target.value))
+                }
               />
               {!!fieldState.invalid && (
                 <FieldError errors={[fieldState.error]} />

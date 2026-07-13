@@ -1,6 +1,7 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 
+import { parseData } from '@/src/shared/helper';
 import { connectToDatabase } from '@/src/shared/lib';
 import { CourseModel, LectureModel, LessonModel } from '@/src/shared/schemas';
 import {
@@ -102,7 +103,7 @@ export async function countLessonByCourseId({
     connectToDatabase();
     const count = await LessonModel.countDocuments({ course: courseId });
 
-    return count || 0;
+    return parseData(count || 0);
   } catch (error) {
     console.log('🚀 ~ countLessonByCourseId ~ error:', error);
   }
