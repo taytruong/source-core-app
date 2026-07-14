@@ -126,7 +126,7 @@ const CourseManageContainer = ({
               className="w-full max-w-48"
               size="lg"
             >
-              <SelectValue placeholder="Select Status" />
+              <SelectValue />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>

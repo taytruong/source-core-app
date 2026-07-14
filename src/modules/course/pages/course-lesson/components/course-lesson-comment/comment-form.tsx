@@ -53,7 +53,7 @@ const CommentForm = ({
 
     startTransition(() => {
       if (!hasComment) {
-        toast.error('Comment to failedr');
+        toast.error('Comment to failed');
 
         return;
       }

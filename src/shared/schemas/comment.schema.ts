@@ -18,7 +18,7 @@ const commentSchema = new Schema<CommentModelProps>({
   },
   status: {
     type: String,
-    default: CommentStatus.PENDING,
+    default: CommentStatus.APPROVED,
     enum: Object.values(CommentStatus),
   },
   created_at: {

@@ -8,7 +8,7 @@ function OrderPageRoots({ searchParams }: QuerySearchParams) {
   return (
     <>
       <Header title="Manage Orders." />
-      <OrderManagePage searchParams={searchParams} />;
+      <OrderManagePage searchParams={searchParams} />
     </>
   );
 }

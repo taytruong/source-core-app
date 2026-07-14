@@ -87,7 +87,7 @@ const OrderManageContainer = ({
         <div className="flex gap-3">
           <div className="w-full lg:w-125">
             <Input
-              placeholder="Search orders ..."
+              placeholder="Search orders code ..."
               onChange={handleSearchData}
             />
           </div>
@@ -99,7 +99,7 @@ const OrderManageContainer = ({
               className="w-full max-w-48"
               size="lg"
             >
-              <SelectValue placeholder="Search orders ..." />
+              <SelectValue />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>

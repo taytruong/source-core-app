@@ -20,11 +20,11 @@ export const timeAgo = (date: string | Date) => {
   const months = Math.floor(days / 30);
   const years = Math.floor(months / 12);
 
-  if (years) return `${years} năm trước`;
-  if (months) return `${months} tháng trước`;
-  if (days) return `${days} ngày trước`;
-  if (hours) return `${hours} giờ trước`;
-  if (minutes) return `${minutes} phút trước`;
+  if (years) return `${years} years ago`;
+  if (months) return `${months} months ago`;
+  if (days) return `${days} days ago`;
+  if (hours) return `${hours} hours ago`;
+  if (minutes) return `${minutes} minutes ago`;
 
-  return `${seconds} giây trước`;
+  return `${seconds} seconds ago`;
 };
