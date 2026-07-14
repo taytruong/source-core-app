@@ -39,10 +39,14 @@ export async function createRating(
 
 export async function getRatingByUserId(
   userId: string,
+  courseId: string,
 ): Promise<boolean | undefined> {
   try {
     connectToDatabase();
-    const findRating = await RatingModel.findOne({ user: userId });
+    const findRating = await RatingModel.findOne({
+      user: userId,
+      course: courseId,
+    });
 
     return findRating?._id ? true : false;
   } catch (error) {

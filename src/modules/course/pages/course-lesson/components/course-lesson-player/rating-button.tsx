@@ -33,7 +33,7 @@ const RatingButton = ({ courseId }: RatingButtonProps) => {
   const handleRatingCourse = async () => {
     setIsLoading(true);
     try {
-      const isAlreadyRated = await getRatingByUserId(userId);
+      const isAlreadyRated = await getRatingByUserId(userId, courseId);
 
       if (isAlreadyRated) {
         toast.warning(
@@ -60,7 +60,8 @@ const RatingButton = ({ courseId }: RatingButtonProps) => {
         setRatingContent('');
         setRatingValue(-1);
       }
-    } catch {
+    } catch (error) {
+      console.log('🚀 ~ handleRatingCourse ~ error:', error);
     } finally {
       setIsLoading(false);
     }
@@ -70,10 +71,7 @@ const RatingButton = ({ courseId }: RatingButtonProps) => {
 
   return (
     <Dialog>
-      <DialogTrigger
-        className="bg-primary button-primary flex items-center gap-3 rounded-lg px-5 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
-        disabled={isDisable}
-      >
+      <DialogTrigger className="bg-primary button-primary flex items-center gap-3 rounded-lg px-5 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50">
         <IconStar className="size-5" />
         <span>Rate Course</span>
       </DialogTrigger>

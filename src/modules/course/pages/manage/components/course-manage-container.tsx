@@ -8,6 +8,7 @@ import {
   BadgeStatus,
   BouncedLink,
   HoverTooltip,
+  Pagination,
   TableAction,
   TableActionItem,
 } from '@/src/shared/components/common';
@@ -28,7 +29,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/src/shared/components/ui/table';
-import { allValue, CourseStatus, courseStatus } from '@/src/shared/constants';
+import {
+  allValue,
+  CourseStatus,
+  courseStatus,
+  ITEM_PER_PAGE,
+} from '@/src/shared/constants';
 import { useQueryString } from '@/src/shared/hooks';
 
 import { updateCourse } from '../../../actions';
@@ -36,11 +42,14 @@ import { CourseItemData } from '../../../types';
 
 interface CourseManageContainerProps {
   courses?: CourseItemData[];
+  total?: number;
 }
 
 const CourseManageContainer = ({
   courses = [],
+  total = 0,
 }: CourseManageContainerProps) => {
+  const totalPages = Math.ceil(total / ITEM_PER_PAGE);
   const { handleSearchData, handleSelectStatus } = useQueryString();
 
   const handleDeleteCourseItem = (slug: string) => {
@@ -226,6 +235,10 @@ const CourseManageContainer = ({
             })}
         </TableBody>
       </Table>
+      <Pagination
+        total={total}
+        totalPages={totalPages}
+      />
     </>
   );
 };

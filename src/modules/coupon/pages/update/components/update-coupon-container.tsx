@@ -112,7 +112,7 @@ const UpdateCouponContainer = ({
       const value = event.target.value;
       const courseList = await fetchCourse({ search: value });
 
-      setFindCourse(courseList);
+      setFindCourse(courseList?.courses);
       if (!value) setFindCourse([]);
     },
     500,

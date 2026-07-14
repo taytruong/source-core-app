@@ -22,9 +22,14 @@ import {
 
 import { CourseItemData } from '../types';
 
+interface FetchCoursesResponse {
+  courses?: CourseItemData[];
+  total?: number;
+}
+
 export async function fetchCourse(
   params: FilterQueryParams,
-): Promise<CourseItemData[] | undefined> {
+): Promise<FetchCoursesResponse | undefined> {
   try {
     connectToDatabase();
     const { level, limit = 10, page = 1, search, status } = params;
@@ -49,7 +54,12 @@ export async function fetchCourse(
       .limit(limit)
       .sort({ create_at: -1 });
 
-    return parseData(courses);
+    const total = await CourseModel.countDocuments(query);
+
+    return {
+      courses: parseData(courses),
+      total,
+    };
   } catch (error) {
     console.log('🚀 ~ fetchCourse ~ error:', error);
   }

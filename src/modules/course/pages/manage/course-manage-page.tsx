@@ -7,15 +7,19 @@ import CourseManageContainer from './components';
 export interface CourseManagePageProps {}
 
 async function CourseManagePage({ searchParams }: QuerySearchParams) {
-  const courses =
-    (await fetchCourse({
-      page: searchParams.page || 1,
-      limit: ITEM_PER_PAGE,
-      search: searchParams.search,
-      status: searchParams.status,
-    })) || [];
+  const data = await fetchCourse({
+    page: searchParams.page || 1,
+    limit: ITEM_PER_PAGE,
+    search: searchParams.search,
+    status: searchParams.status,
+  });
 
-  return <CourseManageContainer courses={courses} />;
+  return (
+    <CourseManageContainer
+      courses={data?.courses}
+      total={data?.total}
+    />
+  );
 }
 
 export default CourseManagePage;
