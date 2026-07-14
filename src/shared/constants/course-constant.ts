@@ -50,3 +50,9 @@ export const courseLevelTitle: Record<CourseLevel, string> = {
   [CourseLevel.INTERMEDIATE]: 'Intermediate',
   [CourseLevel.BEGINNER]: 'Beginner',
 };
+
+export const courseLevelColor: Record<CourseLevel, string> = {
+  [CourseLevel.BEGINNER]: 'bg-primary',
+  [CourseLevel.INTERMEDIATE]: 'bg-[#D6379F]',
+  [CourseLevel.ADVANCED]: 'bg-logo',
+};

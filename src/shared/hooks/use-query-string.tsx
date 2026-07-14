@@ -34,6 +34,10 @@ export const useQueryString = () => {
     createQueryString('status', status);
   };
 
+  const handleSelectLevel = <T extends string>(level: T | string) => {
+    createQueryString('level', level);
+  };
+
   const handleChangePage = (page: number) => {
     createQueryString('page', `${page}`);
   };
@@ -51,5 +55,6 @@ export const useQueryString = () => {
     handleChangePage,
     currentPage,
     handleChangeQs,
+    handleSelectLevel,
   };
 };

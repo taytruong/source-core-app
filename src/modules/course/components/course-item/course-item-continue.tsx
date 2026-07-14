@@ -1,7 +1,11 @@
 'use client';
 
+import { ChefHatIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { courseLevelColor, courseLevelTitle } from '@/src/shared/constants';
+import { cn } from '@/src/shared/utils';
 
 import {
   useQueryCountLessonByCourse,
@@ -16,7 +20,7 @@ interface CourseItemContinueProps {
 }
 
 const CourseItemContinue = ({
-  cta = 'Detail view',
+  cta = '',
   data,
   url = '',
 }: CourseItemContinueProps) => {
@@ -30,19 +34,9 @@ const CourseItemContinue = ({
   );
 
   const courseUrl = url || `/course/${data.slug}`;
-  // const courseInfo = [
-  //   {
-  //     title: formatViews(data?.views),
-  //     icon: <IconEye className="size-5" />,
-  //   },
-  //   {
-  //     title: 5,
-  //     icon: <IconStar className="size-5" />,
-  //   },
-  // ];
 
   return (
-    <div className="bg-item flexCenter rounded-2xl border border-gray-200 p-3 shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100">
+    <div className="bg-item flexCenter rounded-2xl border border-gray-200 px-3 shadow-lg transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-100">
       <Link
         className="relative block h-32"
         href={courseUrl}
@@ -57,24 +51,19 @@ const CourseItemContinue = ({
           width={300}
         />
       </Link>
-      <div className="flex flex-1 flex-col gap-10 p-3">
-        <h3 className="text-xl font-medium">{data?.title}</h3>
-        {/* <div className="mb-0 grid grid-cols-2 text-xs text-gray-500 xl:mb-5 xl:flex xl:items-center xl:gap-3">
-            {courseInfo.map((item, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-2"
-              >
-                {item.icon}
-                <span>{item.title}</span>
-              </div>
-            ))}
-            <CourseItemDuration slug={data.slug} />
-
-            <span className="text-primary ml-auto text-base font-bold">
-              {data?.price?.toLocaleString('en-EN')}
-            </span>
-          </div> */}
+      <div className="flex flex-1 flex-col gap-7 p-3">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <ChefHatIcon
+              className={cn(
+                'size-5 rounded-sm p-0.5 text-white',
+                courseLevelColor[data?.level],
+              )}
+            />
+            <span className="font-medium">{courseLevelTitle[data?.level]}</span>
+          </div>
+          <h3 className="text-xl font-semibold">{data?.title}</h3>
+        </div>
 
         <div className="flex items-end gap-6">
           <div className="flex w-full flex-col gap-2">

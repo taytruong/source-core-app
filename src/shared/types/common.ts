@@ -4,6 +4,7 @@ export interface FilterQueryParams {
   search?: string;
   status?: string;
   active?: boolean;
+  level?: string;
 }
 
 export type SortQueryParams = 'recent' | 'oldest';

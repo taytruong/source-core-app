@@ -8,7 +8,7 @@ import { CourseExploreContainer } from './components';
 
 function CourseExplorePage({ searchParams }: QuerySearchParams) {
   const { data, isLoading } = useQueryFetchCourses({
-    status: searchParams.status,
+    level: searchParams.level,
     page: searchParams.page || 1,
     limit: ITEM_PER_PAGE,
     search: searchParams.search,

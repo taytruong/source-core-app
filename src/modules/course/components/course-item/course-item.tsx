@@ -1,8 +1,11 @@
+import { ChefHatIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { IconEye, IconStar } from '@/src/shared/components/icons';
+import { courseLevelColor, courseLevelTitle } from '@/src/shared/constants';
 import { formatViews } from '@/src/shared/helper';
+import { cn } from '@/src/shared/utils';
 
 import { CourseItemData } from '../../types';
 import CourseItemDuration from './course-item-duration';
@@ -49,8 +52,17 @@ const CourseItem = ({
           {data?.price?.toLocaleString('en-EN')}
         </span>
       </Link>
-      <div className="mt-2 flex flex-1 flex-col pt-4">
-        <h3 className="mb-3 text-lg font-medium">{data?.title}</h3>
+      <div className="flex flex-1 flex-col gap-2 pt-4">
+        <div className="flex items-center gap-2">
+          <ChefHatIcon
+            className={cn(
+              'size-5 rounded-sm p-0.5 text-white',
+              courseLevelColor[data?.level],
+            )}
+          />
+          <span className="font-medium">{courseLevelTitle[data?.level]}</span>
+        </div>
+        <h3 className="mb-3 text-lg font-semibold">{data?.title}</h3>
         <div className="mt-auto">
           <div className="mb-5 flex items-center gap-3 text-xs text-gray-500">
             {courseInfo.map((item, index) => (

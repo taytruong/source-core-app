@@ -85,7 +85,7 @@ const UpdateCouponContainer = ({
         (couponValue > 100 || couponValue < 0)
       ) {
         form.setError('value', {
-          message: 'Giá trị không hợp lệ',
+          message: 'Value is invalid',
         });
 
         return;
@@ -102,7 +102,7 @@ const UpdateCouponContainer = ({
       });
 
       if (updatedCoupon.code) {
-        toast.success('Cập nhật mã (coupon) giảm giá thành công');
+        toast.success('Coupon code updated successfully');
       }
     } catch (error) {
       console.log('🚀 ~ onSubmit ~ error:', error);
@@ -145,9 +145,9 @@ const UpdateCouponContainer = ({
           name="title"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Tiêu đề</FieldLabel>
+              <FieldLabel>Title</FieldLabel>
               <Input
-                placeholder="Tiêu đề"
+                placeholder="Title"
                 {...field}
               />
               {!!fieldState.invalid && (
@@ -163,7 +163,7 @@ const UpdateCouponContainer = ({
             <Field data-invalid={fieldState.invalid}>
               <FieldLabel>Code</FieldLabel>
               <Input
-                placeholder="Mã giảm giá"
+                placeholder="Coupon Code"
                 {...field}
                 disabled
                 className="font-semibold uppercase"
@@ -182,7 +182,7 @@ const UpdateCouponContainer = ({
           name="start_date"
           render={({ fieldState }) => (
             <Field>
-              <FieldLabel>Ngày bắt đầu</FieldLabel>
+              <FieldLabel>Start Date</FieldLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -193,7 +193,7 @@ const UpdateCouponContainer = ({
                     {startDate ? (
                       format(startDate, 'dd/MM/yyyy')
                     ) : (
-                      <span>Chọn ngày bắt đầu</span>
+                      <span>Select start date</span>
                     )}
                   </Button>
                 </PopoverTrigger>
@@ -219,7 +219,7 @@ const UpdateCouponContainer = ({
           name="end_date"
           render={({ fieldState }) => (
             <Field>
-              <FieldLabel>Chọn ngày kết thúc</FieldLabel>
+              <FieldLabel>Select end Date</FieldLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -256,7 +256,7 @@ const UpdateCouponContainer = ({
           name="type"
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel>Loại coupon</FieldLabel>
+              <FieldLabel>Coupon Type</FieldLabel>
               <RadioGroup
                 className="flex h-12 gap-5"
                 value={field.value}
@@ -287,7 +287,7 @@ const UpdateCouponContainer = ({
           render={({ field, fieldState }) => {
             return (
               <Field>
-                <FieldLabel>Giá trị</FieldLabel>
+                <FieldLabel>Value</FieldLabel>
                 <>
                   {couponTypeWatch === CouponType.PERCENT ? (
                     <Input
@@ -315,7 +315,7 @@ const UpdateCouponContainer = ({
           name="active"
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel>Trạng thái</FieldLabel>
+              <FieldLabel>Status</FieldLabel>
               <div className="flex h-12 flex-col justify-center">
                 <Switch
                   checked={field.value}
@@ -334,7 +334,7 @@ const UpdateCouponContainer = ({
           name="limit"
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel>Số lượng tối đa</FieldLabel>
+              <FieldLabel>Maximum Quantity</FieldLabel>
               <Input
                 placeholder="100"
                 type="number"
@@ -352,9 +352,9 @@ const UpdateCouponContainer = ({
           name="courses"
           render={({ fieldState }) => (
             <Field>
-              <FieldLabel>Khóa học</FieldLabel>
+              <FieldLabel>Courses</FieldLabel>
               <Input
-                placeholder="Tìm kiếm khóa học ..."
+                placeholder="Search courses ..."
                 onChange={handleSearchCourse}
               />
               {!!findCourse && findCourse.length > 0 && (
@@ -362,7 +362,7 @@ const UpdateCouponContainer = ({
                   {findCourse?.map((course) => (
                     <Label
                       key={course.title}
-                      className="flex cursor-pointer items-center gap-2 text-sm font-medium"
+                      className="flex cursor-pointer items-center gap-2 text-base font-medium"
                       htmlFor={course.title}
                     >
                       <Checkbox
@@ -385,7 +385,7 @@ const UpdateCouponContainer = ({
                   {selectedCourses?.map((course) => (
                     <div
                       key={course.title}
-                      className="inline-flex items-center gap-2 rounded-lg border border-slate-400 bg-white px-3 py-1 text-sm font-medium"
+                      className="inline-flex items-center gap-2 rounded-lg bg-white px-3 py-1 text-base font-medium shadow-sm"
                     >
                       <span>{course.title}</span>
                       <button
@@ -409,7 +409,7 @@ const UpdateCouponContainer = ({
         className="ml-auto flex w-37.5"
         variant="primary"
       >
-        Cập nhật
+        Update
       </Button>
     </form>
   );

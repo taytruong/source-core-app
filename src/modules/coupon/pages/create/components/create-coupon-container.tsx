@@ -355,7 +355,7 @@ const CreateCouponContainer = () => {
                   {findCourse?.map((course) => (
                     <Label
                       key={course.title}
-                      className="flex cursor-pointer items-center gap-2 text-sm font-medium"
+                      className="flex cursor-pointer items-center gap-2 text-base font-medium"
                       htmlFor={course.title}
                     >
                       <Checkbox
@@ -378,7 +378,7 @@ const CreateCouponContainer = () => {
                   {selectedCourses?.map((course) => (
                     <div
                       key={course.title}
-                      className="inline-flex items-center gap-2 rounded-lg border border-slate-400 bg-white px-3 py-1 text-sm font-medium"
+                      className="inline-flex items-center gap-2 rounded-lg bg-white px-3 py-1 text-base font-medium shadow-sm"
                     >
                       <span>{course.title}</span>
                       <button

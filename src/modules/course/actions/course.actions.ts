@@ -27,7 +27,7 @@ export async function fetchCourse(
 ): Promise<CourseItemData[] | undefined> {
   try {
     connectToDatabase();
-    const { limit = 10, page = 1, search, status } = params;
+    const { level, limit = 10, page = 1, search, status } = params;
     const skip = (page - 1) * limit;
     const query: QueryFilter<typeof CourseModel> = {};
 
@@ -38,6 +38,10 @@ export async function fetchCourse(
 
     if (status) {
       query.status = status;
+    }
+
+    if (level) {
+      query.level = level;
     }
 
     const courses = await CourseModel.find(query)
