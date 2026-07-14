@@ -103,7 +103,7 @@ const CourseManageContainer = ({
 
       <div className="mb-10 flex flex-col justify-start gap-5 lg:flex-row lg:items-center">
         <div className="flex gap-3">
-          <div className="w-full lg:w-75">
+          <div className="w-full lg:w-125">
             <Input
               placeholder="Search courses ..."
               onChange={handleSearchData}

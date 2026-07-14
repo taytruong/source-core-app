@@ -118,10 +118,12 @@ export async function getValidateCode(params: {
       select: '_id title',
     });
     const coupon: CouponItemData = JSON.parse(JSON.stringify(findCoupon));
-    const couponCourses = coupon?.courses.map((course) => course._id);
+    const couponCourses = coupon?.courses.map((course) =>
+      course._id.toString(),
+    );
     let isActive = true;
 
-    if (!couponCourses.some((id) => id.equals(params.courseId))) {
+    if (!couponCourses.includes(params.courseId)) {
       isActive = false;
     }
     if (!coupon?.active) isActive = false;

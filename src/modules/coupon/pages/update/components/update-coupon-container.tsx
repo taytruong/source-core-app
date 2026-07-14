@@ -21,7 +21,6 @@ import {
   FieldLabel,
 } from '@/src/shared/components/ui/field';
 import { Input } from '@/src/shared/components/ui/input';
-import InputFormatCurrency from '@/src/shared/components/ui/input-format';
 import { Label } from '@/src/shared/components/ui/label';
 import {
   Popover,
@@ -219,7 +218,7 @@ const UpdateCouponContainer = ({
           name="end_date"
           render={({ fieldState }) => (
             <Field>
-              <FieldLabel>Select end Date</FieldLabel>
+              <FieldLabel>Select end date</FieldLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -296,9 +295,9 @@ const UpdateCouponContainer = ({
                       onChange={(event) => field.onChange(event.target.value)}
                     />
                   ) : (
-                    <InputFormatCurrency
-                      {...field}
+                    <Input
                       placeholder="100"
+                      {...field}
                       onChange={(event) => field.onChange(event.target.value)}
                     />
                   )}

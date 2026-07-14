@@ -29,7 +29,6 @@ const CouponForm = ({
   const [isAppiled, setIsAppiled] = useState(false);
 
   const [couponCode, setCouponCode] = useState('');
-  // const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setIsAppiled(false);
@@ -43,6 +42,7 @@ const CouponForm = ({
         courseId,
       });
       const couponType = response?.type;
+
       let finalPrice = originalPrice;
 
       if (!response) {
@@ -61,7 +61,6 @@ const CouponForm = ({
       setPrice(finalPrice);
       toast.success('Coupon applied successfully ^-^');
       setCouponCode('');
-      // inputRef.current?.value && (inputRef.current.value = "");
       setIsAppiled(true);
       setCouponId(response._id.toString());
     } catch (error) {
