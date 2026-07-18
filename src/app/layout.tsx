@@ -15,7 +15,8 @@ import { quicksand } from '../shared/utils';
 
 export const metadata: Metadata = {
   title: 'Course-app',
-  description: 'Nền tảng lập trình vui vẻ hong quạo',
+  description:
+    'Course-app is a platform for online learning, offering a wide range of courses and resources to help you achieve your learning goals.',
 };
 
 export default function RootLayout({

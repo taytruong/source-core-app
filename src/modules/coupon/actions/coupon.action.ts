@@ -18,12 +18,12 @@ export async function createCoupon(params: CreateCouponParams) {
     const existCouppon = await CouponModel.findOne({ code: params.code });
 
     if (existCouppon?.code) {
-      return { error: 'Mã giảm giá đã tồn tại !' };
+      return { error: 'Coupon code already exists !' };
     }
     const couponRegex = /^[\dA-Z]{3,10}$/;
 
     if (!couponRegex.test(params.code)) {
-      return { error: 'Mã giảm giá không hợp lệ !' };
+      return { error: 'Invalid coupon code !' };
     }
     const newCoupon = await CouponModel.create(params);
 

@@ -20,7 +20,7 @@ const ButtonEnroll = ({ amount, coupon, courseId }: ButtonEnroll) => {
 
   const handleEnrollCourse = async () => {
     if (!userInfo?.name) {
-      toast.error('Vui lòng đăng nhập nha');
+      toast.error('Please login to enroll in the course');
 
       return;
     }

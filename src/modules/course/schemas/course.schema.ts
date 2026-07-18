@@ -3,13 +3,13 @@ import z from 'zod';
 export const CourseCommentFormSchema = z.object({
   content: z
     .string({
-      message: 'Vui lòng nhập vào bình luận',
+      message: 'Please enter a comment',
     })
-    .min(10, { message: 'Bình luận ít nhất 10 ký tự' }),
+    .min(10, { message: 'Comment must be at least 10 characters long' }),
 });
 
 export const CourseCreateSchema = z.object({
-  title: z.string().min(10, 'Tên khóa học phải có ít nhất 10 ký tự'),
+  title: z.string().min(10, 'Title must be at least 10 characters long'),
   slug: z.string().optional(),
 });
 

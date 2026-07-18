@@ -3,7 +3,7 @@ import Link from 'next/link';
 const AlreadyEnroll = () => {
   return (
     <div className="rounded-lg bg-white p-5">
-      Bạn đang có khóa học này rồi. Vui lòng nhấn vào{' '}
+      You are already enrolled in this course. Please click on{' '}
       <Link
         className="text-primary font-semibold"
         href="/study"
