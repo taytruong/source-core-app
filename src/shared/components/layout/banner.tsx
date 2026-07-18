@@ -717,7 +717,7 @@ function Banner(_props: BannerProps) {
       </div>
       <div className="col-span-5 flex justify-end">
         <div className="grid grid-cols-[300px_250px] gap-3">
-          {featured && (
+          {!!featured && (
             <div className="group relative row-span-3 h-81 overflow-hidden rounded-xl">
               <Image
                 fill
@@ -736,23 +736,27 @@ function Banner(_props: BannerProps) {
             </div>
           )}
 
-          {others.map((course) => (
-            <div
-              key={course._id.toString()}
-              className="group relative h-25 overflow-hidden rounded-xl"
-            >
-              <Image
-                fill
-                src={course.image}
-                alt={course.title}
-                className="object-cover transition-all duration-500 group-hover:scale-110"
-              />
+          {
+            !!others.map((course) => (
+              <div
+                key={course._id.toString()}
+                className="group relative h-25 overflow-hidden rounded-xl"
+              >
+                <Image
+                  fill
+                  src={course.image}
+                  alt={course.title}
+                  className="object-cover transition-all duration-500 group-hover:scale-110"
+                />
 
-              <div className="absolute right-2 bottom-2 left-2">
-                <p className="truncate text-sm font-semibold">{course.title}</p>
+                <div className="absolute right-2 bottom-2 left-2">
+                  <p className="truncate text-sm font-semibold">
+                    {course.title}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          }
         </div>
       </div>
     </section>
