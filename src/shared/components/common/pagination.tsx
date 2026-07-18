@@ -80,7 +80,7 @@ function PaginationButton({
   onClick,
 }: PaginationButtonProps) {
   const paginationButtonClassNames =
-    'size-7 rounded-full bg-white shadow-sm p-2 flexCenter disabled:bg-gray-200';
+    'size-7 rounded-full bg-item shadow-sm p-2 flexCenter disabled:bg-gray-200';
 
   return (
     <button

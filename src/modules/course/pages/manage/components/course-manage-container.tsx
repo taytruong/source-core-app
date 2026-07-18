@@ -1,12 +1,12 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { toast } from 'sonner';
 import Swal from 'sweetalert2';
 
 import {
   BadgeStatus,
-  BouncedLink,
   HoverTooltip,
   Pagination,
   TableAction,
@@ -105,12 +105,12 @@ const CourseManageContainer = ({
 
   return (
     <>
-      <BouncedLink
+      {/* <BouncedLink
         label="Create New Course"
         url="/manage/course/new"
-      />
+      /> */}
 
-      <div className="mb-10 flex flex-col justify-start gap-5 lg:flex-row lg:items-center">
+      <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
         <div className="flex gap-3">
           <div className="w-full lg:w-125">
             <Input
@@ -144,6 +144,12 @@ const CourseManageContainer = ({
             </SelectContent>
           </Select>
         </div>
+        <Link
+          className="bg-primary button-primary flex h-10 items-center justify-center rounded-lg px-3 font-medium text-white"
+          href="/manage/course/new"
+        >
+          Apply New Course
+        </Link>
       </div>
       <Table className="table-responsive">
         <TableHeader>

@@ -1,8 +1,9 @@
 'use client';
 
+import Link from 'next/link';
+
 import {
   BadgeStatus,
-  BouncedLink,
   Pagination,
   TableAction,
   TableActionItem,
@@ -45,12 +46,12 @@ function ManageCouponContainer({
 
   return (
     <>
-      <BouncedLink
+      {/* <BouncedLink
         label="Create Coupon"
         url="/manage/coupon/new"
-      />
+      /> */}
 
-      <div className="mb-10 flex flex-col justify-start gap-5 lg:flex-row lg:items-center">
+      <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
         <div className="flex gap-3">
           <div className="w-full lg:w-125">
             <Input
@@ -84,6 +85,12 @@ function ManageCouponContainer({
             </SelectContent>
           </Select>
         </div>
+        <Link
+          className="bg-primary button-primary flex h-10 items-center justify-center rounded-lg px-3 font-medium text-white"
+          href="/manage/coupon/new"
+        >
+          Apply New Coupon
+        </Link>
       </div>
       <Table className="table-responsive">
         <TableHeader>

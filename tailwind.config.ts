@@ -14,7 +14,7 @@ export default withUt({
       },
       colors: {
         primary: '#DD9E59',
-        item: '#FCF6ED',
+        item: '#FDFBF7',
         logo: '#D35152',
       },
     },
