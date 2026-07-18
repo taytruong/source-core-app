@@ -721,9 +721,9 @@ function Banner(_props: BannerProps) {
             <div className="group relative row-span-3 h-81 overflow-hidden rounded-xl">
               <Image
                 fill
-                src={featured.image}
                 alt={featured.title}
                 className="object-cover transition-all duration-500 group-hover:scale-110"
+                src={featured.image}
               />
 
               <div className="absolute bottom-4 left-4">
@@ -736,27 +736,23 @@ function Banner(_props: BannerProps) {
             </div>
           )}
 
-          {
-            !!others.map((course) => (
-              <div
-                key={course._id.toString()}
-                className="group relative h-25 overflow-hidden rounded-xl"
-              >
-                <Image
-                  fill
-                  src={course.image}
-                  alt={course.title}
-                  className="object-cover transition-all duration-500 group-hover:scale-110"
-                />
+          {others.map((course) => (
+            <div
+              key={course._id.toString()}
+              className="group relative h-25 overflow-hidden rounded-xl"
+            >
+              <Image
+                fill
+                alt={course.title}
+                className="object-cover transition-all duration-500 group-hover:scale-110"
+                src={course.image}
+              />
 
-                <div className="absolute right-2 bottom-2 left-2">
-                  <p className="truncate text-sm font-semibold">
-                    {course.title}
-                  </p>
-                </div>
+              <div className="absolute right-2 bottom-2 left-2">
+                <p className="truncate text-sm font-semibold">{course.title}</p>
               </div>
-            ))
-          }
+            </div>
+          ))}
         </div>
       </div>
     </section>
