@@ -1,11 +1,26 @@
+import Image from 'next/image';
+
+import { RatingIcon } from '@/src/shared/types';
+
 export interface RatingItemProps {
   rating: string;
+  title?: RatingIcon;
 }
 
-function RatingItem({ rating }: RatingItemProps) {
+function RatingItem({ rating, title }: RatingItemProps) {
   return (
-    <div className="from-primary rounded-lg bg-linear-to-tr to-yellow-400 p-2 px-4 text-sm font-medium text-white">
-      {rating}
+    <div className="border-primary rounded-lg border p-2 text-sm font-medium">
+      <div className="flex items-center gap-2">
+        <span>{rating}</span>
+        <span>
+          <Image
+            alt={title ?? ''}
+            height={20}
+            src={`/rating/${title}.png`}
+            width={20}
+          />
+        </span>
+      </div>
     </div>
   );
 }

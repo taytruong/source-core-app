@@ -1,10 +1,9 @@
-import { ChefHatIcon } from 'lucide-react';
+import { ChefHatIcon, FileTextIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { IconEye, IconStar } from '@/src/shared/components/icons';
+import { IconStar } from '@/src/shared/components/icons';
 import { courseLevelColor, courseLevelTitle } from '@/src/shared/constants';
-import { formatViews } from '@/src/shared/helper';
 import { cn } from '@/src/shared/utils';
 
 import { CourseItemData } from '../../types';
@@ -23,13 +22,17 @@ const CourseItem = ({
 }: CourseItemProps) => {
   const courseUrl = url || `/course/${data.slug}`;
   const courseInfo = [
+    // {
+    //   title: formatViews(data?.views),
+    //   icon: <IconEye className="size-4" />,
+    // },
     {
-      title: formatViews(data?.views),
-      icon: <IconEye className="size-4" />,
+      title: data.rating.length,
+      icon: <IconStar className="size-4" />,
     },
     {
-      title: 5,
-      icon: <IconStar className="size-4" />,
+      title: data?.lectures.length,
+      icon: <FileTextIcon className="size-4" />,
     },
   ];
 

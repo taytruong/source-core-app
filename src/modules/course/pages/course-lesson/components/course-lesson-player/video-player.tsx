@@ -3,13 +3,12 @@
 import { Button } from '@/src/shared/components/ui/button';
 import useGlobalStore from '@/src/shared/store';
 
-import LessonNavigation from './lesson-navigation';
 import RatingButton from './rating-button';
 
 interface VideoPlayerProps {
   videoId: string | undefined;
-  nextLesson: string;
-  prevLesson: string;
+  // nextLesson: string;
+  // prevLesson: string;
   courseId: string;
 }
 
@@ -29,8 +28,8 @@ export const getYoutubeVideoId = (url: string | undefined) => {
 
 const VideoPlayer = ({
   courseId,
-  nextLesson,
-  prevLesson,
+  // nextLesson,
+  // prevLesson,
   videoId,
 }: VideoPlayerProps) => {
   const urlVideoId = getYoutubeVideoId(videoId);
@@ -54,11 +53,11 @@ const VideoPlayer = ({
           No video
         </div>
       )}
-      <div className="mb-5 flex items-center justify-between">
-        <LessonNavigation
+      <div className="mb-5 flex items-center justify-end">
+        {/* <LessonNavigation
           nextLesson={nextLesson}
           prevLesson={prevLesson}
-        />
+        /> */}
         <div className="flex gap-5">
           <RatingButton courseId={courseId} />
           <Button

@@ -2,7 +2,11 @@ import Image from 'next/image';
 
 import PageNotFound from '@/src/app/not-found';
 import { CourseOutline } from '@/src/shared/components/common';
-import { courseLevelTitle, CourseStatus } from '@/src/shared/constants';
+import {
+  courseLevelTitle,
+  CourseStatus,
+  ratingList,
+} from '@/src/shared/constants';
 import { formatMinutesToHour } from '@/src/shared/helper';
 import { CourseLessonDuration } from '@/src/shared/types';
 
@@ -27,7 +31,17 @@ async function CourseDetailsContainer({
     !courseDetails || courseDetails.status !== CourseStatus.APPROVED;
 
   if (isEmptyData) return <PageNotFound />;
-  const ratings = courseDetails.rating.map((item) => item.content);
+
+  const ratings = courseDetails.rating.map((item) => {
+    const ratingInfo = ratingList.find((r) => r.value === item.rate);
+
+    return {
+      content: item.content,
+      rate: item.rate,
+      title: ratingInfo?.title,
+    };
+  });
+
   const videoId = courseDetails.intro_url?.split('v=')[1];
 
   const getLessonInfo: CourseLessonDuration = (await getCourseLessonsInfo({
@@ -43,14 +57,17 @@ async function CourseDetailsContainer({
     content: React.ReactNode;
   }[] = [
     {
+      title: 'Lecture',
+      content: courseDetails.lectures.length,
+    },
+    {
       title: 'Lesson',
       content: getLessonInfo.lessons,
     },
-    {
-      title: 'Views',
-      content: courseDetails.views.toLocaleString(),
-    },
-
+    // {
+    //   title: 'Views',
+    //   content: courseDetails.views.toLocaleString(),
+    // },
     {
       title: 'Level',
       content: courseLevelTitle[courseDetails.level],
@@ -199,10 +216,11 @@ async function CourseDetailsContainer({
 
         <SectionBoxItem title="Feedback">
           <div className="mb-5 flex flex-wrap gap-2">
-            {ratings.map((rating: string, index: number) => (
+            {ratings.map((item, index) => (
               <RatingItem
                 key={index}
-                rating={rating}
+                rating={item.content}
+                title={item.title}
               />
             ))}
           </div>

@@ -23,19 +23,19 @@ async function CourseLessonPlayer({
 
   if (!lessonDetails) return null;
 
-  const currentLessonIndex =
-    lessonList?.findIndex((element) => element._id.toString() === lessonId) ||
-    0;
+  // const currentLessonIndex =
+  //   lessonList?.findIndex((element) => element._id.toString() === lessonId) ||
+  //   0;
 
-  const previousLesson = lessonList?.[currentLessonIndex - 1];
-  const nextLesson = lessonList?.[currentLessonIndex + 1];
+  // const previousLesson = lessonList?.[currentLessonIndex - 1];
+  // const nextLesson = lessonList?.[currentLessonIndex + 1];
 
-  const nextLessonUrl = nextLesson
-    ? `/${courseSlug}/lesson?id=${nextLesson._id.toString()}`
-    : '';
-  const previousLessonUrl = previousLesson
-    ? `/${courseSlug}/lesson?id=${previousLesson._id.toString()}`
-    : '';
+  // const nextLessonUrl = nextLesson
+  //   ? `/${courseSlug}/lesson?id=${nextLesson._id.toString()}`
+  //   : '';
+  // const previousLessonUrl = previousLesson
+  //   ? `/${courseSlug}/lesson?id=${previousLesson._id.toString()}`
+  //   : '';
 
   const videoId = lessonDetails.video_url;
 
@@ -48,8 +48,8 @@ async function CourseLessonPlayer({
 
       <VideoPlayer
         courseId={courseId}
-        nextLesson={nextLessonUrl}
-        prevLesson={previousLessonUrl}
+        // nextLesson={nextLessonUrl}
+        // prevLesson={previousLessonUrl}
         videoId={videoId}
       />
 

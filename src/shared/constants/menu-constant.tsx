@@ -1,5 +1,4 @@
 import {
-  IconComment,
   IconExplore,
   IconHome,
   IconOrder,
@@ -36,11 +35,6 @@ export const menuItems: MenuItemProps[] = [
     icon: <IconPlay className="size-5" />,
   },
   {
-    url: '/manage/member',
-    title: 'Member ',
-    icon: <IconUsers className="size-5" />,
-  },
-  {
     url: '/manage/order',
     title: 'Order ',
     icon: <IconOrder className="size-5" />,
@@ -56,8 +50,13 @@ export const menuItems: MenuItemProps[] = [
     icon: <IconStar className="size-5" />,
   },
   {
-    url: '/manage/comment',
-    title: 'Comment ',
-    icon: <IconComment className="size-5" />,
+    url: '/manage/member',
+    title: 'Member ',
+    icon: <IconUsers className="size-5" />,
   },
+  // {
+  //   url: '/manage/comment',
+  //   title: 'Comment ',
+  //   icon: <IconComment className="size-5" />,
+  // },
 ];
