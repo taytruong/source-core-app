@@ -716,7 +716,7 @@ function Banner(_props: BannerProps) {
         </div>
       </div>
       <div className="col-span-5 flex justify-end">
-        <div className="grid grid-cols-[220px_170px] gap-3">
+        <div className="grid grid-cols-[300px_250px] gap-3">
           {featured && (
             <div className="group relative row-span-3 h-81 overflow-hidden rounded-xl">
               <Image
