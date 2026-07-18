@@ -2,8 +2,9 @@ import { ChefHatIcon, FileTextIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { IconStar } from '@/src/shared/components/icons';
+import { IconEye } from '@/src/shared/components/icons';
 import { courseLevelColor, courseLevelTitle } from '@/src/shared/constants';
+import { formatViews } from '@/src/shared/helper';
 import { cn } from '@/src/shared/utils';
 
 import { CourseItemData } from '../../types';
@@ -22,17 +23,19 @@ const CourseItem = ({
 }: CourseItemProps) => {
   const courseUrl = url || `/course/${data.slug}`;
   const courseInfo = [
-    // {
-    //   title: formatViews(data?.views),
-    //   icon: <IconEye className="size-4" />,
-    // },
     {
-      title: data.rating.length,
-      icon: <IconStar className="size-4" />,
+      title: formatViews(data?.views),
+      icon: <IconEye className="size-4" />,
+      text: 'Views',
     },
+    // {
+    //   title: data.rating.length,
+    //   icon: <IconStar className="size-4" />,
+    // },
     {
       title: data?.lectures.length,
       icon: <FileTextIcon className="size-4" />,
+      text: 'Lectures',
     },
   ];
 
@@ -74,7 +77,10 @@ const CourseItem = ({
                 className="flex items-center gap-2"
               >
                 {item.icon}
-                <span>{item.title}</span>
+                <div className="flex items-center gap-1">
+                  <span>{item.title}</span>
+                  <span>{item.text}</span>
+                </div>
               </div>
             ))}
             <CourseItemDuration slug={data.slug} />
