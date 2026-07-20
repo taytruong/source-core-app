@@ -161,3 +161,27 @@ export async function getOrderDetails({
     console.log('🚀 ~ getOrderDetails ~ error:', error);
   }
 }
+
+export async function getPendingOrderByUserAndCourse({
+  courseId,
+  userId,
+}: {
+  userId: string;
+  courseId: string;
+}) {
+  try {
+    connectToDatabase();
+
+    const order = await OrderModel.findOne({
+      user: userId,
+      course: courseId,
+      status: OrderStatus.PENDING,
+    });
+
+    return JSON.parse(JSON.stringify(order));
+  } catch (error) {
+    console.log('🚀 ~ getPendingOrderByUserAndCourse ~ error:', error);
+
+    return null;
+  }
+}
