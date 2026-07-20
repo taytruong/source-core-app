@@ -1,5 +1,7 @@
 # UCADEMY
 
+Ucademy allows instructors to create and manage cooking courses, lectures, and lessons, while providing students with a structured and engaging learning experience.
+
 ## Notes
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
@@ -9,6 +11,39 @@ Please find other information guides in the `readme` folder.
 ## Requirements
 
 - Node.JS ^22.20.0
+
+## Features
+
+### Authentication
+
+- Sign in / Sign up with Clerk
+- Protected dashboard routes
+
+### Course Management
+
+- Create, update, delete and publish courses
+- Course approval workflow
+- Course thumbnail upload
+- Rich text description editor
+
+### Lecture & Lesson
+
+- Create, update and delete lectures
+- Create, update and delete lessons
+- Drag & drop lesson reordering
+- Video lesson support
+- Automatic course duration calculation
+
+### Media
+
+- Upload images with UploadThing
+- Optimized images using Next.js Image
+
+### User Experience
+
+- Responsive design
+- Form validation using React Hook Form + Zod
+- Toast notifications
 
 ## Getting Started
 
