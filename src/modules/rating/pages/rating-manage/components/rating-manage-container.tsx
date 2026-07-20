@@ -112,6 +112,7 @@ const RatingManageContainer = ({ ratings }: RatingManageContainerProps) => {
             <TableHead>No.</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Course</TableHead>
+            <TableHead>Create Date</TableHead>
             <TableHead>User</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Actions</TableHead>
@@ -142,9 +143,6 @@ const RatingManageContainer = ({ ratings }: RatingManageContainerProps) => {
                           width={20}
                         />
                       </div>
-                      <time>
-                        {new Date(rating.create_at).toLocaleDateString('vi-VI')}
-                      </time>
                     </div>
                   </TableCell>
                   <TableCell>
@@ -155,6 +153,11 @@ const RatingManageContainer = ({ ratings }: RatingManageContainerProps) => {
                     >
                       {rating.course.title}
                     </Link>
+                  </TableCell>
+                  <TableCell>
+                    <time>
+                      {new Date(rating.create_at).toLocaleDateString('vi-VI')}
+                    </time>
                   </TableCell>
                   <TableCell>
                     <strong>{rating.user?.name}</strong>

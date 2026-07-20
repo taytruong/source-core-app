@@ -13,10 +13,11 @@ const CommentSorting = () => {
 
   return (
     <button
-      className="flex cursor-pointer items-center gap-2 text-sm font-medium"
+      className="flex cursor-pointer items-center gap-2 font-medium"
       type="button"
       onClick={handleSortComment}
     >
+      {sortValue === 'recent' ? 'Most recent' : 'Oldest'}
       <svg
         className="size-4"
         fill="none"
@@ -31,7 +32,6 @@ const CommentSorting = () => {
           strokeLinejoin="round"
         />
       </svg>
-      {sortValue === 'recent' ? 'Most recent' : 'Oldest'}
     </button>
   );
 };

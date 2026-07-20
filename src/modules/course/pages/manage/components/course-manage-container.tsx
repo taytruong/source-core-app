@@ -157,6 +157,7 @@ const CourseManageContainer = ({
             <TableHead>No.</TableHead>
             <TableHead>Information Course</TableHead>
             <TableHead>Price</TableHead>
+            <TableHead>Create Date</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Settings</TableHead>
           </TableRow>
@@ -173,7 +174,7 @@ const CourseManageContainer = ({
                 <TableRow key={courses.slug}>
                   <TableCell className="w-10 p-7">{index + 1}</TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-10">
                       <Image
                         alt=""
                         className="size-16 shrink-0 rounded-lg object-cover"
@@ -181,22 +182,20 @@ const CourseManageContainer = ({
                         src={courses.image}
                         width={80}
                       />
-                      <div className="flex flex-col gap-1">
-                        <h3 className="text-sm font-medium whitespace-nowrap lg:text-base">
-                          {courses.title}
-                        </h3>
-                        <h4 className="text-xs text-slate-500 lg:text-sm">
-                          {new Date(courses.create_at).toLocaleDateString(
-                            'vi-VI',
-                          )}
-                        </h4>
-                      </div>
+                      <h3 className="text-sm font-semibold whitespace-nowrap lg:text-base">
+                        {courses.title}
+                      </h3>
                     </div>
                   </TableCell>
                   <TableCell>
                     <span className="text-sm font-medium lg:text-base">
                       {courses?.price?.toLocaleString('en-EN')}
                     </span>
+                  </TableCell>
+                  <TableCell>
+                    <h4 className="text-xs font-medium lg:text-sm">
+                      {new Date(courses.create_at).toLocaleDateString('vi-VI')}
+                    </h4>
                   </TableCell>
                   <TableCell>
                     <HoverTooltip label="Can be changed to 'Approved' / 'Pending'">

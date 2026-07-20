@@ -55,7 +55,7 @@ async function CourseLessonPlayer({
 
       <Heading className="mb-5 font-semibold">{lessonDetails.title}</Heading>
       {
-        <div className="entry-content rounded-lg p-5">
+        <div className="entry-content bg-item rounded-lg p-5 shadow-sm">
           <div
             dangerouslySetInnerHTML={{ __html: lessonDetails.content || '' }}
           />

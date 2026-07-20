@@ -99,6 +99,7 @@ function ManageCouponContainer({
             <TableHead>Coupon Code</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Discount</TableHead>
+            <TableHead>Create Date</TableHead>
             <TableHead>Usage</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Actions</TableHead>
@@ -122,6 +123,11 @@ function ManageCouponContainer({
                   ) : (
                     <>{coupon.value}%</>
                   )}
+                </TableCell>
+                <TableCell>
+                  <h4 className="text-xs font-medium lg:text-sm">
+                    {new Date(coupon.create_at).toLocaleDateString('vi-VI')}
+                  </h4>
                 </TableCell>
                 <TableCell>
                   {coupon.used} / {coupon.limit}
