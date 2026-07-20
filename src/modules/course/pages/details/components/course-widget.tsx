@@ -42,10 +42,10 @@ const CourseWidget = ({ data, duration }: CourseWidgetProps) => {
       <div className="sticky top-4 rounded-lg bg-white p-5 shadow-sm">
         <div className="mb-3 flex items-center gap-2">
           <strong className="text-primary text-3xl font-bold">
-            {price.toLocaleString('en-EN')}
+            $ {price.toLocaleString('en-EN')}
           </strong>
           <span className="text-lg text-slate-400 line-through">
-            {data.sale_price.toLocaleString('en-EN')}
+            $ {data.sale_price.toLocaleString('en-EN')}
           </span>
           <span className="bg-primary/30 text-primary ml-auto inline-block rounded-lg px-3 py-1 text-sm font-medium shadow-sm">
             {Math.floor((price / data.sale_price) * 100)}%

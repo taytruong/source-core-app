@@ -156,7 +156,7 @@ const CourseManageContainer = ({
           <TableRow>
             <TableHead>No.</TableHead>
             <TableHead>Information Course</TableHead>
-            <TableHead>Price</TableHead>
+            <TableHead>Price ($)</TableHead>
             <TableHead>Create Date</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Settings</TableHead>

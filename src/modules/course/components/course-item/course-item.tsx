@@ -55,7 +55,7 @@ const CourseItem = ({
           width={300}
         />
         <span className="absolute right-2 bottom-2 rounded-md bg-white px-2 py-1 text-sm font-bold text-black shadow-sm">
-          {data?.price?.toLocaleString('en-EN')}
+          $ {data?.price?.toLocaleString('en-EN')}
         </span>
       </Link>
       <div className="flex flex-1 flex-col gap-2 pt-4">

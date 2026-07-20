@@ -153,7 +153,7 @@ export async function getOrderDetails({
     connectToDatabase();
     const order = await OrderModel.findOne({ code }).populate({
       path: 'course',
-      select: 'title',
+      select: 'title slug',
     });
 
     return JSON.parse(JSON.stringify(order));
