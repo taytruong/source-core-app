@@ -6,7 +6,6 @@ import {
   IconStar,
   IconStudy,
   IconTicket,
-  IconUsers,
 } from '../components/icons';
 import { MenuItemProps } from '../types';
 
@@ -49,11 +48,11 @@ export const menuItems: MenuItemProps[] = [
     title: 'Rating ',
     icon: <IconStar className="size-5" />,
   },
-  {
-    url: '/manage/member',
-    title: 'Member ',
-    icon: <IconUsers className="size-5" />,
-  },
+  // {
+  //   url: '/manage/member',
+  //   title: 'Member ',
+  //   icon: <IconUsers className="size-5" />,
+  // },
   // {
   //   url: '/manage/comment',
   //   title: 'Comment ',
