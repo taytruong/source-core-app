@@ -11,9 +11,9 @@ export interface RatingItemProps {
 
 function RatingItem({ author, avatar, rating, title }: RatingItemProps) {
   return (
-    <div className="bg-item flex flex-col gap-3 rounded-lg p-2 text-sm font-medium shadow-sm">
+    <div className="bg-item flex w-70 flex-col gap-3 rounded-lg p-2 font-medium shadow-sm">
       <div className="flex items-center gap-2">
-        <span className="italic">{rating}</span>
+        <span className="text-base italic">{rating}</span>
         <span>
           <Image
             alt={title ?? ''}
@@ -23,7 +23,6 @@ function RatingItem({ author, avatar, rating, title }: RatingItemProps) {
           />
         </span>
       </div>
-      <div className="border border-slate-400" />
       {!!avatar && (
         <div className="flex items-center gap-2">
           <Image
