@@ -11,7 +11,7 @@ export interface RatingItemProps {
 
 function RatingItem({ author, avatar, rating, title }: RatingItemProps) {
   return (
-    <div className="bg-item flex w-70 flex-col gap-3 rounded-lg p-2 font-medium shadow-sm">
+    <div className="bg-item flex w-70 flex-col gap-3 rounded-lg p-4 font-medium shadow-sm">
       <div className="flex items-center gap-2">
         <span className="text-base italic">{rating}</span>
         <span>
