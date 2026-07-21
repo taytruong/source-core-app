@@ -39,6 +39,8 @@ async function CourseDetailsContainer({
       content: item.content,
       rate: item.rate,
       title: ratingInfo?.title,
+      author: item.user.name,
+      avatar: item.user.avatar,
     };
   });
 
@@ -219,6 +221,8 @@ async function CourseDetailsContainer({
             {ratings.map((item, index) => (
               <RatingItem
                 key={index}
+                author={item.author}
+                avatar={item.avatar}
                 rating={item.content}
                 title={item.title}
               />

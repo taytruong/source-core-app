@@ -175,6 +175,11 @@ export async function fetchCourseBySlug({
         match: {
           status: RatingStatus.ACTIVE,
         },
+        populate: {
+          path: 'user',
+          model: UserModel,
+          select: 'name avatar',
+        },
       });
 
     return parseData(findCourse) as CourseItemData;
