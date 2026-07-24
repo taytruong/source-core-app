@@ -9,7 +9,7 @@ function CourseLessonOutline({
 }: CourseLessonOutlineProps) {
   return (
     <div className="sticky top-5 right-0 max-h-[calc(100svh-56px)] scrollbar-none overflow-y-auto">
-      <div className="relative mt-3.5 mb-5 h-3 w-full overflow-hidden rounded-full border border-slate-200 bg-white">
+      <div className="relative mt-3.5 mb-5 h-3 w-full overflow-hidden rounded-full bg-white shadow-sm">
         <div
           className="from-primary h-full w-0 rounded-full bg-linear-to-r to-yellow-400 transition-all duration-500"
           style={{

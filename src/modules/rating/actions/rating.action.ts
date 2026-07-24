@@ -80,7 +80,7 @@ export async function deleteRating(id: string): Promise<boolean | undefined> {
 
 export async function fetchRatings(
   params: FilterQueryParams,
-): Promise<RatingItemData[] | undefined> {
+): Promise<{ ratings: RatingItemData[]; total: number } | undefined> {
   try {
     connectToDatabase();
     const { limit = 10, page = 1, search, status } = params;
@@ -107,7 +107,12 @@ export async function fetchRatings(
       .limit(limit)
       .sort({ create_at: -1 });
 
-    return JSON.parse(JSON.stringify(ratings));
+    const total = await RatingModel.countDocuments(query);
+
+    return {
+      ratings: JSON.parse(JSON.stringify(ratings)),
+      total,
+    };
   } catch (error) {
     console.log('🚀 ~ getRatings ~ error:', error);
   }

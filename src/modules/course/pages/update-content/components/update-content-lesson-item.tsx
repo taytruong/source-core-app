@@ -92,7 +92,7 @@ const UpdateContentLessonItem = ({
             name="duration"
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
-                <FieldLabel>Duration</FieldLabel>
+                <FieldLabel>Duration (minutes)</FieldLabel>
                 <Input
                   {...field}
                   aria-invalid={fieldState.invalid}

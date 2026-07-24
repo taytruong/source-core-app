@@ -31,7 +31,7 @@ const Pagination = ({ total, totalPages }: PaginationProps) => {
   if (total <= ITEM_PER_PAGE) return null;
 
   return (
-    <div className="flexCenter mt-10 gap-3">
+    <div className="mt-6 flex items-center justify-end gap-3">
       <PaginationButton
         disabled={currentPage === 1}
         onClick={() => handleChangePage(1)}
@@ -45,7 +45,7 @@ const Pagination = ({ total, totalPages }: PaginationProps) => {
         <IconArrowLeft />
       </PaginationButton>
       <input
-        className="h-10 w-20 rounded-full bg-white px-2 text-center font-medium outline-none"
+        className="bg-item h-7 w-15 rounded-lg px-2 text-center font-medium shadow-sm outline-none"
         placeholder="1"
         type="number"
         value={currentPage}
@@ -80,7 +80,7 @@ function PaginationButton({
   onClick,
 }: PaginationButtonProps) {
   const paginationButtonClassNames =
-    'size-7 rounded-full bg-item shadow-sm p-2 flexCenter disabled:bg-gray-200';
+    'size-7 rounded-lg bg-item shadow-sm flexCenter disabled:bg-gray-200';
 
   return (
     <button

@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { deleteRating, updateRating } from '@/src/modules/rating/actions';
 import {
   BadgeStatus,
+  Pagination,
   TableAction,
   TableActionItem,
 } from '@/src/shared/components/common';
@@ -38,9 +39,15 @@ import { RatingItemData } from '@/src/shared/types';
 
 interface RatingManageContainerProps {
   ratings?: RatingItemData[];
+  totalPages: number;
+  total: number;
 }
 
-const RatingManageContainer = ({ ratings }: RatingManageContainerProps) => {
+const RatingManageContainer = ({
+  ratings,
+  total,
+  totalPages,
+}: RatingManageContainerProps) => {
   const { handleSearchData, handleSelectStatus } = useQueryString();
 
   const handleUpdateRating = async (id: string) => {
@@ -189,6 +196,10 @@ const RatingManageContainer = ({ ratings }: RatingManageContainerProps) => {
             })}
         </TableBody>
       </Table>
+      <Pagination
+        total={total}
+        totalPages={totalPages}
+      />
     </div>
   );
 };

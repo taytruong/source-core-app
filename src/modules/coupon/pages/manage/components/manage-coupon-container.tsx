@@ -86,7 +86,7 @@ function ManageCouponContainer({
           </Select>
         </div>
         <Link
-          className="bg-primary button-primary flex h-10 items-center justify-center rounded-lg px-3 font-medium text-white"
+          className="bg-primary button-primary flex h-10 items-center justify-center rounded-lg px-3 font-semibold text-white"
           href="/manage/coupon/new"
         >
           Apply New Coupon

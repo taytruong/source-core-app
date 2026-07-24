@@ -40,7 +40,7 @@ const CommentField = ({
     <>
       <div
         key={comment._id.toString()}
-        className={cn('ml-auto flex items-start gap-3', {
+        className={cn('ml-auto flex items-start gap-3 last:mb-5', {
           'pointer-events-none opacity-50': isPending,
           'mt-5 first:mt-0': level === 0,
         })}
