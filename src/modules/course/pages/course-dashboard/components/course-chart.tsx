@@ -2,6 +2,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -45,7 +46,7 @@ function CourseChart({
         >
           <BarChart
             data={data}
-            margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
+            margin={{ top: 0, right: 30, left: 0, bottom: 0 }}
           >
             <CartesianGrid
               stroke="#e0e0e0"
@@ -64,6 +65,16 @@ function CourseChart({
               tickFormatter={(v) => `${v} Hr`}
               tickLine={false}
               tickMargin={5}
+            />
+            <Legend
+              verticalAlign="top"
+              align="right"
+              iconType="square"
+              iconSize={10}
+              wrapperStyle={{
+                fontWeight: 600,
+                paddingBottom: 10,
+              }}
             />
             <Tooltip
               cursor={false}
