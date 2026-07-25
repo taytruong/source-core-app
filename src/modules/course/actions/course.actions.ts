@@ -291,12 +291,12 @@ export async function fetchDashboardOverview({
   clerkId,
 }: {
   clerkId?: string;
-}): Promise<DashboardOverview | undefined> {
+}): Promise<DashboardOverview | undefined | null> {
   try {
     connectToDatabase();
     const findUser = await UserModel.findOne({ clerkId: clerkId });
 
-    if (!findUser) return;
+    if (!findUser) return null;
 
     const userCourses = await HistoryModel.distinct('course', {
       user: findUser._id,
