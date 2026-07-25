@@ -1,6 +1,5 @@
 'use server';
 
-import { auth } from '@clerk/nextjs/server';
 import { QueryFilter } from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
@@ -288,14 +287,14 @@ export async function getCourseLessonsInfo({
   }
 }
 
-export async function fetchDashboardOverview(): Promise<
-  DashboardOverview | undefined
-> {
+export async function fetchDashboardOverview({
+  clerkId,
+}: {
+  clerkId?: string;
+}): Promise<DashboardOverview | undefined> {
   try {
     connectToDatabase();
-
-    const { userId } = await auth();
-    const findUser = await UserModel.findOne({ clerkId: userId });
+    const findUser = await UserModel.findOne({ clerkId: clerkId });
 
     if (!findUser) return;
 

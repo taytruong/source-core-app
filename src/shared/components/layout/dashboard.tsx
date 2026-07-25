@@ -5,12 +5,16 @@ import { BookOpen, Clock3, FileTextIcon, Trophy } from 'lucide-react';
 import { useQueryFetchItemDashboard } from '@/src/modules/course/libs/react-query';
 import CourseChart from '@/src/modules/course/pages/course-dashboard/components/course-chart';
 
+import { useUserContext } from '../../contexts';
 import { CardItem } from '../common';
 
 export interface DashboardProps {}
 
 function Dashboard(_props: DashboardProps) {
-  const { data } = useQueryFetchItemDashboard();
+  const { userInfo } = useUserContext();
+  const { data, isLoading } = useQueryFetchItemDashboard({
+    clerkId: userInfo?.clerkId || '',
+  });
 
   const overviewCards = [
     {
@@ -46,13 +50,17 @@ function Dashboard(_props: DashboardProps) {
   return (
     <div className="grid grid-cols-[1fr_260px] gap-6">
       <div>
-        <CourseChart data={data?.chartData || []} />
+        <CourseChart
+          data={data?.chartData || []}
+          isLoading={isLoading}
+        />
       </div>
       <div className="grid grid-cols-1 gap-4">
         {overviewCards.map((item) => (
           <CardItem
             key={item.title}
             {...item}
+            isLoading={isLoading}
           />
         ))}
       </div>

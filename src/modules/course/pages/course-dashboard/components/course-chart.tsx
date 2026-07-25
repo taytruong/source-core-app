@@ -17,9 +17,24 @@ interface ChartData {
 
 export interface CourseChartProps {
   data: ChartData[];
+  isLoading: boolean;
 }
 
-function CourseChart({ data }: CourseChartProps) {
+function CourseChart({
+  data,
+  isLoading,
+}: CourseChartProps & { isLoading: boolean }) {
+  if (isLoading) {
+    return (
+      <>
+        <Heading className="mb-5 lg:text-xl">Dashboard Hours Spent</Heading>
+        <div className="bg-item rounded-lg p-6 shadow-sm">
+          <div className="h-80 w-full animate-pulse rounded bg-gray-200" />
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <Heading className="mb-5 lg:text-xl">Dashboard Hours Spent</Heading>

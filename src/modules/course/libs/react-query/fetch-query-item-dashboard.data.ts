@@ -4,12 +4,20 @@ import { QUERY_KEYS } from '@/src/shared/constants';
 
 import { fetchDashboardOverview } from '../../actions';
 
-export const useQueryFetchItemDashboard = () => {
+interface QueryFetchItemDashboardProps {
+  clerkId?: string;
+}
+
+export const useQueryFetchItemDashboard = ({
+  clerkId,
+}: QueryFetchItemDashboardProps) => {
   return useQuery({
-    enabled: true,
-    queryKey: [QUERY_KEYS.FETCH_DASHBOARD_OVERVIEW],
+    enabled: !!clerkId,
+    queryKey: [QUERY_KEYS.FETCH_DASHBOARD_OVERVIEW, clerkId],
     queryFn: async () => {
-      const response = await fetchDashboardOverview();
+      const response = await fetchDashboardOverview({
+        clerkId,
+      });
 
       return (
         response ?? {
