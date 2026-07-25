@@ -12,15 +12,17 @@ export interface DashboardProps {}
 
 function Dashboard(_props: DashboardProps) {
   const { userInfo } = useUserContext();
+
   const { data, isLoading } = useQueryFetchItemDashboard({
     clerkId: userInfo?.clerkId || '',
   });
 
-  const isEmptyCardItems =
-    data?.cardItems.totalCourses === 0 &&
-    data?.cardItems.totalCompleted === 0 &&
-    data?.cardItems.totalPending === 0 &&
-    data?.cardItems.totalHours === 0;
+  const isEmptyCardItems = data?.cardItems || {
+    totalCourses: 0,
+    totalCompleted: 0,
+    totalPending: 0,
+    totalHours: 0,
+  };
 
   const isEmptyChart = data?.chartData.length === 0;
 
