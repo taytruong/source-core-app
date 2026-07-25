@@ -203,6 +203,7 @@ When creating a new module, follow these rules:
 - shadcn/ui
 - Radix UI
 - Lucide React icons
+- Recharts for data visualization
 - `next-themes` for theme handling
 - `sonner` and `sweetalert2` for feedback states
 
