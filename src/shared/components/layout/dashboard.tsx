@@ -16,6 +16,18 @@ function Dashboard(_props: DashboardProps) {
     clerkId: userInfo?.clerkId || '',
   });
 
+  const isEmptyCardItems =
+    data?.cardItems.totalCourses === 0 &&
+    data?.cardItems.totalCompleted === 0 &&
+    data?.cardItems.totalPending === 0 &&
+    data?.cardItems.totalHours === 0;
+
+  const isEmptyChart = data?.chartData.length === 0;
+
+  if (!isLoading && (isEmptyCardItems || isEmptyChart)) {
+    return null;
+  }
+
   const overviewCards = [
     {
       title: 'Courses',
