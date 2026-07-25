@@ -17,14 +17,14 @@ function Dashboard(_props: DashboardProps) {
     clerkId: userInfo?.clerkId || '',
   });
 
-  const isEmptyCardItems = data?.cardItems || {
-    totalCourses: 0,
-    totalCompleted: 0,
-    totalPending: 0,
-    totalHours: 0,
-  };
+  const isEmptyCardItems =
+    !data?.cardItems ||
+    (data.cardItems.totalCourses === 0 &&
+      data.cardItems.totalCompleted === 0 &&
+      data.cardItems.totalPending === 0 &&
+      data.cardItems.totalHours === 0);
 
-  const isEmptyChart = data?.chartData.length === 0;
+  const isEmptyChart = !data?.chartData || data.chartData.length === 0;
 
   if (!isLoading && (isEmptyCardItems || isEmptyChart)) {
     return null;
