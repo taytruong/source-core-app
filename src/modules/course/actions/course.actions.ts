@@ -1,5 +1,6 @@
 'use server';
 
+import { auth } from '@clerk/nextjs/server';
 import { QueryFilter } from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
@@ -8,6 +9,7 @@ import { parseData } from '@/src/shared/helper';
 import { connectToDatabase } from '@/src/shared/lib';
 import {
   CourseModel,
+  HistoryModel,
   LectureModel,
   LessonModel,
   RatingModel,
@@ -25,6 +27,19 @@ import { CourseItemData } from '../types';
 interface FetchCoursesResponse {
   courses?: CourseItemData[];
   total?: number;
+}
+
+interface DashboardOverview {
+  cardItems: {
+    totalCourses: number;
+    totalCompleted: number;
+    totalPending: number;
+    totalHours: number;
+  };
+  chartData: {
+    month: string;
+    hours: number;
+  }[];
 }
 
 export async function fetchCourse(
@@ -270,5 +285,116 @@ export async function getCourseLessonsInfo({
     return { duration, lessons: lessons.length };
   } catch (error) {
     console.log('🚀 ~ getCourseLessonsInfo ~ error:', error);
+  }
+}
+
+export async function fetchDashboardOverview(): Promise<
+  DashboardOverview | undefined
+> {
+  try {
+    connectToDatabase();
+
+    const { userId } = await auth();
+    const findUser = await UserModel.findOne({ clerkId: userId });
+
+    if (!findUser) return;
+
+    const userCourses = await HistoryModel.distinct('course', {
+      user: findUser._id,
+    });
+
+    const totalCourses = userCourses.length;
+
+    const totalCompleted = await HistoryModel.countDocuments({
+      user: findUser._id,
+    });
+
+    const totalLessonsInUserCourses = await LessonModel.countDocuments({
+      course: { $in: userCourses },
+      _destroy: false,
+    });
+
+    const totalPending = totalLessonsInUserCourses - totalCompleted;
+
+    const hourStats = await HistoryModel.aggregate([
+      { $match: { user: findUser._id } },
+      {
+        $lookup: {
+          from: 'lessons',
+          localField: 'lesson',
+          foreignField: '_id',
+          as: 'lessonData',
+        },
+      },
+      { $unwind: '$lessonData' },
+      {
+        $group: {
+          _id: null,
+          totalSeconds: { $sum: '$lessonData.duration' },
+        },
+      },
+    ]);
+    const totalHours = Math.round((hourStats[0]?.totalSeconds ?? 0) / 60);
+
+    const monthlyHours = await HistoryModel.aggregate([
+      { $match: { user: findUser._id } },
+      {
+        $lookup: {
+          from: 'lessons',
+          localField: 'lesson',
+          foreignField: '_id',
+          as: 'lessonData',
+        },
+      },
+      { $unwind: '$lessonData' },
+      {
+        $group: {
+          _id: {
+            month: { $month: '$create_at' },
+            year: { $year: '$create_at' },
+          },
+          totalSeconds: { $sum: '$lessonData.duration' },
+        },
+      },
+      { $sort: { '_id.year': 1, '_id.month': 1 } },
+    ]);
+
+    const monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+
+    const fullYear = monthNames.map((month) => ({
+      month,
+      hours: 0,
+    }));
+
+    for (const item of monthlyHours) {
+      fullYear[item._id.month - 1].hours = Math.round(item.totalSeconds / 60);
+    }
+
+    const chartData = fullYear;
+
+    return {
+      cardItems: {
+        totalCourses,
+        totalCompleted,
+        totalPending,
+        totalHours,
+      },
+      chartData,
+    };
+  } catch (error) {
+    console.log('🚀 ~ fetchDashboardOverview ~ error:', error);
   }
 }

@@ -1,6 +1,7 @@
 export { default as CourseOutline } from '../course';
 export { default as BadgeStatus } from './badge-status';
 export { default as BouncedLink } from './bounced-link';
+export { default as CardItem } from './card-item';
 export { default as CourseGrid } from './course-grid';
 export { default as EmptySpace } from './empty-space';
 export { default as Heading } from './heading';

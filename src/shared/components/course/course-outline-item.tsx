@@ -49,7 +49,7 @@ const CourseOutlineItem = ({
   return (
     <div
       className={cn(
-        `flex items-center gap-4 ${type === 'detail' ? 'border-b border-dashed' : ''} p-4 text-sm font-medium last:border-b-0`,
+        `flex items-center gap-4 ${type === 'detail' ? 'mx-4 border-b border-dashed' : ''} p-4 text-sm font-medium last:border-b-0`,
         isActive ? 'font-bold' : '',
       )}
     >

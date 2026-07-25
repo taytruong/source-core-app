@@ -2,7 +2,7 @@ export const formatMinutesToHour = (minutes: number) => {
   const hours = Math.floor(minutes / 60);
   const remainMinutes = minutes % 60;
 
-  return `${hours}h${remainMinutes}m`;
+  return `${hours}h ${remainMinutes}m`;
 };
 
 export const formatDate = (date: string | Date) => {

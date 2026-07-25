@@ -19,7 +19,7 @@ function Banner(_props: BannerProps) {
   return (
     <section className="bg-primary grid min-h-65 grid-cols-12 items-center rounded-3xl p-4 text-white">
       <div className="relative col-span-7 space-y-6">
-        <h1 className="pb-7 text-7xl font-bold">Learn to Cook</h1>
+        <h1 className="pb-7 text-7xl font-bold">Learn to Cook🍳</h1>
         <p className="max-w-xl text-lg">
           Master authentic recipes from beginner to advanced with structured
           courses, hands-on practice, and expert guidance.
@@ -718,7 +718,7 @@ function Banner(_props: BannerProps) {
       <div className="col-span-5 flex justify-end">
         <div className="grid grid-cols-[300px_250px] gap-3">
           {!!featured && (
-            <div className="group relative row-span-3 h-81 overflow-hidden rounded-xl">
+            <div className="group relative row-span-3 h-80 overflow-hidden rounded-xl">
               <Image
                 fill
                 alt={featured.title}
@@ -739,7 +739,7 @@ function Banner(_props: BannerProps) {
           {others.map((course) => (
             <div
               key={course._id.toString()}
-              className="group relative h-25 overflow-hidden rounded-xl"
+              className="group relative h-24 overflow-hidden rounded-xl"
             >
               <Image
                 fill
