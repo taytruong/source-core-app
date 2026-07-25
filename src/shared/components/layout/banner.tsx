@@ -17,7 +17,7 @@ function Banner(_props: BannerProps) {
   const others = heroCourses.slice(1, 4);
 
   return (
-    <section className="bg-primary grid min-h-65 grid-cols-12 items-center rounded-3xl p-4 text-white">
+    <section className="bg-primary/90 grid min-h-65 grid-cols-12 items-center rounded-3xl p-4 text-white">
       <div className="relative col-span-7 space-y-6">
         <h1 className="pb-7 text-7xl font-bold">Learn to Cook🍳</h1>
         <p className="max-w-xl text-lg">
@@ -718,14 +718,14 @@ function Banner(_props: BannerProps) {
       <div className="col-span-5 flex justify-end">
         <div className="grid grid-cols-[300px_250px] gap-3">
           {!!featured && (
-            <div className="group relative row-span-3 h-80 overflow-hidden rounded-xl">
+            <div className="group relative row-span-3 h-70 overflow-hidden rounded-xl">
               <Image
                 fill
                 alt={featured.title}
                 className="object-cover transition-all duration-500 group-hover:scale-110"
                 src={featured.image}
               />
-
+              <div className="absolute inset-0 rounded-xl bg-linear-to-t from-black/70 via-black/20 to-transparent" />
               <div className="absolute bottom-4 left-4">
                 <p className="font-semibold">{featured.title}</p>
 
@@ -739,7 +739,7 @@ function Banner(_props: BannerProps) {
           {others.map((course) => (
             <div
               key={course._id.toString()}
-              className="group relative h-24 overflow-hidden rounded-xl"
+              className="group relative h-21 overflow-hidden rounded-xl"
             >
               <Image
                 fill
@@ -747,7 +747,7 @@ function Banner(_props: BannerProps) {
                 className="object-cover transition-all duration-500 group-hover:scale-110"
                 src={course.image}
               />
-
+              <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
               <div className="absolute right-2 bottom-2 left-2">
                 <p className="truncate text-sm font-semibold">{course.title}</p>
               </div>
