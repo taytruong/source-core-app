@@ -726,7 +726,7 @@ function Banner(_props: BannerProps) {
                 src={featured.image}
               />
               <div className="absolute inset-0 rounded-xl bg-linear-to-t from-black/70 via-black/20 to-transparent" />
-              <div className="absolute bottom-4 left-4">
+              <div className="absolute bottom-4 left-4 z-10">
                 <p className="font-semibold">{featured.title}</p>
 
                 <span className="mt-1 inline-block rounded-full bg-white/90 px-3 py-1 text-xs text-black">
@@ -748,7 +748,7 @@ function Banner(_props: BannerProps) {
                 src={course.image}
               />
               <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
-              <div className="absolute right-2 bottom-2 left-2">
+              <div className="absolute right-2 bottom-2 left-2 z-10">
                 <p className="truncate text-sm font-semibold">{course.title}</p>
               </div>
             </div>

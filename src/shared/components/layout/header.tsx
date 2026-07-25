@@ -16,7 +16,7 @@ function Header({ title }: HeaderProps) {
   const { userInfo } = useUserContext();
 
   return (
-    <div className="mb-10 flex h-20 flex-col justify-center">
+    <div className="mb-7 flex h-20 flex-col justify-center">
       <div className="flex items-center justify-between">
         <Heading className="lg:text-3xl">{title}</Heading>
         <div className="flexCenter mt-auto gap-3">
