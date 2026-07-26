@@ -14,7 +14,12 @@ export const useQueryFetchCourses = (props: QueryFetchCoursesProps) => {
     queryFn: async () => {
       const response = await fetchCourse(props);
 
-      return response?.courses || [];
+      return (
+        response || {
+          courses: [],
+          total: 0,
+        }
+      );
     },
     placeholderData: keepPreviousData,
     refetchOnWindowFocus: true,

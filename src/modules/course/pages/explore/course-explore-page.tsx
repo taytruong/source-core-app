@@ -16,8 +16,9 @@ function CourseExplorePage({ searchParams }: QuerySearchParams) {
 
   return (
     <CourseExploreContainer
-      courses={data}
+      courses={data?.courses}
       isLoading={isLoading}
+      total={data?.total}
     />
   );
 }

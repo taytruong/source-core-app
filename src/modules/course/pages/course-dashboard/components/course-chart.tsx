@@ -61,16 +61,16 @@ function CourseChart({
               tickMargin={7}
             />
             <YAxis
-              tick={{ fontWeight: 600 }}
-              tickFormatter={(v) => `${v} Hr`}
+              tick={{ fontWeight: 600, fontSize: 14 }}
+              tickFormatter={(v) => `${v}H`}
               tickLine={false}
               tickMargin={5}
             />
             <Legend
-              verticalAlign="top"
               align="right"
-              iconType="square"
               iconSize={10}
+              iconType="square"
+              verticalAlign="top"
               wrapperStyle={{
                 fontWeight: 600,
                 paddingBottom: 10,
@@ -78,7 +78,7 @@ function CourseChart({
             />
             <Tooltip
               cursor={false}
-              formatter={(value) => `${value} Hr`}
+              formatter={(value) => `${value}H`}
               contentStyle={{
                 borderRadius: 8,
                 color: '#1c1c1c',

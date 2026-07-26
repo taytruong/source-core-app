@@ -16,7 +16,7 @@ function CourseListSuggestion(_props: CourseListSuggestionProps) {
     limit: 8,
     status: CourseStatus.APPROVED,
   });
-  const courseList = data || [];
+  const courseList = data?.courses || [];
 
   return (
     <div className="flex flex-col gap-5">
