@@ -4,6 +4,7 @@ export { default as BouncedLink } from './bounced-link';
 export { default as CardItem } from './card-item';
 export { default as CourseGrid } from './course-grid';
 export { default as EmptySpace } from './empty-space';
+export { default as FilterSelectStatus } from './filter-select-status';
 export { default as Heading } from './heading';
 export { default as HoverTooltip } from './hover-tooltip';
 export { default as LinkActive } from './link-active';

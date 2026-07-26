@@ -7,20 +7,13 @@ import Swal from 'sweetalert2';
 
 import {
   BadgeStatus,
+  FilterSelectStatus,
   HoverTooltip,
   Pagination,
   TableAction,
   TableActionItem,
 } from '@/src/shared/components/common';
 import { Input } from '@/src/shared/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/src/shared/components/ui/select';
 import {
   Table,
   TableBody,
@@ -105,11 +98,6 @@ const CourseManageContainer = ({
 
   return (
     <>
-      {/* <BouncedLink
-        label="Create New Course"
-        url="/manage/course/new"
-      /> */}
-
       <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
         <div className="flex gap-3">
           <div className="w-full lg:w-125">
@@ -118,31 +106,11 @@ const CourseManageContainer = ({
               onChange={handleSearchData}
             />
           </div>
-          <Select
-            defaultValue={allValue}
+          <FilterSelectStatus
+            allValue={allValue}
+            options={courseStatus}
             onValueChange={(value) => handleSelectStatus(value as CourseStatus)}
-          >
-            <SelectTrigger
-              className="w-full max-w-48"
-              size="lg"
-            >
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value={allValue}>All</SelectItem>
-                {courseStatus.map((status) => (
-                  <SelectItem
-                    key={status.value}
-                    className={status.className}
-                    value={status.value}
-                  >
-                    {status.title}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          />
         </div>
         <Link
           className="bg-primary button-primary flex h-10 items-center justify-center rounded-lg px-3 font-semibold text-white"

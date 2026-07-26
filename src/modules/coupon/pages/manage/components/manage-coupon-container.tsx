@@ -4,19 +4,12 @@ import Link from 'next/link';
 
 import {
   BadgeStatus,
+  FilterSelectStatus,
   Pagination,
   TableAction,
   TableActionItem,
 } from '@/src/shared/components/common';
 import { Input } from '@/src/shared/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/src/shared/components/ui/select';
 import {
   Table,
   TableBody,
@@ -46,11 +39,6 @@ function ManageCouponContainer({
 
   return (
     <>
-      {/* <BouncedLink
-        label="Create Coupon"
-        url="/manage/coupon/new"
-      /> */}
-
       <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
         <div className="flex gap-3">
           <div className="w-full lg:w-125">
@@ -59,31 +47,12 @@ function ManageCouponContainer({
               onChange={handleSearchData}
             />
           </div>
-          <Select
-            defaultValue={allValue}
+          <FilterSelectStatus
+            allValue={allValue}
+            options={couponStatus}
+            placeholder="Select Status"
             onValueChange={(value) => handleChangeQs('active', value)}
-          >
-            <SelectTrigger
-              className="w-full max-w-48"
-              size="lg"
-            >
-              <SelectValue placeholder="Select Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value={allValue}>All</SelectItem>
-                {couponStatus.map((status) => (
-                  <SelectItem
-                    key={status.value}
-                    className={status.className}
-                    value={`${status.value}`}
-                  >
-                    {status.title}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          />
         </div>
         <Link
           className="bg-primary button-primary flex h-10 items-center justify-center rounded-lg px-3 font-semibold text-white"

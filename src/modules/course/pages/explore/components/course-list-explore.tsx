@@ -2,18 +2,11 @@
 
 import {
   CourseGrid,
+  FilterSelectStatus,
   Pagination,
   SortCreateAt,
 } from '@/src/shared/components/common';
 import { Input } from '@/src/shared/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/src/shared/components/ui/select';
 import {
   allValue,
   CourseLevel,
@@ -50,30 +43,12 @@ function CourseListSuggestion({
               onChange={handleSearchData}
             />
           </div>
-          <Select
-            defaultValue={allValue}
+          <FilterSelectStatus
+            allValue={allValue}
+            options={courseLevel}
+            placeholder="Select Level"
             onValueChange={(value) => handleSelectLevel(value as CourseLevel)}
-          >
-            <SelectTrigger
-              className="w-full max-w-48"
-              size="lg"
-            >
-              <SelectValue placeholder="Select Level" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value={allValue}>All</SelectItem>
-                {courseLevel.map((level) => (
-                  <SelectItem
-                    key={level.value}
-                    value={level.value}
-                  >
-                    {level.title}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          />
           <SortCreateAt />
         </div>
         <CourseGrid isLoading={isLoading}>

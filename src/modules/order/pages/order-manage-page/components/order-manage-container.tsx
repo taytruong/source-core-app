@@ -6,19 +6,12 @@ import Swal from 'sweetalert2';
 import {
   BadgeStatus,
   EmptySpace,
+  FilterSelectStatus,
   HoverTooltip,
   Pagination,
 } from '@/src/shared/components/common';
 import { IconCancel, IconCheck } from '@/src/shared/components/icons';
 import { Input } from '@/src/shared/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/src/shared/components/ui/select';
 import {
   Table,
   TableBody,
@@ -91,31 +84,11 @@ const OrderManageContainer = ({
               onChange={handleSearchData}
             />
           </div>
-          <Select
-            defaultValue={allValue}
+          <FilterSelectStatus
+            allValue={allValue}
+            options={courseStatus}
             onValueChange={(value) => handleSelectStatus(value as OrderStatus)}
-          >
-            <SelectTrigger
-              className="w-full max-w-48"
-              size="lg"
-            >
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value={allValue}>All</SelectItem>
-                {courseStatus.map((status) => (
-                  <SelectItem
-                    key={status.value}
-                    className={status.className}
-                    value={status.value}
-                  >
-                    {status.title}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          />
         </div>
       </div>
       <Table className="table-responsive">
