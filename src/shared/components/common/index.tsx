@@ -10,5 +10,6 @@ export { default as LinkActive } from './link-active';
 export { default as Loading } from './loading';
 export { default as MenuItem } from './menu-item';
 export { default as Pagination } from './pagination';
+export { default as SortCreateAt } from './sort-create-at';
 export { default as TableAction } from './table-action';
 export { default as TableActionItem } from './table-action-item';

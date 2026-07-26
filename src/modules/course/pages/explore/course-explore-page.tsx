@@ -12,6 +12,7 @@ function CourseExplorePage({ searchParams }: QuerySearchParams) {
     page: searchParams.page || 1,
     limit: ITEM_PER_PAGE,
     search: searchParams.search,
+    sort: searchParams.sort,
   });
 
   return (

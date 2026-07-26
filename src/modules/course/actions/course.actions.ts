@@ -46,7 +46,7 @@ export async function fetchCourse(
 ): Promise<FetchCoursesResponse | undefined> {
   try {
     connectToDatabase();
-    const { level, limit = 10, page = 1, search, status } = params;
+    const { level, limit = 10, page = 1, search, sort, status } = params;
     const skip = (page - 1) * limit;
     const query: QueryFilter<typeof CourseModel> = {};
 
@@ -66,7 +66,7 @@ export async function fetchCourse(
     const courses = await CourseModel.find(query)
       .skip(skip)
       .limit(limit)
-      .sort({ create_at: -1 });
+      .sort({ create_at: sort === 'recent' ? -1 : 1 });
 
     const total = await CourseModel.countDocuments(query);
 

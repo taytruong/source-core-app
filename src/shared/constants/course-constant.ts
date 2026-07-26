@@ -56,3 +56,8 @@ export const courseLevelColor: Record<CourseLevel, string> = {
   [CourseLevel.INTERMEDIATE]: 'bg-[#D6379F]',
   [CourseLevel.ADVANCED]: 'bg-logo',
 };
+
+export const sortOptions: { value: string; title: string }[] = [
+  { value: 'recent', title: 'Most recent' },
+  { value: 'oldest', title: 'Oldest' },
+];

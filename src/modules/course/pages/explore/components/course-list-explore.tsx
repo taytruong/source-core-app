@@ -1,6 +1,10 @@
 'use client';
 
-import { CourseGrid, Pagination } from '@/src/shared/components/common';
+import {
+  CourseGrid,
+  Pagination,
+  SortCreateAt,
+} from '@/src/shared/components/common';
 import { Input } from '@/src/shared/components/ui/input';
 import {
   Select,
@@ -70,6 +74,7 @@ function CourseListSuggestion({
               </SelectGroup>
             </SelectContent>
           </Select>
+          <SortCreateAt />
         </div>
         <CourseGrid isLoading={isLoading}>
           {courseList?.length > 0 &&

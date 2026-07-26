@@ -5,6 +5,7 @@ export interface FilterQueryParams {
   status?: string;
   active?: boolean;
   level?: string;
+  sort?: SortQueryParams;
 }
 
 export type SortQueryParams = 'recent' | 'oldest';
