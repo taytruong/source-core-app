@@ -9,9 +9,10 @@ import { getCourseLessonsInfo } from '../../actions';
 
 export interface CourseItemDurationProps {
   slug: string;
+  classIcon?: string;
 }
 
-function CourseItemDuration({ slug }: CourseItemDurationProps) {
+function CourseItemDuration({ classIcon, slug }: CourseItemDurationProps) {
   const [duration, setDuration] = useState(0);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ function CourseItemDuration({ slug }: CourseItemDurationProps) {
 
   return (
     <div className="flex items-center gap-2">
-      <IconClock className="size-4" />
+      <IconClock className={`size-4 ${classIcon}`} />
       <span>{formatMinutesToHour(duration)}</span>
     </div>
   );

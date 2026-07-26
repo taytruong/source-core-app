@@ -28,10 +28,6 @@ const CourseItem = ({
       icon: <IconEye className="size-4" />,
       text: 'Views',
     },
-    // {
-    //   title: data.rating.length,
-    //   icon: <IconStar className="size-4" />,
-    // },
     {
       title: data?.lectures.length,
       icon: <FileTextIcon className="size-4" />,

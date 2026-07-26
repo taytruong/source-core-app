@@ -41,6 +41,7 @@ async function CourseLessonContainer({
           <CourseLessonPlayer
             courseId={courseId}
             courseSlug={courseSlug}
+            foundCourse={foundCourse}
             lessonId={lessonId}
           />
         </Suspense>
