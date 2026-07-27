@@ -14,6 +14,7 @@ import {
 import {
   CreateOrderParams,
   FilterQueryParams,
+  getSortOption,
   OrderItemData,
   UpdateOrderParams,
   UserItemData,
@@ -29,7 +30,7 @@ export async function fetchOrder(
 ): Promise<FetchOrdersResponse | undefined> {
   try {
     connectToDatabase();
-    const { limit = 10, page = 1, search, status } = params;
+    const { limit = 10, page = 1, search, sort, status } = params;
     const skip = (page - 1) * limit;
     const query: QueryFilter<typeof CourseModel> = {};
 
@@ -54,7 +55,7 @@ export async function fetchOrder(
         path: 'coupon',
         select: 'code',
       })
-      .sort({ create_at: -1 })
+      .sort(getSortOption(sort))
       .skip(skip)
       .limit(limit);
 

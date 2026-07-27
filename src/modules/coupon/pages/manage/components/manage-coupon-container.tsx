@@ -6,6 +6,7 @@ import {
   BadgeStatus,
   FilterSelectStatus,
   Pagination,
+  SortableTable,
   TableAction,
   TableActionItem,
 } from '@/src/shared/components/common';
@@ -68,7 +69,7 @@ function ManageCouponContainer({
             <TableHead>Coupon Code</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Discount</TableHead>
-            <TableHead>Create Date</TableHead>
+            <SortableTable field="create">Create Date</SortableTable>
             <TableHead>Usage</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Actions</TableHead>

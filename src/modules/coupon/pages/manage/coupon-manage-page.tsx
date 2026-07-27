@@ -12,6 +12,7 @@ async function CouponManagePage({ searchParams }: QuerySearchParams) {
     limit: ITEM_PER_PAGE,
     search: searchParams.search,
     active: searchParams.active,
+    sort: searchParams.sort,
   });
 
   if (!data) return null;

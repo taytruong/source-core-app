@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 import { RatingStatus } from '@/src/shared/constants';
 import { connectToDatabase } from '@/src/shared/lib';
 import { CourseModel, RatingModel } from '@/src/shared/schemas';
-import { FilterQueryParams } from '@/src/shared/types';
+import { FilterQueryParams, getSortOption } from '@/src/shared/types';
 import {
   CreateRatingParams,
   RatingItemData,
@@ -83,7 +83,7 @@ export async function fetchRatings(
 ): Promise<{ ratings: RatingItemData[]; total: number } | undefined> {
   try {
     connectToDatabase();
-    const { limit = 10, page = 1, search, status } = params;
+    const { limit = 10, page = 1, search, sort, status } = params;
     const skip = (page - 1) * limit;
     const query: QueryFilter<typeof RatingModel> = {};
 
@@ -105,7 +105,7 @@ export async function fetchRatings(
       })
       .skip(skip)
       .limit(limit)
-      .sort({ create_at: -1 });
+      .sort(getSortOption(sort));
 
     const total = await RatingModel.countDocuments(query);
 

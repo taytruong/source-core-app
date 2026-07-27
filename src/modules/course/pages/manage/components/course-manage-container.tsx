@@ -10,6 +10,7 @@ import {
   FilterSelectStatus,
   HoverTooltip,
   Pagination,
+  SortableTable,
   TableAction,
   TableActionItem,
 } from '@/src/shared/components/common';
@@ -123,9 +124,9 @@ const CourseManageContainer = ({
         <TableHeader>
           <TableRow>
             <TableHead>No.</TableHead>
-            <TableHead>Information Course</TableHead>
-            <TableHead>Price ($)</TableHead>
-            <TableHead>Create Date</TableHead>
+            <SortableTable field="title">Information Course</SortableTable>
+            <SortableTable field="price">Price ($)</SortableTable>
+            <SortableTable field="create">Create Date</SortableTable>
             <TableHead>Status</TableHead>
             <TableHead>Settings</TableHead>
           </TableRow>
@@ -150,9 +151,13 @@ const CourseManageContainer = ({
                         src={courses.image}
                         width={80}
                       />
-                      <h3 className="text-sm font-semibold whitespace-nowrap lg:text-base">
+                      <Link
+                        className="hover:text-primary text-sm font-semibold whitespace-nowrap transition-colors duration-200 lg:text-base"
+                        href={`/course/${courses.slug}`}
+                        target="_blank"
+                      >
                         {courses.title}
-                      </h3>
+                      </Link>
                     </div>
                   </TableCell>
                   <TableCell>

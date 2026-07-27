@@ -8,7 +8,26 @@ export interface FilterQueryParams {
   sort?: SortQueryParams;
 }
 
-export type SortQueryParams = 'recent' | 'oldest';
+export type SortQueryParams =
+  | 'recent'
+  | 'oldest'
+  | 'price_asc'
+  | 'price_desc'
+  | 'title_asc'
+  | 'title_desc';
+
+export const SORT_MAP: Record<SortQueryParams, Record<string, 1 | -1>> = {
+  recent: { create_at: -1 },
+  oldest: { create_at: 1 },
+  price_asc: { price: 1 },
+  price_desc: { price: -1 },
+  title_asc: { title: 1 },
+  title_desc: { title: -1 },
+};
+
+export const getSortOption = (sort?: SortQueryParams) =>
+  SORT_MAP[sort ?? 'recent'];
+
 export type BadgeStatusVariant = 'default' | 'success' | 'warning' | 'danger';
 
 export interface QuerySearchParams {

@@ -1,4 +1,4 @@
-import { OrderPaymentPage } from '@/src/modules/order/pages/order-manage-page copy';
+import { OrderPaymentPage } from '@/src/modules/order/pages/order-payment-page';
 import { Header } from '@/src/shared/components/layout';
 
 interface OrderDetailsPageRootProps {

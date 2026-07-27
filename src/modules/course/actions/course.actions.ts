@@ -18,6 +18,7 @@ import {
   CourseLessonDuration,
   CreateCourseParams,
   FilterQueryParams,
+  getSortOption,
   UpdateCourseParams,
 } from '@/src/shared/types';
 
@@ -66,7 +67,7 @@ export async function fetchCourse(
     const courses = await CourseModel.find(query)
       .skip(skip)
       .limit(limit)
-      .sort({ create_at: sort === 'recent' ? -1 : 1 });
+      .sort(getSortOption(sort));
 
     const total = await CourseModel.countDocuments(query);
 

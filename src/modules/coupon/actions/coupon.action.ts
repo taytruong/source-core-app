@@ -5,7 +5,7 @@ import { revalidatePath } from 'next/cache';
 
 import { connectToDatabase } from '@/src/shared/lib';
 import { CouponModel } from '@/src/shared/schemas';
-import { FilterQueryParams } from '@/src/shared/types';
+import { FilterQueryParams, getSortOption } from '@/src/shared/types';
 import {
   CouponItemData,
   CreateCouponParams,
@@ -60,7 +60,7 @@ export async function getCoupons(params: FilterQueryParams): Promise<
 > {
   try {
     connectToDatabase();
-    const { active: isActive, limit = 10, page = 1, search } = params;
+    const { active: isActive, limit = 10, page = 1, search, sort } = params;
     const skip = (page - 1) * limit;
     const query: QueryFilter<typeof CouponModel> = {};
 
@@ -74,7 +74,7 @@ export async function getCoupons(params: FilterQueryParams): Promise<
     const coupons = await CouponModel.find(query)
       .skip(skip)
       .limit(limit)
-      .sort({ create_at: -1 });
+      .sort(getSortOption(sort));
 
     const total = await CouponModel.countDocuments(query);
 

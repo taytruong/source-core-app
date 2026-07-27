@@ -9,6 +9,7 @@ import {
   BadgeStatus,
   FilterSelectStatus,
   Pagination,
+  SortableTable,
   TableAction,
   TableActionItem,
 } from '@/src/shared/components/common';
@@ -93,7 +94,7 @@ const RatingManageContainer = ({
             <TableHead>No.</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>Course</TableHead>
-            <TableHead>Create Date</TableHead>
+            <SortableTable field="create">Create Date</SortableTable>
             <TableHead>User</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Actions</TableHead>
@@ -128,7 +129,7 @@ const RatingManageContainer = ({
                   </TableCell>
                   <TableCell>
                     <Link
-                      className="hover:text-primary font-semibold transition-all"
+                      className="hover:text-primary text-sm font-semibold whitespace-nowrap transition-colors duration-200 lg:text-base"
                       href={`/course/${rating.course.slug}`}
                       target="_blank"
                     >

@@ -1,4 +1,6 @@
 'use client';
+
+import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 
 import { useQueryString } from '@/src/shared/hooks';
@@ -7,31 +9,32 @@ const CommentSorting = () => {
   const params = useSearchParams();
   const sortValue = params.get('sort');
   const { createQueryString } = useQueryString();
+
+  const isActive = sortValue === 'recent' || sortValue === 'oldest';
+  const isDesc = sortValue === 'recent';
+
   const handleSortComment = () => {
     createQueryString('sort', sortValue === 'recent' ? 'oldest' : 'recent');
   };
 
   return (
     <button
-      className="flex cursor-pointer items-center gap-2 font-medium"
       type="button"
+      className={`flex cursor-pointer items-center gap-2 font-medium ${
+        isActive ? 'text-primary' : ''
+      }`}
       onClick={handleSortComment}
     >
-      {sortValue === 'recent' ? 'Most recent' : 'Oldest'}
-      <svg
-        className="size-4"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={1.5}
-        viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      {isDesc ? 'Most recent' : 'Oldest'}
+      {isActive ? (
+        isDesc ? (
+          <ArrowDown className="size-4" />
+        ) : (
+          <ArrowUp className="size-4" />
+        )
+      ) : (
+        <ArrowUpDown className="size-4 opacity-40" />
+      )}
     </button>
   );
 };

@@ -12,6 +12,7 @@ async function CourseManagePage({ searchParams }: QuerySearchParams) {
     limit: ITEM_PER_PAGE,
     search: searchParams.search,
     status: searchParams.status,
+    sort: searchParams.sort,
   });
 
   return (

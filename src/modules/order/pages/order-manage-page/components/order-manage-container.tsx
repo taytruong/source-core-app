@@ -9,6 +9,7 @@ import {
   FilterSelectStatus,
   HoverTooltip,
   Pagination,
+  SortableTable,
 } from '@/src/shared/components/common';
 import { IconCancel, IconCheck } from '@/src/shared/components/icons';
 import { Input } from '@/src/shared/components/ui/input';
@@ -97,9 +98,11 @@ const OrderManageContainer = ({
             <TableHead>No.</TableHead>
             <TableHead>Order Code</TableHead>
             <TableHead>Course</TableHead>
-            <TableHead>Create Date</TableHead>
+            <SortableTable field="create">Create Date</SortableTable>
             <TableHead>User</TableHead>
             <TableHead>Amount</TableHead>
+            <TableHead>Discount</TableHead>
+            <TableHead>Total</TableHead>
             <TableHead>Discount Code</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Actions</TableHead>
@@ -126,16 +129,16 @@ const OrderManageContainer = ({
                     </h4>
                   </TableCell>
                   <TableCell>{order.user?.name}</TableCell>
+                  <TableCell>{order.amount.toLocaleString('us-US')}</TableCell>
                   <TableCell>
-                    <div className="flex flex-col gap-2">
-                      <span>{order.amount.toLocaleString('us-US')}</span>
-                      {order.discount > 0 && (
-                        <span>{order.discount.toLocaleString('us-US')}</span>
-                      )}
-                      <strong className={orderStatusItem?.className}>
-                        {order.total.toLocaleString('us-US')}
-                      </strong>
-                    </div>
+                    {order.discount > 0
+                      ? order.discount.toLocaleString('us-US')
+                      : '-'}
+                  </TableCell>
+                  <TableCell>
+                    <strong className={orderStatusItem?.className}>
+                      {order.total.toLocaleString('us-US')}
+                    </strong>
                   </TableCell>
                   <TableCell>
                     <strong>{order.coupon?.code || ''}</strong>
