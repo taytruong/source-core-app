@@ -26,3 +26,9 @@ export const orderStatus: {
     variant: 'danger',
   },
 ];
+
+export const orderStatusColors: Record<string, string> = {
+  [OrderStatus.COMPLETE]: '#1dc259',
+  [OrderStatus.PENDING]: '#cf8938',
+  [OrderStatus.CANCEL]: '#DC2626',
+};

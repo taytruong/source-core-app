@@ -61,3 +61,9 @@ export const sortOptions: { value: string; title: string }[] = [
   { value: 'recent', title: 'Most recent' },
   { value: 'oldest', title: 'Oldest' },
 ];
+
+export const courseStatusColors: Record<string, string> = {
+  [CourseStatus.APPROVED]: '#1dc259',
+  [CourseStatus.PENDING]: '#cf8938',
+  [CourseStatus.REJECTED]: '#DC2626',
+};

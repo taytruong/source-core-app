@@ -16,7 +16,9 @@ import {
 } from '@/src/shared/schemas';
 import {
   CourseLessonDuration,
+  CourseStatsOverview,
   CreateCourseParams,
+  DashboardOverview,
   FilterQueryParams,
   getSortOption,
   UpdateCourseParams,
@@ -27,32 +29,6 @@ import { CourseItemData } from '../types';
 interface FetchCoursesResponse {
   courses?: CourseItemData[];
   total?: number;
-}
-
-interface DashboardOverview {
-  cardItems: {
-    totalCourses: number;
-    totalCompleted: number;
-    totalPending: number;
-    totalHours: number;
-  };
-  chartData: {
-    month: string;
-    hours: number;
-  }[];
-}
-
-interface CourseStatsOverview {
-  cardItems: {
-    totalCourses: number;
-    totalViews: number;
-    totalRevenue: number;
-    totalPending: number;
-  };
-  chartData: {
-    status: CourseStatus;
-    count: number;
-  }[];
 }
 
 export async function fetchCourse(

@@ -27,3 +27,16 @@ export interface UpdateOrderParams {
   orderId: string;
   status: OrderStatus;
 }
+
+export interface OrderStatsOverview {
+  cardItems: {
+    totalOrders: number;
+    totalRevenue: number;
+    totalUsers: number;
+    totalPending: number;
+  };
+  chartData: {
+    status: OrderStatus;
+    count: number;
+  }[];
+}

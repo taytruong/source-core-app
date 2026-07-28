@@ -1,3 +1,4 @@
+import { CourseStatus } from '../constants';
 import { SortQueryParams } from './common';
 import { CourseModelProps, LessonModelProps } from './models';
 
@@ -46,3 +47,29 @@ export type UpdateCourseParams = {
   updateData: Partial<CourseModelProps>; // Partial : from must to option
   path?: string;
 };
+
+export interface DashboardOverview {
+  cardItems: {
+    totalCourses: number;
+    totalCompleted: number;
+    totalPending: number;
+    totalHours: number;
+  };
+  chartData: {
+    month: string;
+    hours: number;
+  }[];
+}
+
+export interface CourseStatsOverview {
+  cardItems: {
+    totalCourses: number;
+    totalViews: number;
+    totalRevenue: number;
+    totalPending: number;
+  };
+  chartData: {
+    status: CourseStatus;
+    count: number;
+  }[];
+}

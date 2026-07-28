@@ -16,6 +16,7 @@ import {
   FilterQueryParams,
   getSortOption,
   OrderItemData,
+  OrderStatsOverview,
   UpdateOrderParams,
   UserItemData,
 } from '@/src/shared/types';
@@ -184,5 +185,49 @@ export async function getPendingOrderByUserAndCourse({
     console.log('🚀 ~ getPendingOrderByUserAndCourse ~ error:', error);
 
     return null;
+  }
+}
+
+export async function fetchOrderStats(): Promise<
+  OrderStatsOverview | undefined
+> {
+  try {
+    connectToDatabase();
+
+    const totalOrders = await OrderModel.countDocuments();
+
+    const revenueResult = await OrderModel.aggregate([
+      { $match: { status: OrderStatus.COMPLETE } },
+      { $group: { _id: null, totalRevenue: { $sum: '$total' } } },
+    ]);
+    const totalRevenue = revenueResult[0]?.totalRevenue ?? 0;
+
+    const uniqueBuyers = await OrderModel.distinct('user');
+    const totalUsers = uniqueBuyers.length;
+
+    const statusBreakdown = await OrderModel.aggregate([
+      { $group: { _id: '$status', count: { $sum: 1 } } },
+    ]);
+
+    const totalPending =
+      statusBreakdown.find((item) => item._id === OrderStatus.PENDING)?.count ??
+      0;
+
+    const chartData = statusBreakdown.map((item) => ({
+      status: item._id,
+      count: item.count,
+    }));
+
+    return {
+      cardItems: {
+        totalOrders,
+        totalRevenue,
+        totalUsers,
+        totalPending,
+      },
+      chartData,
+    };
+  } catch (error) {
+    console.log('🚀 ~ fetchOrderStats ~ error:', error);
   }
 }

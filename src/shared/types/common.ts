@@ -1,3 +1,5 @@
+import { LucideIcon } from 'lucide-react';
+
 export interface FilterQueryParams {
   page?: number;
   limit?: number;
@@ -47,4 +49,14 @@ export interface MenuItemProps {
 export interface StorageLesson {
   course: string;
   lesson: string;
+}
+
+export interface StatCardConfig {
+  key: string;
+  title: string;
+  icon: LucideIcon;
+  iconBg: string;
+  iconColor: string;
+  formatter?: (value: number) => string | number;
+  subtext?: string | ((value: number) => string);
 }

@@ -12,6 +12,38 @@ import {
 import { ChartItem } from './stats-section';
 
 const FALLBACK_COLOR = '#94A3B8';
+const RADIAN = Math.PI / 180;
+
+// Custom label render
+const renderCustomizedLabel = ({
+  cx,
+  cy,
+  innerRadius,
+  midAngle,
+  outerRadius,
+  percent,
+}: any) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  // Hide label if the percentage is less than 5%
+  if (percent < 0.05) return null;
+
+  return (
+    <text
+      dominantBaseline="central"
+      fill="white"
+      fontSize={12}
+      fontWeight={600}
+      textAnchor="middle"
+      x={x}
+      y={y}
+    >
+      {`${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
+};
 
 export interface DonutChartProps {
   title: string;
@@ -23,8 +55,8 @@ export interface DonutChartProps {
 function DonutChart({ colors, data, isLoading, title }: DonutChartProps) {
   if (isLoading) {
     return (
-      <div className="bg-item flex h-68 items-center justify-center rounded-lg p-4 shadow-sm">
-        <div className="size-38 animate-pulse rounded-full bg-gray-200" />
+      <div className="bg-item flex h-70 items-center justify-center rounded-lg p-4 shadow-sm">
+        <div className="size-40 animate-pulse rounded-full bg-gray-200" />
       </div>
     );
   }
@@ -33,17 +65,18 @@ function DonutChart({ colors, data, isLoading, title }: DonutChartProps) {
     <div className="bg-item h-full rounded-lg p-2 shadow-sm">
       <h3 className="text-sm font-medium">{title}</h3>
       <ResponsiveContainer
-        height={220}
+        height={260}
         width="100%"
       >
         <PieChart>
           <Pie
             data={data}
             dataKey="value"
-            innerRadius={65}
+            innerRadius={0}
+            label={renderCustomizedLabel}
+            labelLine={false}
             nameKey="label"
-            outerRadius={95}
-            paddingAngle={3}
+            outerRadius={110}
             stroke="none"
           >
             {data?.map((entry) => (
@@ -72,6 +105,7 @@ function DonutChart({ colors, data, isLoading, title }: DonutChartProps) {
               border: '1px solid #e0e0e0',
               boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)',
               fontWeight: 600,
+              fontSize: 12,
             }}
           />
         </PieChart>

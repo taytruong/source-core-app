@@ -33,6 +33,7 @@ import { OrderItemData } from '@/src/shared/types';
 
 import { updateOrder } from '../../../actions';
 import OrderAction from './order-action';
+import OrderStatsSection from './order-stats-section';
 
 export interface OrderManageContainerProps {
   orders?: OrderItemData[];
@@ -76,8 +77,9 @@ const OrderManageContainer = ({
   };
 
   return (
-    <>
-      <div className="mb-10 flex flex-col justify-start gap-5 lg:flex-row lg:items-center">
+    <div className="flex flex-col gap-10">
+      <OrderStatsSection />
+      <div className="flex flex-col justify-start gap-5 lg:flex-row lg:items-center">
         <div className="flex gap-3">
           <div className="w-full lg:w-125">
             <Input
@@ -195,7 +197,7 @@ const OrderManageContainer = ({
         total={total}
         totalPages={totalPages}
       />
-    </>
+    </div>
   );
 };
 

@@ -1,17 +1,8 @@
 'use client';
-import { LucideIcon } from 'lucide-react';
 
+import { StatCardConfig } from '../../types';
 import CardItem from './card-item';
 import DonutChart from './donut-chart';
-
-export interface StatCardConfig {
-  key: string;
-  title: string;
-  icon: LucideIcon;
-  iconBg: string;
-  iconColor: string;
-  formatter?: (value: number) => string | number;
-}
 
 export interface ChartItem {
   label: string;
@@ -47,6 +38,11 @@ function StatsSection({
             ? config.formatter(rawValue)
             : rawValue;
 
+          const subtext =
+            typeof config.subtext === 'function'
+              ? config.subtext(rawValue)
+              : config.subtext;
+
           return (
             <CardItem
               key={config.key}
@@ -54,6 +50,7 @@ function StatsSection({
               iconBg={config.iconBg}
               iconColor={config.iconColor}
               isLoading={isLoading}
+              subText={subtext}
               title={config.title}
               value={value}
             />
