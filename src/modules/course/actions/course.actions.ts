@@ -42,6 +42,19 @@ interface DashboardOverview {
   }[];
 }
 
+interface CourseStatsOverview {
+  cardItems: {
+    totalCourses: number;
+    totalViews: number;
+    totalRevenue: number;
+    totalPending: number;
+  };
+  chartData: {
+    status: CourseStatus;
+    count: number;
+  }[];
+}
+
 export async function fetchCourse(
   params: FilterQueryParams,
 ): Promise<FetchCoursesResponse | undefined> {
@@ -396,5 +409,53 @@ export async function fetchDashboardOverview({
     };
   } catch (error) {
     console.log('🚀 ~ fetchDashboardOverview ~ error:', error);
+  }
+}
+
+export async function fetchCourseStats(): Promise<
+  CourseStatsOverview | undefined
+> {
+  try {
+    connectToDatabase();
+
+    const totalCourses = await CourseModel.countDocuments({ _destroy: false });
+
+    const totalViewsResult = await CourseModel.aggregate([
+      { $match: { _destroy: false } },
+      { $group: { _id: null, totalViews: { $sum: '$views' } } },
+    ]);
+    const totalViews = totalViewsResult[0]?.totalViews ?? 0;
+
+    const revenueResult = await CourseModel.aggregate([
+      { $match: { _destroy: false, status: CourseStatus.APPROVED } },
+      { $group: { _id: null, totalRevenue: { $sum: '$price' } } },
+    ]);
+    const totalRevenue = revenueResult[0]?.totalRevenue ?? 0;
+
+    const statusBreakdown = await CourseModel.aggregate([
+      { $match: { _destroy: false } },
+      { $group: { _id: '$status', count: { $sum: 1 } } },
+    ]);
+
+    const totalPending =
+      statusBreakdown.find((item) => item._id === CourseStatus.PENDING)
+        ?.count ?? 0;
+
+    const chartData = statusBreakdown.map((item) => ({
+      status: item._id,
+      count: item.count,
+    }));
+
+    return {
+      cardItems: {
+        totalCourses,
+        totalViews,
+        totalRevenue,
+        totalPending,
+      },
+      chartData,
+    };
+  } catch (error) {
+    console.log('🚀 ~ fetchCourseStats ~ error:', error);
   }
 }

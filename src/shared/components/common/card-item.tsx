@@ -2,7 +2,7 @@ import { LucideIcon } from 'lucide-react';
 
 interface CardItemProps {
   title: string;
-  value: number;
+  value: number | string;
   icon: LucideIcon;
   iconBg: string;
   iconColor: string;

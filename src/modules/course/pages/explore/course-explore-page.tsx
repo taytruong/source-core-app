@@ -1,6 +1,6 @@
 'use client';
 
-import { ITEM_PER_PAGE } from '@/src/shared/constants';
+import { CourseStatus, ITEM_PER_PAGE } from '@/src/shared/constants';
 import { QuerySearchParams } from '@/src/shared/types';
 
 import { useQueryFetchCourses } from '../../libs/react-query';
@@ -13,6 +13,7 @@ function CourseExplorePage({ searchParams }: QuerySearchParams) {
     limit: ITEM_PER_PAGE,
     search: searchParams.search,
     sort: searchParams.sort,
+    status: CourseStatus.APPROVED,
   });
 
   return (

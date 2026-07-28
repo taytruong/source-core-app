@@ -33,6 +33,7 @@ import { useQueryString } from '@/src/shared/hooks';
 
 import { updateCourse } from '../../../actions';
 import { CourseItemData } from '../../../types';
+import CourseStatsSection from './course-stats-section';
 
 interface CourseManageContainerProps {
   courses?: CourseItemData[];
@@ -98,8 +99,9 @@ const CourseManageContainer = ({
   };
 
   return (
-    <>
-      <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
+    <div className="flex flex-col gap-10">
+      <CourseStatsSection />
+      <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
         <div className="flex gap-3">
           <div className="w-full lg:w-125">
             <Input
@@ -217,7 +219,7 @@ const CourseManageContainer = ({
         total={total}
         totalPages={totalPages}
       />
-    </>
+    </div>
   );
 };
 
