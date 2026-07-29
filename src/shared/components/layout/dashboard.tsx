@@ -75,6 +75,7 @@ function Dashboard(_props: DashboardProps) {
             key={item.title}
             {...item}
             isLoading={isLoading}
+            type="dashboard"
           />
         ))}
       </div>
