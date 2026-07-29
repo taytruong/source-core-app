@@ -22,6 +22,7 @@ const renderCustomizedLabel = ({
   midAngle,
   outerRadius,
   percent,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: any) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);

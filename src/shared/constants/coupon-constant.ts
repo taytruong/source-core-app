@@ -26,3 +26,8 @@ export const couponStatus = [
     className: 'text-orange-500',
   },
 ];
+
+export const couponStatusColors = {
+  Active: '#16A34A', // green - Active coupon
+  Inactive: '#EA580C', // orange - Inactive coupon
+} as const;

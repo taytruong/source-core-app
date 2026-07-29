@@ -8,6 +8,7 @@ import { CouponModel } from '@/src/shared/schemas';
 import { FilterQueryParams, getSortOption } from '@/src/shared/types';
 import {
   CouponItemData,
+  CouponStatsOverview,
   CreateCouponParams,
   UpdateCouponParams,
 } from '@/src/shared/types/coupon.type';
@@ -146,5 +147,47 @@ export async function deleteCoupon(code: string) {
     revalidatePath('/manage/coupon');
   } catch (error) {
     console.log('🚀 ~ createCoupon ~ error:', error);
+  }
+}
+
+export async function fetchCouponStats(): Promise<
+  CouponStatsOverview | undefined
+> {
+  try {
+    connectToDatabase();
+
+    const totalCoupons = await CouponModel.countDocuments();
+
+    const usedResult = await CouponModel.aggregate([
+      { $group: { _id: null, totalUsed: { $sum: '$used' } } },
+    ]);
+    const totalUsed = usedResult[0]?.totalUsed ?? 0;
+
+    const usedZero = await CouponModel.countDocuments({ used: 0 });
+
+    const statusBreakdown = await CouponModel.aggregate([
+      { $group: { _id: '$active', count: { $sum: 1 } } },
+    ]);
+
+    const inactiveCoupons =
+      statusBreakdown.find((item) => item._id === false)?.count ?? 0;
+
+    const chartData = statusBreakdown.map((item) => ({
+      status: item._id ? 1 : 0,
+      count: item.count,
+      statusLabel: item._id ? 'Active' : 'Inactive',
+    }));
+
+    return {
+      cardItems: {
+        totalCoupons,
+        totalUsed,
+        usedZero,
+        inactiveCoupons,
+      },
+      chartData,
+    };
+  } catch (error) {
+    console.log('🚀 ~ fetchCouponStats ~ error:', error);
   }
 }

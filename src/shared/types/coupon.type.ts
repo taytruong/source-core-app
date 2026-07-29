@@ -23,3 +23,17 @@ export type UpdateCouponParams = {
 export interface CouponItemData extends Omit<CouponModelProps, 'courses'> {
   courses: CourseItemData[];
 }
+
+export interface CouponStatsOverview {
+  cardItems: {
+    totalCoupons: number;
+    totalUsed: number;
+    usedZero: number;
+    inactiveCoupons: number;
+  };
+  chartData: {
+    status: number;
+    count: number;
+    statusLabel: string;
+  }[];
+}

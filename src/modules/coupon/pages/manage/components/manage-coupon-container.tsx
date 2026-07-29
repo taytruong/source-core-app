@@ -23,6 +23,7 @@ import { allValue, couponStatus, CouponType } from '@/src/shared/constants';
 import { useQueryString } from '@/src/shared/hooks';
 import { CouponItemData } from '@/src/shared/types';
 
+import CouponStatsSection from './coupon-stats-section';
 import DeleteCouponModal from './delete-coupon-modal';
 
 export interface ManageCouponContainerProps {
@@ -39,8 +40,9 @@ function ManageCouponContainer({
   const { handleChangeQs, handleSearchData } = useQueryString();
 
   return (
-    <>
-      <div className="mb-10 flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
+    <div className="flex flex-col gap-10">
+      <CouponStatsSection />
+      <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
         <div className="flex gap-3">
           <div className="w-full lg:w-125">
             <Input
@@ -133,7 +135,7 @@ function ManageCouponContainer({
         total={total}
         totalPages={totalPages}
       />
-    </>
+    </div>
   );
 }
 
