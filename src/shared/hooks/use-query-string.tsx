@@ -38,6 +38,10 @@ export const useQueryString = () => {
     createQueryString('level', level);
   };
 
+  const handleSelectRole = <T extends string>(role: T | string) => {
+    createQueryString('role', role);
+  };
+
   const handleChangePage = (page: number) => {
     createQueryString('page', `${page}`);
   };
@@ -56,5 +60,6 @@ export const useQueryString = () => {
     currentPage,
     handleChangeQs,
     handleSelectLevel,
+    handleSelectRole,
   };
 };

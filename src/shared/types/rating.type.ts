@@ -1,4 +1,5 @@
 import { RatingStatus } from '../constants';
+import { UserModelProps } from './models';
 
 export type CreateRatingParams = {
   rate: number;
@@ -20,4 +21,16 @@ export type RatingItemData = {
     name: string;
   };
   status: RatingStatus;
+};
+
+export type UpdateRoleParams = {
+  userId: string;
+  updateData: Partial<UserModelProps>;
+  path?: string;
+};
+
+export type UpdateStatusUserParams = {
+  userId: string;
+  updateData: Partial<UserModelProps>; // Partial : from must to option
+  path?: string;
 };

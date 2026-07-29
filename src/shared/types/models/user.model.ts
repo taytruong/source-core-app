@@ -13,4 +13,5 @@ export interface UserModelProps extends Document {
   status: UserStatus;
   role: UserRole;
   create_at: Date;
+  _destroy: boolean;
 }

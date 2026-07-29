@@ -10,7 +10,16 @@ import {
   LessonModel,
   UserModel,
 } from '@/src/shared/schemas';
-import { CreateUserParams, UserModelProps } from '@/src/shared/types';
+import {
+  CreateUserParams,
+  FilterQueryParams,
+  getSortOption,
+  UpdateRoleParams,
+  UpdateStatusUserParams,
+  UserModelProps,
+} from '@/src/shared/types';
+import { QueryFilter } from 'mongoose';
+import { revalidatePath } from 'next/cache';
 
 export async function createUser(
   params: CreateUserParams,
@@ -71,5 +80,91 @@ export async function getUserCourses(
     return courses;
   } catch (error) {
     console.log(error);
+  }
+}
+
+export async function fetchAllUsers(
+  params: FilterQueryParams,
+): Promise<{ users: UserModelProps[]; total: number } | undefined> {
+  try {
+    connectToDatabase();
+    const { limit = 10, page = 1, search, sort, status, role } = params;
+    const skip = (page - 1) * limit;
+    const query: QueryFilter<typeof UserModel> = {};
+
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } },
+        { username: { $regex: search, $options: 'i' } },
+      ];
+    }
+
+    if (status) {
+      query.status = status;
+    }
+    if (role) {
+      query.role = role;
+    }
+
+    const users = await UserModel.find(query)
+      .skip(skip)
+      .limit(limit)
+      .sort(getSortOption(sort));
+
+    const total = await UserModel.countDocuments(query);
+    return {
+      users: JSON.parse(JSON.stringify(users)),
+      total,
+    };
+  } catch (error) {
+    console.log('🚀 ~ fetchAllUsers ~ error:', error);
+  }
+}
+
+export async function updateRole(params: UpdateRoleParams) {
+  try {
+    connectToDatabase();
+    await UserModel.findOneAndUpdate(
+      { _id: params.userId },
+      { role: params.updateData.role },
+      {
+        new: true,
+      },
+    );
+
+    revalidatePath(params.path || '/');
+
+    return {
+      success: true,
+      message: 'Update role successfully',
+    };
+  } catch (error) {
+    console.log('🚀 ~ updateRole ~ error:', error);
+  }
+}
+
+export async function updateStatusUser(params: UpdateStatusUserParams) {
+  try {
+    connectToDatabase();
+    const findCourse = await UserModel.findOne({ _id: params.userId });
+
+    if (!findCourse) return;
+    await UserModel.findOneAndUpdate(
+      { _id: params.userId },
+      params.updateData,
+      {
+        new: true,
+      },
+    );
+
+    revalidatePath(params.path || '/');
+
+    return {
+      success: true,
+      message: 'Update user successfully',
+    };
+  } catch (error) {
+    console.log('🚀 ~ updateUser ~ error:', error);
   }
 }

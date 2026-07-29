@@ -6,3 +6,4 @@ export * from './menu-constant';
 export * from './order-constant';
 export * from './rating-constant';
 export * from './react-query.constant';
+export * from './user-constant';

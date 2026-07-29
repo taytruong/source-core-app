@@ -8,6 +8,7 @@ export interface FilterQueryParams {
   active?: boolean;
   level?: string;
   sort?: SortQueryParams;
+  role?: string;
 }
 
 export type SortQueryParams =
