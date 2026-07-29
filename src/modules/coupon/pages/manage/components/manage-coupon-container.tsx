@@ -43,7 +43,7 @@ function ManageCouponContainer({
     <div className="flex flex-col gap-10">
       <CouponStatsSection />
       <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
-        <div className="flex gap-3">
+        <div className="flex gap-5">
           <div className="w-full lg:w-125">
             <Input
               placeholder="Search coupon code ..."

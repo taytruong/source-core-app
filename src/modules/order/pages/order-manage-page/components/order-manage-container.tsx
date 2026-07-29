@@ -80,7 +80,7 @@ const OrderManageContainer = ({
     <div className="flex flex-col gap-10">
       <OrderStatsSection />
       <div className="flex flex-col justify-start gap-5 lg:flex-row lg:items-center">
-        <div className="flex gap-3">
+        <div className="flex gap-5">
           <div className="w-full lg:w-125">
             <Input
               placeholder="Search orders code ..."

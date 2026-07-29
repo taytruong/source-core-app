@@ -36,7 +36,7 @@ function CourseListSuggestion({
   return (
     <>
       <div className="flex flex-col gap-5">
-        <div className="flex gap-3">
+        <div className="flex gap-5">
           <div className="w-full lg:w-125">
             <Input
               placeholder="Search course ..."

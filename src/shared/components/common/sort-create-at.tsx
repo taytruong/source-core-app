@@ -1,4 +1,5 @@
 'use client';
+import { ArrowUpDownIcon } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 
 import { sortOptions } from '../../constants';
@@ -24,29 +25,34 @@ function SortCreateAt(_props: SortCreateAtProps) {
   };
 
   return (
-    <Select
-      defaultValue={sortValue || 'recent'}
-      onValueChange={handleSelectSort}
-    >
-      <SelectTrigger
-        className="w-full max-w-48"
-        size="lg"
+    <div className="flex w-48 items-center gap-2">
+      <div className="flex items-center gap-2">
+        <ArrowUpDownIcon size={16} />:
+      </div>
+      <Select
+        defaultValue={sortValue || 'recent'}
+        onValueChange={handleSelectSort}
       >
-        <SelectValue placeholder="Sort by" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          {sortOptions.map((option) => (
-            <SelectItem
-              key={option.value}
-              value={option.value}
-            >
-              {option.title}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+        <SelectTrigger
+          className="w-full max-w-48"
+          size="lg"
+        >
+          <SelectValue placeholder="Sort by" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {sortOptions.map((option) => (
+              <SelectItem
+                key={option.value}
+                value={option.value}
+              >
+                {option.title}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
   );
 }
 
