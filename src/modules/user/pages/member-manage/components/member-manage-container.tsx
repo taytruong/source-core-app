@@ -1,6 +1,8 @@
 'use client';
 
 import { SearchIcon } from 'lucide-react';
+import Image from 'next/image';
+import { toast } from 'sonner';
 import Swal from 'sweetalert2';
 
 import {
@@ -29,8 +31,7 @@ import {
 } from '@/src/shared/constants';
 import { useQueryString } from '@/src/shared/hooks';
 import { UserModelProps } from '@/src/shared/types';
-import Image from 'next/image';
-import { toast } from 'sonner';
+
 import { updateRole, updateStatusUser } from '../../../actions';
 
 interface MemberManageContainerProps {
@@ -39,8 +40,8 @@ interface MemberManageContainerProps {
 }
 
 const MemberManageContainer = ({
-  users = [],
   total = 0,
+  users = [],
 }: MemberManageContainerProps) => {
   const totalPages = Math.ceil(total / ITEM_PER_PAGE);
   const { handleSearchData, handleSelectRole, handleSelectStatus } =
@@ -48,14 +49,18 @@ const MemberManageContainer = ({
 
   const getNextStatus = (current: UserStatus): UserStatus => {
     switch (current) {
-      case UserStatus.ACTIVE:
+      case UserStatus.ACTIVE: {
         return UserStatus.UNACTIVE;
-      case UserStatus.UNACTIVE:
+      }
+      case UserStatus.UNACTIVE: {
         return UserStatus.BANNED;
-      case UserStatus.BANNED:
+      }
+      case UserStatus.BANNED: {
         return UserStatus.ACTIVE;
-      default:
+      }
+      default: {
         return UserStatus.ACTIVE;
+      }
     }
   };
 
@@ -96,6 +101,7 @@ const MemberManageContainer = ({
       }).then(async (result) => {
         if (result.isConfirmed) {
           const nextStatus = getNextStatus(status);
+
           await updateStatusUser({
             userId,
             updateData: {
@@ -161,6 +167,7 @@ const MemberManageContainer = ({
               const statusItem = userStatusOptions.find(
                 (item) => item.value === user.status,
               );
+
               return (
                 <TableRow key={user._id.toString()}>
                   <TableCell className="w-10 p-7">{index + 1}</TableCell>
@@ -213,7 +220,7 @@ const MemberManageContainer = ({
                       {new Date(user.create_at).toLocaleDateString('vi-VI')}
                     </h4>
                   </TableCell>
-                  <TableCell></TableCell>
+                  <TableCell />
                 </TableRow>
               );
             })}

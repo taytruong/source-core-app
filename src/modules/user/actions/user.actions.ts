@@ -1,5 +1,8 @@
 'use server';
 
+import { QueryFilter } from 'mongoose';
+import { revalidatePath } from 'next/cache';
+
 import { CourseItemData } from '@/src/modules/course/types';
 import { CourseStatus } from '@/src/shared/constants';
 import { parseData } from '@/src/shared/helper';
@@ -18,8 +21,6 @@ import {
   UpdateStatusUserParams,
   UserModelProps,
 } from '@/src/shared/types';
-import { QueryFilter } from 'mongoose';
-import { revalidatePath } from 'next/cache';
 
 export async function createUser(
   params: CreateUserParams,
@@ -88,7 +89,7 @@ export async function fetchAllUsers(
 ): Promise<{ users: UserModelProps[]; total: number } | undefined> {
   try {
     connectToDatabase();
-    const { limit = 10, page = 1, search, sort, status, role } = params;
+    const { limit = 10, page = 1, role, search, sort, status } = params;
     const skip = (page - 1) * limit;
     const query: QueryFilter<typeof UserModel> = {};
 
@@ -113,6 +114,7 @@ export async function fetchAllUsers(
       .sort(getSortOption(sort));
 
     const total = await UserModel.countDocuments(query);
+
     return {
       users: JSON.parse(JSON.stringify(users)),
       total,

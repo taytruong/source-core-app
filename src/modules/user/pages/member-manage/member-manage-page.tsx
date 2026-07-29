@@ -1,5 +1,6 @@
 import { ITEM_PER_PAGE } from '@/src/shared/constants';
 import { QuerySearchParams } from '@/src/shared/types';
+
 import { fetchAllUsers } from '../../actions';
 import MemberManageContainer from './components';
 
@@ -14,12 +15,13 @@ async function MemberManagePage({ searchParams }: QuerySearchParams) {
     role: searchParams.role,
     sort: searchParams.sort,
   });
+
   if (!data) return null;
 
   return (
     <MemberManageContainer
-      users={data?.users}
       total={data?.total}
+      users={data?.users}
     />
   );
 }
