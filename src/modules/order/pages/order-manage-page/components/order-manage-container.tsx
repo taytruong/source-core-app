@@ -1,5 +1,6 @@
 'use client';
 
+import { SearchIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import Swal from 'sweetalert2';
 
@@ -83,6 +84,7 @@ const OrderManageContainer = ({
         <div className="flex gap-5">
           <div className="w-full lg:w-125">
             <Input
+              icon={<SearchIcon size={18} />}
               placeholder="Search orders code ..."
               onChange={handleSearchData}
             />

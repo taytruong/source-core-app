@@ -1,5 +1,7 @@
 'use client';
 
+import { SearchIcon } from 'lucide-react';
+
 import {
   CourseGrid,
   FilterSelectStatus,
@@ -39,6 +41,7 @@ function CourseListSuggestion({
         <div className="flex gap-5">
           <div className="w-full lg:w-125">
             <Input
+              icon={<SearchIcon size={18} />}
               placeholder="Search course ..."
               onChange={handleSearchData}
             />

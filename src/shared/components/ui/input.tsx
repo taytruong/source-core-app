@@ -1,12 +1,16 @@
-import { SearchIcon } from 'lucide-react';
 import * as React from 'react';
 
 import { cn } from '../../utils';
 
-function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
+function Input({
+  className,
+  icon,
+  type,
+  ...props
+}: React.ComponentProps<'input'> & { icon?: React.ReactNode }) {
   return (
     <div className="flex items-center gap-2">
-      <SearchIcon />:
+      {!!icon && <div className="flex items-center gap-2">{icon}:</div>}
       <input
         data-slot="input"
         type={type}

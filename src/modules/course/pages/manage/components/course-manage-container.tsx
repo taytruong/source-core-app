@@ -1,5 +1,6 @@
 'use client';
 
+import { SearchIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'sonner';
@@ -105,6 +106,7 @@ const CourseManageContainer = ({
         <div className="flex gap-3">
           <div className="w-full lg:w-125">
             <Input
+              icon={<SearchIcon size={18} />}
               placeholder="Search courses ..."
               onChange={handleSearchData}
             />

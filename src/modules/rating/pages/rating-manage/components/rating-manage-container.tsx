@@ -1,5 +1,6 @@
 'use client';
 
+import { SearchIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Swal from 'sweetalert2';
@@ -76,6 +77,7 @@ const RatingManageContainer = ({
         <div className="flex gap-5">
           <div className="w-full lg:w-125">
             <Input
+              icon={<SearchIcon size={18} />}
               placeholder="Search ratings..."
               onChange={handleSearchData}
             />

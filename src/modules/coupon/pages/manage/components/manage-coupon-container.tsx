@@ -1,5 +1,6 @@
 'use client';
 
+import { SearchIcon } from 'lucide-react';
 import Link from 'next/link';
 
 import {
@@ -46,6 +47,7 @@ function ManageCouponContainer({
         <div className="flex gap-5">
           <div className="w-full lg:w-125">
             <Input
+              icon={<SearchIcon size={18} />}
               placeholder="Search coupon code ..."
               onChange={handleSearchData}
             />
@@ -54,6 +56,7 @@ function ManageCouponContainer({
             allValue={allValue}
             options={couponStatus}
             placeholder="Select Status"
+            type="icon"
             onValueChange={(value) => handleChangeQs('active', value)}
           />
         </div>

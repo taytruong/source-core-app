@@ -23,6 +23,7 @@ interface FilterSelectStatusProps {
   placeholder?: string;
   defaultValue?: string;
   className?: string;
+  type?: 'icon';
 }
 
 function FilterSelectStatus({
