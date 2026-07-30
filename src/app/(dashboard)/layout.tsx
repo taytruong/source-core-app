@@ -20,7 +20,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
     return <PageNotFound />;
   }
 
-  if (user.status !== UserStatus.ACTIVE) {
+  if (user?.status !== UserStatus.ACTIVE) {
     return <PageNotFound />;
   }
 

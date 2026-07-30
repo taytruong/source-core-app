@@ -11,8 +11,6 @@ import {
   HoverTooltip,
   Pagination,
   SortableTable,
-  TableAction,
-  TableActionItem,
 } from '@/src/shared/components/common';
 import { Input } from '@/src/shared/components/ui/input';
 import {
@@ -34,7 +32,7 @@ import {
 import { useQueryString } from '@/src/shared/hooks';
 import { UserModelProps } from '@/src/shared/types';
 
-import { deleteUser, updateRole, updateStatusUser } from '../../../actions';
+import { updateRole, updateStatusUser } from '../../../actions';
 
 interface MemberManageContainerProps {
   users?: UserModelProps[];
@@ -92,23 +90,23 @@ const MemberManageContainer = ({
     }
   };
 
-  const handleDeleteUser = async (id: string) => {
-    try {
-      Swal.fire({
-        title: 'Are you sure you want to delete this user?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Confirm',
-        cancelButtonText: 'Cancel',
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          await deleteUser(id);
-        }
-      });
-    } catch (error) {
-      console.log('🚀 ~ handleDeleteUser ~ error:', error);
-    }
-  };
+  // const handleDeleteUser = async (id: string) => {
+  //   try {
+  //     Swal.fire({
+  //       title: 'Are you sure you want to delete this user?',
+  //       icon: 'warning',
+  //       showCancelButton: true,
+  //       confirmButtonText: 'Confirm',
+  //       cancelButtonText: 'Cancel',
+  //     }).then(async (result) => {
+  //       if (result.isConfirmed) {
+  //         await deleteUser(id);
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.log('🚀 ~ handleDeleteUser ~ error:', error);
+  //   }
+  // };
 
   const handleChangeStatus = async (userId: string, status: UserStatus) => {
     try {
@@ -174,7 +172,7 @@ const MemberManageContainer = ({
             <TableHead>Role</TableHead>
             <TableHead>Status</TableHead>
             <SortableTable field="create">Join Date</SortableTable>
-            <TableHead>Actions</TableHead>
+            {/* <TableHead>Actions</TableHead> */}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -224,7 +222,7 @@ const MemberManageContainer = ({
                     </HoverTooltip>
                   </TableCell>
                   <TableCell>
-                    {!UserRole.ADMIN && (
+                    {user.role !== UserRole.ADMIN && (
                       <HoverTooltip label="Can be changed to 'Active' / 'Inactive' / 'Banned'">
                         <button>
                           <BadgeStatus
@@ -247,9 +245,9 @@ const MemberManageContainer = ({
                       {new Date(user.create_at).toLocaleDateString('vi-VI')}
                     </h4>
                   </TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     <TableAction>
-                      {!UserRole.ADMIN && (
+                      {user.role !== UserRole.ADMIN && (
                         <TableActionItem
                           label="Delete User"
                           type="delete"
@@ -257,7 +255,7 @@ const MemberManageContainer = ({
                         />
                       )}
                     </TableAction>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               );
             })}

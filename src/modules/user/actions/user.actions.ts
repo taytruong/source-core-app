@@ -48,7 +48,9 @@ export async function getUserInfo({
 
     return parseData(findUser);
   } catch (error) {
-    console.log(error);
+    console.log('🚀 ~ getUserInfo ~ error:', error);
+
+    return null;
   }
 }
 
