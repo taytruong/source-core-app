@@ -194,6 +194,7 @@ const MemberManageContainer = ({
                     <HoverTooltip label="Can be changed to 'Admin' / 'User'">
                       <button>
                         <BadgeStatus
+                          className={roleItem?.className}
                           title={roleItem?.title}
                           onClick={() =>
                             handleChangeRole(user._id.toString(), user.role)
@@ -206,6 +207,7 @@ const MemberManageContainer = ({
                     <HoverTooltip label="Can be changed to 'Active' / 'Inactive' / 'Banned'">
                       <button>
                         <BadgeStatus
+                          className={statusItem?.className}
                           title={statusItem?.title}
                           onClick={() =>
                             handleChangeStatus(user._id.toString(), user.status)
