@@ -17,7 +17,9 @@ Please find other information guides in the `readme` folder.
 ### Authentication
 
 - Sign in / Sign up with Clerk
+- Role-based authorization
 - Protected dashboard routes
+- Admin / Student dashboard access
 
 ### Course Management
 
