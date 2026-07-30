@@ -19,7 +19,9 @@ export type SortQueryParams =
   | 'price_asc'
   | 'price_desc'
   | 'title_asc'
-  | 'title_desc';
+  | 'title_desc'
+  | 'name_asc'
+  | 'name_desc';
 
 export const SORT_MAP: Record<SortQueryParams, Record<string, 1 | -1>> = {
   recent: { create_at: -1 },
@@ -28,6 +30,8 @@ export const SORT_MAP: Record<SortQueryParams, Record<string, 1 | -1>> = {
   price_desc: { price: -1 },
   title_asc: { title: 1 },
   title_desc: { title: -1 },
+  name_asc: { name: 1 },
+  name_desc: { name: -1 },
 };
 
 export const getSortOption = (sort?: SortQueryParams) =>

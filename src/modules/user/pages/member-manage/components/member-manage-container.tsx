@@ -167,7 +167,7 @@ const MemberManageContainer = ({
         <TableHeader>
           <TableRow>
             <TableHead>No.</TableHead>
-            <SortableTable field="title">User Information</SortableTable>
+            <SortableTable field="name">User Information</SortableTable>
             <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Status</TableHead>

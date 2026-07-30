@@ -8,17 +8,18 @@ import { SortQueryParams } from '../../types';
 import { TableHead } from '../ui/table';
 
 const FIELD_SORT_MAP: Record<
-  'create' | 'price' | 'title',
+  'create' | 'price' | 'title' | 'name',
   { asc: SortQueryParams; desc: SortQueryParams }
 > = {
   create: { asc: 'oldest', desc: 'recent' },
   price: { asc: 'price_asc', desc: 'price_desc' },
   title: { asc: 'title_asc', desc: 'title_desc' },
+  name: { asc: 'name_asc', desc: 'name_desc' },
 };
 
 export interface SortableTableProps {
   children: React.ReactNode;
-  field: 'create' | 'price' | 'title';
+  field: 'create' | 'price' | 'title' | 'name';
   className?: string;
 }
 
