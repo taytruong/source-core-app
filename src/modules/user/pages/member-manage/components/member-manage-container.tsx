@@ -2,7 +2,6 @@
 
 import { SearchIcon } from 'lucide-react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import Swal from 'sweetalert2';
 
@@ -46,7 +45,6 @@ const MemberManageContainer = ({
   total = 0,
   users = [],
 }: MemberManageContainerProps) => {
-  const router = useRouter();
   const totalPages = Math.ceil(total / ITEM_PER_PAGE);
   const { handleSearchData, handleSelectRole, handleSelectStatus } =
     useQueryString();
@@ -86,7 +84,7 @@ const MemberManageContainer = ({
             },
             path: '/manage/member',
           });
-          router.refresh();
+          window.location.href = '/manage/member';
           toast.success('Role updated successfully!');
         }
       });
@@ -133,7 +131,7 @@ const MemberManageContainer = ({
             },
             path: '/manage/member',
           });
-          router.refresh();
+          window.location.href = '/manage/member';
           toast.success('Status updated successfully!');
         }
       });
