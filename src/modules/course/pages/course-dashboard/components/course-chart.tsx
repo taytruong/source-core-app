@@ -61,10 +61,12 @@ function CourseChart({
               tickMargin={7}
             />
             <YAxis
+              domain={[0, 40]}
               tick={{ fontWeight: 600, fontSize: 14 }}
               tickFormatter={(v) => `${v}H`}
               tickLine={false}
               tickMargin={5}
+              ticks={[0, 10, 20, 30, 40]}
             />
             <Legend
               align="right"
