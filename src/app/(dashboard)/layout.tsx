@@ -1,9 +1,9 @@
-import { auth } from '@clerk/nextjs/server';
+import { auth, currentUser } from '@clerk/nextjs/server';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import React from 'react';
 
-import { getUserInfo } from '@/src/modules/user/actions';
+import { createUser, getUserInfo } from '@/src/modules/user/actions';
 import { MenuItem } from '@/src/shared/components/common';
 import { Sidebar } from '@/src/shared/components/layout';
 import { menuItems, UserStatus } from '@/src/shared/constants';
@@ -14,7 +14,25 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   const { userId } = await auth();
 
   if (!userId) return redirect('/sign-in');
-  const user = await getUserInfo({ userId });
+
+  let user = await getUserInfo({ userId });
+
+  if (!user) {
+    const clerkUser = await currentUser();
+
+    if (!clerkUser) {
+      return redirect('/sign-in');
+    }
+    await createUser({
+      clerkId: userId,
+      username: clerkUser.username!,
+      email: clerkUser.emailAddresses[0].emailAddress,
+      name: clerkUser.username!,
+      avatar: clerkUser.imageUrl || '',
+    });
+
+    user = await getUserInfo({ userId });
+  }
 
   if (!user?.role) {
     return <PageNotFound />;
