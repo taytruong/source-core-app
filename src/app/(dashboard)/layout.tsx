@@ -1,16 +1,34 @@
+'use client';
 import Link from 'next/link';
 import React from 'react';
 
 import { MenuItem } from '@/src/shared/components/common';
 import { Sidebar } from '@/src/shared/components/layout';
-import { menuItems } from '@/src/shared/constants';
+import { menuItems, UserStatus } from '@/src/shared/constants';
+import { useUserContext } from '@/src/shared/contexts';
 
-const layout = ({ children }: { children: React.ReactNode }) => {
+import PageNotFound from '../not-found';
+
+const Layout = ({ children }: { children: React.ReactNode }) => {
+  const { userInfo } = useUserContext();
+
+  if (!userInfo?.role) {
+    return null;
+  }
+
+  if (userInfo.status !== UserStatus.ACTIVE) {
+    return <PageNotFound />;
+  }
+
+  const permissonRoleMenuItems = menuItems.filter((item) =>
+    (item.role || []).includes(userInfo.role),
+  );
+
   return (
     <div className="wrapper block min-h-screen pb-20 lg:grid lg:grid-cols-[300px__minmax(0,1fr)] lg:pb-0">
-      <Sidebar />
+      <Sidebar menuItems={permissonRoleMenuItems} />
       <ul className="fixed bottom-0 left-0 z-50 flex h-16 w-full justify-center gap-5 border-t border-t-gray-200 bg-linear-to-t from-orange-100 to-white/40 p-3 lg:hidden">
-        {menuItems.map((item, index) => (
+        {permissonRoleMenuItems.map((item, index) => (
           <MenuItem
             key={index}
             onlyIcon
@@ -43,4 +61,4 @@ const layout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default layout;
+export default Layout;

@@ -170,3 +170,15 @@ export async function updateStatusUser(params: UpdateStatusUserParams) {
     console.log('🚀 ~ updateUser ~ error:', error);
   }
 }
+
+export async function deleteUser(id: string): Promise<boolean | undefined> {
+  try {
+    connectToDatabase();
+    await UserModel.findByIdAndDelete(id);
+    revalidatePath('/manage/member');
+
+    return true;
+  } catch (error) {
+    console.log('🚀 ~ deleteUser ~ error:', error);
+  }
+}

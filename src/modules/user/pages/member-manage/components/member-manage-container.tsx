@@ -11,6 +11,8 @@ import {
   HoverTooltip,
   Pagination,
   SortableTable,
+  TableAction,
+  TableActionItem,
 } from '@/src/shared/components/common';
 import { Input } from '@/src/shared/components/ui/input';
 import {
@@ -32,7 +34,7 @@ import {
 import { useQueryString } from '@/src/shared/hooks';
 import { UserModelProps } from '@/src/shared/types';
 
-import { updateRole, updateStatusUser } from '../../../actions';
+import { deleteUser, updateRole, updateStatusUser } from '../../../actions';
 
 interface MemberManageContainerProps {
   users?: UserModelProps[];
@@ -87,6 +89,24 @@ const MemberManageContainer = ({
       });
     } catch (error) {
       console.log('🚀 ~ handleChangeRole ~ error:', error);
+    }
+  };
+
+  const handleDeleteUser = async (id: string) => {
+    try {
+      Swal.fire({
+        title: 'Are you sure you want to delete this user?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await deleteUser(id);
+        }
+      });
+    } catch (error) {
+      console.log('🚀 ~ handleDeleteUser ~ error:', error);
     }
   };
 
@@ -204,17 +224,22 @@ const MemberManageContainer = ({
                     </HoverTooltip>
                   </TableCell>
                   <TableCell>
-                    <HoverTooltip label="Can be changed to 'Active' / 'Inactive' / 'Banned'">
-                      <button>
-                        <BadgeStatus
-                          className={statusItem?.className}
-                          title={statusItem?.title}
-                          onClick={() =>
-                            handleChangeStatus(user._id.toString(), user.status)
-                          }
-                        />
-                      </button>
-                    </HoverTooltip>
+                    {!UserRole.ADMIN && (
+                      <HoverTooltip label="Can be changed to 'Active' / 'Inactive' / 'Banned'">
+                        <button>
+                          <BadgeStatus
+                            className={statusItem?.className}
+                            title={statusItem?.title}
+                            onClick={() =>
+                              handleChangeStatus(
+                                user._id.toString(),
+                                user.status,
+                              )
+                            }
+                          />
+                        </button>
+                      </HoverTooltip>
+                    )}
                   </TableCell>
 
                   <TableCell>
@@ -222,7 +247,17 @@ const MemberManageContainer = ({
                       {new Date(user.create_at).toLocaleDateString('vi-VI')}
                     </h4>
                   </TableCell>
-                  <TableCell />
+                  <TableCell>
+                    <TableAction>
+                      {!UserRole.ADMIN && (
+                        <TableActionItem
+                          label="Delete User"
+                          type="delete"
+                          onClick={() => handleDeleteUser(user._id.toString())}
+                        />
+                      )}
+                    </TableAction>
+                  </TableCell>
                 </TableRow>
               );
             })}

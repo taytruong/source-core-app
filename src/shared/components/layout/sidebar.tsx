@@ -1,9 +1,14 @@
 'use client';
 
 import { MenuItem } from '@/src/shared/components/common';
-import { menuItems } from '@/src/shared/constants';
 
-const Sidebar = () => {
+import { MenuItemProps } from '../../types';
+
+interface SidebarProps {
+  menuItems: MenuItemProps[];
+}
+
+const Sidebar = ({ menuItems }: SidebarProps) => {
   return (
     <div className="fixed top-0 bottom-0 left-0 hidden w-75 flex-col border-r border-r-gray-200 bg-linear-to-r from-orange-100 to-white/40 px-7 py-5 shadow-sm lg:flex">
       <a

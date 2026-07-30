@@ -1,5 +1,7 @@
 import { LucideIcon } from 'lucide-react';
 
+import { UserRole } from '../constants';
+
 export interface FilterQueryParams {
   page?: number;
   limit?: number;
@@ -45,6 +47,7 @@ export interface MenuItemProps {
   title2?: string;
   icon?: React.ReactNode;
   onlyIcon?: boolean;
+  role?: UserRole[];
 }
 
 export interface StorageLesson {
