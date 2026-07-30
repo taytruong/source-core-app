@@ -1,40 +1,31 @@
-'use client';
+import { auth } from '@clerk/nextjs/server';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import { redirect } from 'next/navigation';
+import React from 'react';
 
+import { getUserInfo } from '@/src/modules/user/actions';
 import { MenuItem } from '@/src/shared/components/common';
 import { Sidebar } from '@/src/shared/components/layout';
 import { menuItems, UserStatus } from '@/src/shared/constants';
-import { useUserContext } from '@/src/shared/contexts';
 
 import PageNotFound from '../not-found';
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { userInfo } = useUserContext();
-  const [isHydrated, setIsHydrated] = useState(false);
+const Layout = async ({ children }: { children: React.ReactNode }) => {
+  const { userId } = await auth();
 
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
+  if (!userId) return redirect('/sign-in');
+  const user = await getUserInfo({ userId });
 
-  if (!isHydrated || !userInfo) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="border-t-primary h-12 w-12 animate-spin rounded-full border-4 border-gray-300" />
-      </div>
-    );
+  if (!user?.role) {
+    return <PageNotFound />;
   }
 
-  if (!userInfo?.role) {
-    return null;
-  }
-
-  if (userInfo.status !== UserStatus.ACTIVE) {
+  if (user.status !== UserStatus.ACTIVE) {
     return <PageNotFound />;
   }
 
   const permissonRoleMenuItems = menuItems.filter((item) =>
-    (item.role || []).includes(userInfo.role),
+    (item.role || []).includes(user.role),
   );
 
   return (
