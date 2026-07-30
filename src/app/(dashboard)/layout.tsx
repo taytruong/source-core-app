@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { MenuItem } from '@/src/shared/components/common';
 import { Sidebar } from '@/src/shared/components/layout';
@@ -11,6 +11,19 @@ import PageNotFound from '../not-found';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const { userInfo } = useUserContext();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+  if (!isHydrated || !userInfo) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <div className="border-t-primary h-12 w-12 animate-spin rounded-full border-4 border-gray-300" />
+      </div>
+    );
+  }
 
   if (!userInfo?.role) {
     return null;

@@ -31,10 +31,16 @@ import {
   UserStatus,
   userStatusOptions,
 } from '@/src/shared/constants';
+import { useUserContext } from '@/src/shared/contexts';
 import { useQueryString } from '@/src/shared/hooks';
 import { UserModelProps } from '@/src/shared/types';
 
-import { deleteUser, updateRole, updateStatusUser } from '../../../actions';
+import {
+  deleteUser,
+  getUserInfo,
+  updateRole,
+  updateStatusUser,
+} from '../../../actions';
 
 interface MemberManageContainerProps {
   users?: UserModelProps[];
@@ -45,6 +51,7 @@ const MemberManageContainer = ({
   total = 0,
   users = [],
 }: MemberManageContainerProps) => {
+  const { setuserInfo } = useUserContext();
   const totalPages = Math.ceil(total / ITEM_PER_PAGE);
   const { handleSearchData, handleSelectRole, handleSelectStatus } =
     useQueryString();
@@ -84,7 +91,11 @@ const MemberManageContainer = ({
             },
             path: '/manage/member',
           });
-          window.location.href = '/manage/member';
+          const updatedUser = await getUserInfo({ userId });
+
+          if (updatedUser) {
+            setuserInfo(updatedUser);
+          }
           toast.success('Role updated successfully!');
         }
       });
@@ -131,7 +142,6 @@ const MemberManageContainer = ({
             },
             path: '/manage/member',
           });
-          window.location.href = '/manage/member';
           toast.success('Status updated successfully!');
         }
       });
