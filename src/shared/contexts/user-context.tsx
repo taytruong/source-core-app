@@ -16,8 +16,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const { userId } = useAuth();
 
   useEffect(() => {
+    if (!userId) return;
+
     async function fetchUserInfo() {
-      const user = await getUserInfo({ userId: userId || '' });
+      const user = await getUserInfo({ userId: userId! });
 
       if (user) {
         setuserInfo(user);
