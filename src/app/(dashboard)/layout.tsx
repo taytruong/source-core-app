@@ -13,7 +13,53 @@ import PageNotFound from '../not-found';
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const { userId } = await auth();
 
-  if (!userId) return redirect('/sign-in');
+  // ====================== BEFORE LOGIN ======================
+  const publicMenuItems = menuItems.filter(
+    (item) =>
+      item.url === '/' ||
+      item.url === '/explore' ||
+      item.url === '/course/[slug]',
+  );
+
+  if (!userId) {
+    return (
+      <div className="wrapper block min-h-screen pb-20 lg:grid lg:grid-cols-[300px__minmax(0,1fr)] lg:pb-0">
+        <Sidebar menuItems={publicMenuItems} />
+        <ul className="fixed bottom-0 left-0 z-50 flex h-16 w-full justify-center gap-5 border-t border-t-gray-200 bg-linear-to-t from-orange-100 to-white/40 p-3 lg:hidden">
+          {publicMenuItems.map((item, index) => (
+            <MenuItem
+              key={index}
+              onlyIcon
+              icon={item.icon}
+              title={item.title}
+              url={item.url}
+            />
+          ))}
+        </ul>
+        <div className="hidden lg:block" />
+        <div className="flex min-h-screen flex-col">
+          <main className="flex-1">
+            <div className="px-14 py-5">{children}</div>
+          </main>
+
+          <footer className="p-4">
+            <p className="text-right text-sm font-medium">
+              Developed by{' '}
+              <Link
+                className="text-logo"
+                href="https://www.linkedin.com/in/t%C3%A2y-tr%C6%B0%C6%A1ng-1203322a0/"
+                target="_blank"
+              >
+                <strong>TayTruong</strong>
+              </Link>
+            </p>
+          </footer>
+        </div>
+      </div>
+    );
+  }
+
+  // ====================== AFTER LOGIN ======================
 
   let user = await getUserInfo({ userId });
 

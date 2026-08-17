@@ -38,7 +38,7 @@ function Header({ title }: HeaderProps) {
             ) : (
               <Link
                 className="flexCenter text-logo gap-2 p-2"
-                href="sign-in"
+                href="/sign-in"
               >
                 <span className="text-xl font-bold">👉 Sign in !</span>
                 <IconLogin className="bg-logo flexCenter size-8 rounded-full text-white" />
