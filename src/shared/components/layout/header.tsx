@@ -20,9 +20,11 @@ function Header({ title }: HeaderProps) {
       <div className="flex items-center justify-between">
         <Heading className="lg:text-3xl">{title}</Heading>
         <div className="flexCenter mt-auto gap-3">
-          <h2 className="text-xl font-bold">
-            {userInfo?.name ? <span>{userInfo.name} ! 👋</span> : null}
-          </h2>
+          {!!userId && !!userInfo?.name && (
+            <h2 className="text-xl font-bold">
+              <span>{userInfo.name} ! 👋</span>
+            </h2>
+          )}
           <div className="m t-1">
             {userId ? (
               <UserButton
