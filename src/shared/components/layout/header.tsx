@@ -21,7 +21,7 @@ function Header({ title }: HeaderProps) {
         <Heading className="lg:text-3xl">{title}</Heading>
         <div className="flexCenter mt-auto gap-3">
           {!!userId && !!userInfo?.name && (
-            <h2 className="text-xl font-bold">
+            <h2 className="hidden text-xl font-bold sm:block">
               <span>{userInfo.name} ! 👋</span>
             </h2>
           )}

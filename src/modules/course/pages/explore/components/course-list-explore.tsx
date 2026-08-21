@@ -38,7 +38,7 @@ function CourseListSuggestion({
   return (
     <>
       <div className="flex flex-col gap-5">
-        <div className="flex gap-5">
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-5">
           <div className="w-full lg:w-125">
             <Input
               icon={<SearchIcon size={18} />}
@@ -46,13 +46,19 @@ function CourseListSuggestion({
               onChange={handleSearchData}
             />
           </div>
-          <FilterSelectStatus
-            allValue={allValue}
-            options={courseLevel}
-            placeholder="Select Level"
-            onValueChange={(value) => handleSelectLevel(value as CourseLevel)}
-          />
-          <SortCreateAt />
+
+          <div className="w-full lg:w-auto">
+            <FilterSelectStatus
+              allValue={allValue}
+              options={courseLevel}
+              placeholder="Select Level"
+              onValueChange={(value) => handleSelectLevel(value as CourseLevel)}
+            />
+          </div>
+
+          <div className="w-full lg:w-auto">
+            <SortCreateAt />
+          </div>
         </div>
         <CourseGrid isLoading={isLoading}>
           {courseList?.length > 0 &&
