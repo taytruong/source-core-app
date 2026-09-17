@@ -26,7 +26,7 @@ function Banner(_props: BannerProps) {
         </div>
       </div>
 
-      <div className="hidden shrink-0 2xl:block 2xl:w-[22%] [&>svg]:h-auto">
+      <div className="hidden shrink-0 2xl:block">
         <BannerRight />
       </div>
     </section>
