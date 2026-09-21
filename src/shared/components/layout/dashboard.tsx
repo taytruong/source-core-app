@@ -39,14 +39,14 @@ function Dashboard(_props: DashboardProps) {
       iconColor: '#D6A44E',
     },
     {
-      title: 'Pending',
+      title: 'Pending lesson',
       value: data?.cardItems.totalPending ?? 0,
       icon: FileTextIcon,
       iconBg: '#E8F5E9',
       iconColor: '#43A047',
     },
     {
-      title: 'Completed',
+      title: 'Completed lesson',
       value: data?.cardItems.totalCompleted ?? 0,
       icon: Trophy,
       iconBg: '#FCE4EC',
