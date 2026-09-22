@@ -151,14 +151,14 @@ const MemberManageContainer = ({
           <FilterSelectStatus
             allValue={allValue}
             options={userRoleOptions}
-            placeholder="Search roles..."
+            type="user"
             onValueChange={(value) => handleSelectRole(value as UserRole)}
           />
 
           <FilterSelectStatus
             allValue={allValue}
             options={userStatusOptions}
-            placeholder="Search statuses..."
+            type="icon"
             onValueChange={(value) => handleSelectStatus(value as UserStatus)}
           />
         </div>

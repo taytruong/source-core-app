@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { format } from 'date-fns';
 import { debounce } from 'lodash';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
@@ -55,6 +56,7 @@ const UpdateCouponContainer = ({
   const [endDate, setEndDate] = useState<Date>(
     couponDetails.end_date || new Date(),
   );
+  const router = useRouter();
   const form = useForm<z.infer<typeof couponCreateSchema>>({
     resolver: zodResolver(couponCreateSchema),
     defaultValues: {
@@ -404,12 +406,22 @@ const UpdateCouponContainer = ({
           )}
         />
       </div>
-      <Button
-        className="ml-auto flex w-37.5"
-        variant="primary"
-      >
-        Update
-      </Button>
+      <div className="flex justify-end gap-3">
+        <Button
+          className="w-37.5"
+          type="button"
+          variant="primary"
+          onClick={() => router.push('/manage/coupon')}
+        >
+          Cancel
+        </Button>
+        <Button
+          className="w-37.5"
+          variant="primary"
+        >
+          Update Coupon
+        </Button>
+      </div>
     </form>
   );
 };

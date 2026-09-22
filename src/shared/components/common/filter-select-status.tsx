@@ -1,6 +1,6 @@
 'use client';
 
-import { FunnelIcon } from 'lucide-react';
+import { FunnelIcon, UserKeyIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import {
@@ -26,7 +26,7 @@ interface FilterSelectStatusProps {
   placeholder?: string;
   defaultValue?: string;
   className?: string;
-  type?: 'icon';
+  type?: 'icon' | 'user';
 }
 
 function FilterSelectStatus({
@@ -37,6 +37,7 @@ function FilterSelectStatus({
   onValueChange,
   options,
   placeholder,
+  type,
 }: FilterSelectStatusProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -54,9 +55,15 @@ function FilterSelectStatus({
           isOpen ? 'z-50' : 'z-auto'
         }`}
       >
-        <div className="flex items-center gap-2">
-          <FunnelIcon size={16} />:
-        </div>
+        {type === 'user' ? (
+          <div className="flex items-center gap-2">
+            <UserKeyIcon size={18} />:
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <FunnelIcon size={16} />:
+          </div>
+        )}
 
         <Select
           defaultValue={defaultValue ?? allValue}
