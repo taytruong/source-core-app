@@ -97,15 +97,25 @@ function CreateCourseContainer() {
           )}
         />
       </div>
-      <Button
-        className="w-30"
-        disabled={mutationCreateCourse.isPending}
-        isLoading={mutationCreateCourse.isPending}
-        type="submit"
-        variant={'primary'}
-      >
-        Create Course
-      </Button>
+      <div className="flex justify-end gap-3">
+        <Button
+          className="w-37.5"
+          type="button"
+          variant="primary"
+          onClick={() => router.push('/manage/course')}
+        >
+          Cancel
+        </Button>
+        <Button
+          className="w-37.5"
+          disabled={mutationCreateCourse.isPending}
+          isLoading={mutationCreateCourse.isPending}
+          type="submit"
+          variant={'primary'}
+        >
+          Create Course
+        </Button>
+      </div>
     </form>
   );
 }

@@ -528,15 +528,25 @@ const UpdateCourseContainer = ({ course }: UpdateCourseContainerProps) => {
           )}
         /> */}
       </div>
-      <Button
-        className="w-37.5"
-        disabled={muatationUpdateCourse.isPending}
-        isLoading={muatationUpdateCourse.isPending}
-        type="submit"
-        variant={'primary'}
-      >
-        Update Course
-      </Button>
+      <div className="flex gap-3">
+        <Button
+          className="w-37.5"
+          type="button"
+          variant="primary"
+          onClick={() => router.push('/manage/course')}
+        >
+          Cancel
+        </Button>
+        <Button
+          className="w-37.5"
+          disabled={muatationUpdateCourse.isPending}
+          isLoading={muatationUpdateCourse.isPending}
+          type="submit"
+          variant={'primary'}
+        >
+          Update Course
+        </Button>
+      </div>
     </form>
   );
 };

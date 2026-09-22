@@ -398,12 +398,24 @@ const CreateCouponContainer = () => {
           )}
         />
       </div>
-      <Button
-        className="ml-auto flex w-37.5"
-        variant="primary"
-      >
-        Create Coupon
-      </Button>
+      <div className="flex justify-end gap-3">
+        <Button
+          className="w-37.5"
+          type="button"
+          variant="primary"
+          onClick={() => router.push('/manage/coupon')}
+        >
+          Cancel
+        </Button>
+
+        <Button
+          className="w-37.5"
+          type="submit"
+          variant="primary"
+        >
+          Create Coupon
+        </Button>
+      </div>
     </form>
   );
 };

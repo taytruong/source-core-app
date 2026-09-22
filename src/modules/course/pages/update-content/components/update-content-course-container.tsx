@@ -1,4 +1,5 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { MouseEvent, useState } from 'react';
 import { toast } from 'sonner';
 import Swal from 'sweetalert2';
@@ -32,6 +33,7 @@ const UpdateContentCourseContainer = ({
   course,
 }: UpdateContentCourseContainerProps) => {
   const lectures = course.lectures;
+  const router = useRouter();
 
   const [lectureEdit, setLectureEdit] = useState('');
   const [lectureIdEdit, setLectureIdEdit] = useState('');
@@ -254,12 +256,23 @@ const UpdateContentCourseContainer = ({
           </div>
         ))}
       </div>
-      <Button
-        className="mt-5"
-        onClick={handleAddNewLecture}
-      >
-        Add new lecture
-      </Button>
+      <div className="mt-5 flex gap-3">
+        <Button
+          className="w-37.5"
+          type="button"
+          variant="primary"
+          onClick={() => router.push('/manage/course')}
+        >
+          Cancel
+        </Button>
+        <Button
+          className="w-37.5"
+          variant="primary"
+          onClick={handleAddNewLecture}
+        >
+          Add new lecture
+        </Button>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,7 @@
+'use client';
+
 import { FunnelIcon } from 'lucide-react';
+import { useState } from 'react';
 
 import {
   Select,
@@ -35,37 +38,57 @@ function FilterSelectStatus({
   options,
   placeholder,
 }: FilterSelectStatusProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className="flex w-48 items-center gap-2">
-      <div className="flex items-center gap-2">
-        <FunnelIcon size={16} />:
-      </div>
-      <Select
-        defaultValue={defaultValue ?? allValue}
-        onValueChange={onValueChange}
+    <>
+      {!!isOpen && (
+        <div
+          aria-hidden="true"
+          className="fixed inset-0 z-40 bg-black/5 backdrop-blur-sm"
+        />
+      )}
+
+      <div
+        className={`relative flex w-48 items-center gap-2 ${
+          isOpen ? 'z-50' : 'z-auto'
+        }`}
       >
-        <SelectTrigger
-          className={className}
-          size="lg"
+        <div className="flex items-center gap-2">
+          <FunnelIcon size={16} />:
+        </div>
+
+        <Select
+          defaultValue={defaultValue ?? allValue}
+          open={isOpen}
+          onOpenChange={setIsOpen}
+          onValueChange={onValueChange}
         >
-          <SelectValue placeholder={placeholder} />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectItem value={allValue}>{allLabel}</SelectItem>
-            {options.map((option) => (
-              <SelectItem
-                key={option.value}
-                className={option.className}
-                value={`${option.value}`}
-              >
-                {option.title}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </div>
+          <SelectTrigger
+            className={className}
+            size="lg"
+          >
+            <SelectValue placeholder={placeholder} />
+          </SelectTrigger>
+
+          <SelectContent className="z-60">
+            <SelectGroup>
+              <SelectItem value={allValue}>{allLabel}</SelectItem>
+
+              {options.map((option) => (
+                <SelectItem
+                  key={option.value}
+                  className={option.className}
+                  value={`${option.value}`}
+                >
+                  {option.title}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+    </>
   );
 }
 
